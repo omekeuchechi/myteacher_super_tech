@@ -62,20 +62,22 @@ const WhatAppInfo = () => {
     const [minimized, setMinimized] = useState(false);
     const [animating, setAnimating] = useState(false);
 
-    // Handle minimize with animation
+    // Handle minimize with animation that will
+    // make the component look like it's being minimized
     const handleMinimize = () => {
         setAnimating(true);
         setTimeout(() => {
             setMinimized(true);
             setAnimating(false);
-        }, 600); // match animation duration
+        }, 600);
     };
 
     // Handle restore with animation
+    // This will restore the component to its original state
     const handleRestore = () => {
         setAnimating(true);
         setMinimized(false);
-        setTimeout(() => setAnimating(false), 700); // match animation duration
+        setTimeout(() => setAnimating(false), 700);
     };
 
     return minimized ? (
