@@ -1,0 +1,203 @@
+.contact-us {
+    max-width: 520px;
+    margin: 60px auto 80px auto;
+    padding: 36px 28px 32px 28px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    /* Animation for entrance */
+    animation: contactUsPopIn 1s cubic-bezier(.4,2,.3,1);
+}
+
+@keyframes contactUsPopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.96) translateY(40px);
+        box-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+    70% {
+        opacity: 1;
+        transform: scale(1.03) translateY(-8px);
+        box-shadow: 0 8px 32px rgba(0,59,177,0.13), 0 2px 16px rgba(0,0,0,0.08);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+    }
+}
+
+.contact-us h1 {
+    font-size: 2.7rem;
+    color: #003bb1;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+    /* Animate heading */
+    animation: fadeSlideDown 1s 0.2s both;
+}
+
+.contact-us h2 {
+    font-size: 2rem;
+    color: #003bb1;
+    font-weight: 700;
+    margin: 18px 0 8px 0;
+    letter-spacing: 0.3px;
+    animation: fadeSlideDown 1s 0.4s both;
+}
+
+@keyframes fadeSlideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.contact-us p {
+    color: #444;
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    animation: fadeSlideUp 1s 0.5s both;
+}
+
+@keyframes fadeSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.contact-us iframe {
+    width: 100%;
+    max-width: 100%;
+    min-height: 260px;
+    border-radius: 12px;
+    margin: 0 auto 18px auto;
+    border: 0;
+    box-shadow: 0 2px 12px rgba(0,59,177,0.08);
+    animation: fadeInMap 1.1s 0.6s both;
+}
+
+@keyframes fadeInMap {
+    0% {
+        opacity: 0;
+        transform: scale(0.97) translateY(40px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.contact-us form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 8px;
+    animation: fadeSlideUp 1s 0.7s both;
+}
+
+.contact-us input,
+.contact-us textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #e0eaff;
+    border-radius: 8px;
+    font-size: 1.18rem;
+    font-family: inherit;
+    background: #f7faff;
+    color: #222;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    resize: none;
+}
+
+.contact-us input:focus,
+.contact-us textarea:focus {
+    border-color: #003bb1;
+    outline: none;
+    box-shadow: 0 0 0 2px #e0eaff;
+}
+
+.contact-us button[type="submit"] {
+    background: #003bb1;
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 0;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    margin-top: 6px;
+    animation: fadeSlideUp 1s 0.8s both;
+}
+
+.contact-us button[type="submit"]:hover {
+    background: #0050e0;
+    transform: translateY(-2px) scale(1.03);
+}
+
+/* Fade-in animation for scroll (JS-controlled) */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(.4,2,.3,1), transform 0.7s cubic-bezier(.4,2,.3,1);
+}
+
+.scroll-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+    .contact-us {
+        max-width: 98vw;
+        padding: 18px 8px 18px 8px;
+    }
+    .contact-us iframe {
+        min-height: 180px;
+    }
+}
+
+@media (max-width: 600px) {
+    .contact-us {
+        padding: 10px 2vw 18px 2vw;
+        max-width: 100vw;
+        border-radius: 10px;
+        gap: 18px;
+    }
+    .contact-us h1 {
+        font-size: 1.7rem;
+    }
+    .contact-us h2 {
+        font-size: 1.3rem;
+    }
+    .contact-us input,
+    .contact-us textarea {
+        font-size: 1.08rem;
+        padding: 10px 6px;
+    }
+    .contact-us p {
+        font-size: 1.08rem;
+    }
+    .contact-us button[type="submit"] {
+        font-size: 1.08rem;
+    }
+    .contact-us iframe {
+        min-height: 120px;
+        border-radius: 6px;
+    }
+}

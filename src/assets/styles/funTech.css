@@ -1,0 +1,122 @@
+/* FunTech Section Styles */
+.funtech-section {
+    padding: 48px 0 32px 0;
+    background: var(--background-color, #f9f9f9);
+    text-align: center;
+    margin-bottom: 100px;
+    /* For animation */
+    background-image: linear-gradient(135deg, var(--background-color, #f9f9f9) 60%, #e0eaff 100%);
+    background-size: 200% 200%;
+    background-position: right top;
+    transition: background-position 0.7s cubic-bezier(.4,2,.3,1), background-color 0.7s, background-image 0.7s;
+}
+
+.funtech-section:hover {
+    background-position: left bottom;
+    background-image: linear-gradient(135deg, #e0eaff 0%, var(--background-color, #f9f9f9) 100%);
+}
+
+.funtech-title {
+    font-size: 2.2rem;
+    color: var(--primary-color, #003bb1);
+    font-weight: 800;
+    margin-bottom: 36px;
+    letter-spacing: 0.5px;
+}
+
+.funtech-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.funtech-card {
+    background: var(--text-color-light, #fff);
+    border-radius: 14px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    padding: 28px 22px 22px 22px;
+    width: 270px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    opacity: 0;
+    transform: translateY(40px) scale(0.98) rotate(-2deg);
+    transition: 
+        opacity 0.7s cubic-bezier(.4,2,.3,1),
+        transform 0.7s cubic-bezier(.4,2,.3,1),
+        box-shadow 0.3s;
+}
+
+.funtech-card.show {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+}
+
+.funtech-card:hover, .funtech-card:focus-within {
+    box-shadow: 0 8px 32px rgba(0,59,177,0.13), 0 2px 16px rgba(0,0,0,0.08);
+    transform: translateY(-8px) scale(1.03) rotate(1deg);
+    transition: 
+        box-shadow 0.3s,
+        transform 0.4s cubic-bezier(.4,2,.3,1);
+}
+
+.funtech-card h3 {
+    color: var(--secondary-color, #0077ff);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: 0.2px;
+}
+
+.funtech-card p {
+    color: var(--text-color-gray, #444);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0;
+    flex: 1;
+    text-align: left;
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+    .funtech-cards {
+        gap: 18px;
+    }
+    .funtech-card {
+        width: 45vw;
+        min-width: 220px;
+        max-width: 340px;
+    }
+}
+
+@media (max-width: 600px) {
+    .funtech-section {
+        padding: 28px 0 18px 0;
+    }
+    .funtech-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    .funtech-cards {
+        flex-direction: column;
+        gap: 14px;
+        align-items: center;
+    }
+    .funtech-cards > .funtech-card {
+        width: 90vw;
+        margin-left: auto;
+        margin-right: auto;
+        min-width: unset;
+        max-width: 98vw;
+        padding: 18px 10px 14px 10px;
+    }
+    .funtech-card h3 {
+        font-size: 1rem;
+    }
+    .funtech-card p {
+        font-size: 0.98rem;
+    }
+}

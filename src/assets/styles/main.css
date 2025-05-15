@@ -1,0 +1,316 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    list-style: none;
+}
+
+:root {
+    /* Fixed invalid comments and formatting */
+    /* --primary-color: #3498db; */
+    /* --primary-color: #0583f8d2; */
+    --primary-color: #086ccae1;
+    --primary-color-2: #3498db85;
+    /* --secondary-color: #086ccad7; */
+    --secondary-color: #086cca;
+    --text-color: #000;
+    --text-color-gray: #4b4545;
+    --text-color-light: #fff;
+    --background-color: #f0f0f0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 62.5%;
+    scroll-snap-type: proximity;
+    scrollbar-color: var(--primary-color) var(--background-color);
+}
+
+body {
+    background-color: var(--background-color);
+    width: 100%;
+    overflow-x: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Hero Section */
+.hero-video {
+    position: absolute;
+    z-index: -1000;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 70vh;
+    overflow: hidden;
+}
+
+.hero-video > video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-section {
+    margin-top: auto;
+    width: 100%;
+    min-height: 70vh;
+    padding: 50px;
+    background-color: var(--primary-color);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    margin: 0 auto;
+    gap: 2rem;
+    height: 100%;
+}
+
+.hero-content > h1 {
+    font-size: 3.8rem;
+    color: var(--text-color-light);
+    font-weight: 800;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 0;
+}
+
+.hero-section .hero-content > .btn {
+    padding: 3rem 3rem;
+    border-radius: 50px;
+    background-color: var(--text-color-light);
+    color: var(--secondary-color);
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.hero-section .hero-content > .btn:hover {
+    background-color: var(--secondary-color);
+    color: var(--text-color-light);
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Main Section */
+.main {
+    width: 80%;
+    margin: 60px auto;
+    border-radius: 100px;
+    padding: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    box-shadow: 0 0 0 4px #5e5c5c;
+    align-items: center;
+    gap: 10rem;
+    background-color: var(--text-color-light);
+}
+
+.main > .main-content {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.main > img {
+    width: 500px;
+    height: auto;
+    border-radius: 2%;
+}
+
+.main > img:hover {
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.main > .main-content > h2 {
+    font-size: 4rem;
+    color: var(--text-color);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.main > .main-content > p {
+    font-size: 2rem;
+    color: var(--text-color-gray);
+    text-align: justify;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+}
+
+.main > .main-content > .btn {
+    padding: 2.5rem 3rem;
+    border-radius: 50px;
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.main > .main-content > .btn:hover {
+    background-color: var(--secondary-color);
+    color: var(--text-color-light);
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Gallery Section */
+.gallary-header {
+    width: 100%;
+    text-align: center;
+    font-size: 2.9rem;
+    margin: 60px 0 40px;
+    /* color: var(--text-color-light); */
+    /* font-weight: 800; */
+}
+.gallary-header > h2 {
+    font-size: 4rem;
+    color: var(--text-color);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.gallary-header > h2:hover {
+    color: var(--secondary-color);
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.gallary-header > p {
+    font-weight: 200;
+    color: var(--text-color-gray);
+    font-size: 2rem;
+}
+
+.gallary-header > p:hover {
+    color: var(--text-color);
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.gallary {
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    margin: 40px auto;
+}
+
+.gallary > img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.gallary > img:hover {
+    filter: grayscale(2);
+}
+
+/* Testimonials Section */
+#testimonials {
+    width: 100%;
+    margin-top: 60px;
+    padding: 2rem 0;
+    background-color: var(--text-color-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tes-header {
+    width: 100%;
+    text-align: center;
+    font-size: 2.9rem;
+    margin-bottom: 40px;
+}
+
+.tes-header > p {
+    font-weight: 200;
+    color: var(--text-color-gray);
+    font-size: 2rem;
+}
+
+.sweeper {
+    overflow: hidden;
+    width: 90%;
+    position: relative;
+}
+
+.tes-containers {
+    display: flex;
+    gap: 2rem;
+    transition: transform 1s ease-in-out;
+    will-change: transform;
+}
+
+.testimonial-card {
+    flex: 0 0 300px;
+    height: 400px;
+    background-color: var(--primary-color);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.testimonial-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.testimonial-card > img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.testimonial-card > h4 {
+    font-size: 1.8rem;
+    color: var(--text-color-light);
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.testimonial-card > p {
+    font-size: 2rem;
+    color: var(--text-color-light);
+    text-align: left;
+    flex-grow: 3;
+    margin-bottom: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* For single line ellipsis */
+    /* For multiline ellipsis, use the following instead: */
+    display: -webkit-box;
+    line-clamp: 3;
+    /* overflow-y: auto; */
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}

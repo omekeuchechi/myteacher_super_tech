@@ -1,0 +1,538 @@
+/* Responsive Styles for Portrait Orientation */
+@media (orientation: portrait) {
+    .navbar {
+        display: inline-flex;
+        /* gap: 7rem; */
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .navbar .logo > h1 {
+        display: block;
+    }
+
+    .navbar .menu-icon {
+        display: block;
+        border: 1px solid var(--text-color-light);
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    .navbar .menu-icon > i {
+        font-size: 2.4rem !important;
+        color: var(--text-color-light);
+    }
+
+    .navbar .menu-icon > i:hover {
+        color: var(--primary-color);
+    }
+
+    .navbar > .auth-btn {
+        display: block;
+        padding: 30px 20px;
+        background-color: var(--text-color-light);
+        text-decoration: none;
+    }
+
+    .navbar .menu-icon-show {
+        animation: menu-icon-rotate 1s linear 1;
+    }
+
+    /* Animation for rotating the menu icon */
+    @keyframes menu-icon-rotate {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            background-color: #ffffff7c;
+            transform: rotate(360deg);
+        }
+    }
+
+    .navbar .menu-icon:hover {
+        background: var(--text-color-light);
+        color: var(--primary-color);
+        transform: scale(1.1);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .navbar > ul {
+        display: none;
+    }
+
+    .navbar > .auth {
+        display: none;
+    }
+
+    .navbar > .nav-ul-show {
+        display: block;
+        position: absolute;
+        top: 65px;
+        left: 0;
+        width: 100%;
+        background-color: var(--text-color-light);
+        padding: 0;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        border-bottom: 2px solid var(--text-color-light);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .navbar > .nav-ul-show > li {
+        width: 100%;
+        border-bottom: 1px solid var(--primary-color);
+    }
+
+    .navbar > .nav-ul-show > li:hover {
+        background-color: var(--primary-color);
+        transform: scale(1.1);
+        color: var(--text-color-light);
+        padding-left: 10px;
+        padding-right: 10px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .navbar > .nav-ul-show > li > a {
+        font-size: 2rem;
+        color: var(--text-color-dark);
+        font-weight: 800;
+        padding: 1rem 2rem;
+        text-align: center;
+    }
+
+    .navbar > .nav-ul-show > .nav-link-hide-show {
+        display: block;
+    }
+
+    .hero-section {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        padding: 0 2rem;
+        /* top: -23px; */
+    }
+
+    .hero-video > video {
+        border-bottom-left-radius: 0;
+        height: 77.5vh;
+        border-bottom-right-radius: 0;
+    }
+
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 5rem;
+        gap: 2rem;
+    }
+
+    .hero-content > h1 {
+        display: inline;
+        font-size: 3rem;
+    }
+
+    .main {
+        width: 100%;
+        flex-direction: column;
+        gap: 5rem;
+        padding: 2rem 0;
+        box-shadow: 0 0 0 0;
+    }
+
+    .main > img {
+        width: 100%;
+        height: auto;
+    }
+
+    .main > .main-content {
+        width: 100%;
+        padding: 0 1rem;
+        text-align: left;
+    }
+}
+
+/* Responsive Styles */
+
+/* Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+    .hero-content > h1 {
+        font-size: 2.5rem;
+    }
+
+    .main {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .main > img {
+        width: 100%;
+    }
+
+    .gallary > img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .testimonial-card {
+        flex: 0 0 100%;
+        height: auto;
+    }
+
+    #tech-journey-section {
+        padding: 50px 20px;
+    }
+
+    #tech-journey-section .section-header h2 {
+        font-size: 2.8rem;
+    }
+
+    #tech-journey-section .section-header p {
+        font-size: 1.4rem;
+    }
+
+    .journey-steps {
+        gap: 20px;
+    }
+
+    .journey-step {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .step-number {
+        width: 50px;
+        height: 50px;
+        font-size: 1.8rem;
+    }
+
+    .step-content h3 {
+        font-size: 2rem;
+    }
+
+    .step-content p {
+        font-size: 1.4rem;
+    }
+        .journey-cta p {
+        font-size: 1.6rem;
+    }
+
+    .journey-btn {
+        font-size: 1.6rem;
+        padding: 12px 25px;
+    }
+}
+
+/* Tablet (max-width: 768px) */
+@media (max-width: 768px) {
+    .hero-content > h1 {
+        font-size: 3rem;
+    }
+
+    .main {
+        flex-direction: column;
+        gap: 5rem;
+        padding: 2rem 10px;
+        text-align: left;
+    }
+
+    .main > .main-content > p{
+        font-size: 1.5rem;
+        line-height: 1.5;
+        text-align: left;
+        padding: 0 2rem;
+    }
+
+    .main > img {
+        width: 80%;
+    }
+
+    .gallary-section > .gallary-header > h2 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: var(--text-color-dark);
+        
+    }
+
+    .gallary > img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .sweeper > .tes-containers > .testimonial-card {
+        flex: 0 0 60%;
+    }
+    /* .sweeper > .tes-containers > .testimonial-card > img {
+        width: 100%;
+        height: auto;
+        border-radius: 50%;
+    } */
+    .sweeper > .tes-containers > .testimonial-card > p{
+        font-size: 1rem;
+    }
+
+}
+
+/* Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+    section {
+        padding: 50px 20px;
+    }
+
+    #digital-skills > .containers > .section-header1 {
+        margin-left: 0px;
+    }
+
+    #digital-skills > .containers > .section-header1 > h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        line-height: 1;
+    }
+
+    .section-header1 > p {
+        font-size: 1.2rem;
+    }
+    .course-cards {
+        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+.course-cards > .course-card {
+    padding: 2px;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 600px;
+    max-width: 350px;
+    border-radius: 0;
+    /* margin-bottom: 20px; */
+    flex-direction: column;
+    background-color: transparent;
+    box-shadow: none;
+    transition: all 0.2s ease, box-shadow 0.2s ease;
+}
+
+    /* .course-card {
+        max-width: 90%;
+    } */
+
+    .course-card h3 {
+        font-size: 2rem;
+    }
+
+    .course-card p {
+        font-size: 1.2rem;
+    }
+
+    .card-button {
+        font-size: 1.2rem;
+        padding: 8px 16px;
+    }
+
+    .course-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .services-container > .service-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .services-container > .service-row > .service-card {
+        max-width: 100%;
+        flex: 1 1 100%;
+        box-shadow: none;
+        padding: 10px 0;
+    }
+
+    #ai-registration-section{
+        padding: 0;
+    }
+
+    .ai-reg-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .ai-reg-text h2 {
+        font-size: 2.5rem;
+    }
+
+    .ai-reg-text p {
+        font-size: 1.4rem;
+    }
+
+    .ai-register-btn {
+        font-size: 1.6rem;
+        padding: 10px 20px;
+    }
+    .ai-highlights {
+        flex-direction: column;
+        gap: 20px;
+    }
+    #tech-journey-section {
+        padding: 60px 10px;
+    }
+
+    #tech-journey-section .section-header3 h2 {
+        font-size: 3rem;
+    }
+
+    #tech-journey-section .section-header3 p {
+        font-size: 1.6rem;
+        margin-top: 10px;
+        color: var(--text-color-gray);
+        margin-bottom: 10px;
+    }
+
+    .journey-steps {
+        gap: 25px;
+    }
+
+    .journey-step {
+        flex-direction: row;
+        gap: 15px;
+    }
+    .step-number {
+        width: 55px;
+        height: 55px;
+        font-size: 1.9rem;
+    }
+
+    .step-content h3 {
+        font-size: 2.7rem;
+    }
+
+    .step-content p {
+        font-size: 1.5rem;
+        text-align: left;
+        line-height: 1.5;
+    }
+
+    .journey-cta p {
+        font-size: 1.8rem;
+    }
+
+    .journey-btn {
+        font-size: 1.7rem;
+        padding: 14px 28px;
+    }
+}
+
+/* Tablet (max-width: 768px) */
+@media (max-width: 768px) {
+    section {
+        padding: 60px 30px;
+    }
+
+    .section-header1 {
+        margin-left: 20px;
+    }
+
+    .section-header1 > h2 {
+        font-size: 2.8rem;
+    }
+
+    .section-header1 > p {
+        font-size: 1.4rem;
+    }
+
+    .course-cards {
+        justify-content: center;
+    }
+
+    .course-card {
+        max-width: 45%;
+    }
+
+    .course-card h3 {
+        font-size: 2.2rem;
+    }
+
+    .course-card p {
+        font-size: 1.4rem;
+    }
+
+    .card-button {
+        font-size: 1.4rem;
+        padding: 10px 18px;
+    }
+
+    .course-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+
+    .service-row {
+        flex-direction: row;
+        gap: 30px;
+    }
+
+    .service-card {
+        max-width: 48%;
+    }
+
+    .ai-reg-content {
+        flex-direction: row;
+        gap: 30px;
+    }
+
+    .ai-reg-text h2 {
+        font-size: 3rem;
+    }
+
+    .ai-reg-text p {
+        font-size: 1.6rem;
+    }
+
+    .ai-register-btn {
+        font-size: 1.8rem;
+        padding: 12px 30px;
+    }
+}
+
+
+/* Styles for screens up to 900px */
+@media (max-width: 1160px) {
+    .main {
+        flex-direction: column;
+        gap: 4rem;
+        padding: 3rem 5vw;
+        align-items: center;
+        background-color: transparent;
+        justify-content: center;
+        display: flex;
+        box-shadow: 0 0 0 0;
+    }
+
+    .main > img {
+        width: 90%;
+        max-width: 400px;
+        border-radius: 14px;
+        box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+    }
+
+    .main > .main-content {
+        width: 100%;
+        padding: 0 1rem;
+        text-align: left;
+    }
+
+    .main-content h2 {
+        font-size: 2.4rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .main-content p {
+        font-size: 1.3rem;
+        line-height: 1.5;
+    }
+
+    .btn {
+        font-size: 1.3rem;
+        padding: 12px 24px;
+        margin-top: 1.5rem;
+    }
+}

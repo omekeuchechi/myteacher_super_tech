@@ -1,0 +1,116 @@
+/* Button base: blue to purple, toggled: orange to pink for contrast and vibrance */
+
+/* this is basic CSS for a button animation with a logo and text. The button changes color on click, and the text slides out while the logo pops in. * */
+.enroll-btn {
+    position: relative;
+    overflow: hidden;
+    transition: background 0.5s;
+    background: linear-gradient(90deg, #3a8dde 0%, #7b2ff2 100%);
+    animation: gradient-move 2s ease-in-out infinite;
+    color: #fff;
+    border: none;
+    background-size: 200% 200%;
+}
+
+.enroll-btn.clicked {
+    background: linear-gradient(270deg, #ff9800, #ff5e62, #ff9800, #ff5e62);
+    background-size: 400% 400%;
+    animation: gradient-move 2s ease-in-out infinite;
+    color: #fff;
+}
+
+@keyframes gradient-move {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.enroll-text {
+    display: inline-block;
+    transition: transform 0.5s cubic-bezier(.68,-0.55,.27,1.55), opacity 0.5s;
+}
+.enroll-text.slide-out {
+    transform: translateX(120%) rotate(-15deg);
+    opacity: 0;
+}
+
+.logo-animate {
+    display: none;
+    width: 28px;
+    height: 28px;
+    margin-left: 10px;
+    vertical-align: middle;
+    transition: transform 0.7s cubic-bezier(.68,-0.55,.27,1.55), opacity 0.7s;
+    opacity: 0;
+}
+.logo-animate.show {
+    display: inline-block;
+    opacity: 1;
+    animation: logo-pop 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+    transform: rotate(360deg) scale(1.2);
+}
+
+@keyframes logo-pop {
+    0% {
+        opacity: 0;
+        transform: rotate(-90deg) scale(0.5);
+    }
+    60% {
+        opacity: 1;
+        transform: rotate(20deg) scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: rotate(360deg) scale(1.2);
+    }
+}
+
+
+/* whatsapp animation section take note */
+.whatsapp-3d-animate {
+    animation: whatsapp3dIn 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+}
+.whatsapp-3d-minimize {
+    animation: whatsapp3dOut 0.6s cubic-bezier(.68,-0.55,.27,1.55);
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+}
+
+@keyframes whatsapp3dIn {
+    0% {
+        opacity: 0;
+        transform: rotateY(90deg) scale(0.7) translateZ(0);
+        box-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+    60% {
+        opacity: 1;
+        transform: rotateY(-10deg) scale(1.05) translateZ(20px);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    }
+    100% {
+        opacity: 1;
+        transform: rotateY(0deg) scale(1) translateZ(0);
+        box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+    }
+}
+
+@keyframes whatsapp3dOut {
+    0% {
+        opacity: 1;
+        transform: rotateY(0deg) scale(1) translateZ(0);
+        box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+    }
+    100% {
+        opacity: 0;
+        transform: rotateY(90deg) scale(0.7) translateZ(0);
+        box-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+}
