@@ -1,7 +1,15 @@
 import { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import NavLogo from '../img/Untitled-1.png';
 
 const Nav = () => {
+  const navigate = useNavigate();
+
+  // navigation section
+
+  const handleLoginClick = () => {
+    navigate('/auth');
+  }
   useEffect(() => {
     const navUl = document.querySelector('.nav-ul');
     const navLiHide = document.querySelectorAll('.nav-link-hide');
@@ -44,11 +52,11 @@ const Nav = () => {
         <li><a href="#">Contact Us</a></li>
         <li><a href="#">Tech Blog</a></li>
         <li className="nav-link-hide"><a href="#">Login</a></li>
-        <li className="nav-link-hide"><a href="#">Register for a programme</a></li>
+        <li className="nav-link-hide" onClick={handleLoginClick}><a href="#">Register for a programme</a></li>
       </ul>
       <div className="auth">
         <a href="#" className="login active">Login</a>
-        <a href="#" className="signup">Register for a programme</a>
+        <a href="#" className="signup" onClick={handleLoginClick}>Register for a programme</a>
       </div>
     </nav>
   );

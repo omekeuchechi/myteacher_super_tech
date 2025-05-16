@@ -1,0 +1,87 @@
+/* Mobile styles */
+@media (max-width: 768px) {
+  .auth-container {
+    flex-direction: column;
+    height: auto;
+    gap: 0;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .side-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    /* width: 100%; */
+  }
+
+  .side-background > *{
+    display: none;
+  }
+
+  .sliding-form{
+    position: static;
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-top: 0;
+    padding: 20px 10px;
+    box-shadow: none;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  .step {
+    width: 100%;
+    flex-shrink: 0;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .step > div > span{
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: 900;
+    color: #fff;
+  }
+
+  .step > h2 {
+    color: #fff;
+    font-size: 2rem;
+    -webkit-text-stroke: 1.3px #4a90e2;
+    font-weight: 900;
+  }
+
+  .buttons > button{
+    font-size: 2.4rem;
+    padding: 10px 20px;
+  }
+
+  .buttons button:nth-child(1) {
+    background-color: #fff;
+    color: #4a90e2;
+  }
+
+  .step > .submit-btn {
+  /* width: 50% !important; */
+  padding: 15px 6rem;
+  font-size: 2rem;
+  margin: 20px auto;
+  }
+
+  .arg {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .arg label, .arg a {
+    font-size: 0.95rem;
+    width: 100%;
+  }
+  .arg input[type="checkbox"] {
+    min-width: 18px;
+    min-height: 18px;
+  }
+}
