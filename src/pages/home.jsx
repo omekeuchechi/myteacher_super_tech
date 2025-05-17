@@ -19,6 +19,7 @@ import WhatAppInfo from "../components/whatappInfo";
 import AboutCom from "../components/aboutComponent/aboutBody";
 import ContactUs from "../components/contactUs";
 import Testimonial from "../components/testimonial";
+import Flyers from "../components/Flyers";
 
 function Home() {
 
@@ -58,6 +59,7 @@ useEffect(() => {
             {/* <Faq />  */}
             <TechRoadMap />
             <FunTech />
+            <Flyers />
             <AiSection />
             <Gallary />
             <Testimony />

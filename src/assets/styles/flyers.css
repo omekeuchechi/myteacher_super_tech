@@ -1,0 +1,35 @@
+.flyers-section {
+    padding: 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.flyers-header {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Container for images: responsive grid or flex */
+.flyer-images-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Wrap each image for consistent sizing */
+.flyer-image-wrapper {
+    flex: 1 1 200px;
+    max-width: 300px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.flyer-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    object-fit: contain;
+}

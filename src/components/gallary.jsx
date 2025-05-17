@@ -11,18 +11,31 @@ import img9 from '../img/download (39).jpeg';
 import img10 from '../img/download (37).jpeg';
 import img11 from '../img/download (40).jpeg';
 
-const GallaryImages = [
-    { image: img1, alt: 'Event Image 1' },
-    { image: img2, alt: 'Event Image 2' },
-    { image: img3, alt: 'Event Image 3' },
-    { image: img4, alt: 'Event Image 4' },
-    { image: img5, alt: 'Event Image 5' },
-    { image: img6, alt: 'Event Image 6' },
-    { image: img7, alt: 'Event Image 7' },
-    { image: img8, alt: 'Event Image 8' },
-    { image: img9, alt: 'Event Image 9' },
-    { image: img10, alt: 'Event Image 10' },
-    { image: img11, alt: 'Event Image 11' }
+// new gallery images
+import bestTechIntituteImage1 from '../assets/images/Best tech intitute image1.jpg';
+import bestTechIntituteImage2 from '../assets/images/Best tech intitute image2.jpg';
+import bestTechIntituteImage3 from '../assets/images/Best tech intitute image3.jpeg';
+import bestTechIntituteImage4 from '../assets/images/Best tech intitute image4.jpeg';
+import bestTechIntituteImage5 from '../assets/images/Best tech intitute image5.jpeg';
+import bestTechIntituteImage6 from '../assets/images/Best tech intitute image6.jpeg';
+import bestTechIntituteImage7 from '../assets/images/Best tech intitute image8.jpeg';
+import bestTechIntituteImage8 from '../assets/images/Best tech intitute image8.jpeg'; // Confirm if this is intentional
+import bestTechIntituteImage9 from '../assets/images/Best tech intitute image9.jpeg';
+import bestTechIntituteImage10 from '../assets/images/Best tech intitute image10.jpeg';
+import bestTechIntituteImage11 from '../assets/images/Best tech intitute image11.jpeg';
+
+const BestTechImages = [
+    { image: bestTechIntituteImage1, alt: 'Best tech intitute image1' },
+    { image: bestTechIntituteImage2, alt: 'Best tech intitute image2' },
+    { image: bestTechIntituteImage3, alt: 'Best tech intitute image3' },
+    { image: bestTechIntituteImage4, alt: 'Best tech intitute image4' },
+    { image: bestTechIntituteImage5, alt: 'Best tech intitute image5' },
+    { image: bestTechIntituteImage6, alt: 'Best tech intitute image6' },
+    { image: bestTechIntituteImage7, alt: 'Best tech intitute image7' },
+    { image: bestTechIntituteImage8, alt: 'Best tech intitute image8' },
+    { image: bestTechIntituteImage9, alt: 'Best tech intitute image9' },
+    { image: bestTechIntituteImage10, alt: 'Best tech intitute image10' },
+    { image: bestTechIntituteImage11, alt: 'Best tech intitute image11' },
 ];
 
 const Gallary = () => {
@@ -34,10 +47,10 @@ const Gallary = () => {
                 <h2>Our Gallary</h2>
                 <p>Explore our vibrant community and the exciting events we host.</p>
             </div>
-            <marquee className="gallary" scrollamount="4">
-                {GallaryImages.map((item, index) => 
+            <marquee className="gallary" scrollamount="10">
+                {BestTechImages.map((item, index) => (
                     <img key={index} src={item.image} alt={item.alt} />
-                )}
+                ))}
             </marquee>
         </div>
     );
