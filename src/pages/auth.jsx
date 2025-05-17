@@ -10,6 +10,10 @@ const Register = () => {
   const [step, setStep] = useState(0);
   const navigate = useNavigate();
 
+  const handleHomeClick = () => {
+    navigate('/');
+  }
+
   const handleNext = () => {
     if (step < 2) {
       setStep(prev => prev + 1);
@@ -42,7 +46,7 @@ const Register = () => {
           {/* Step 1 */}
           <div className='step'>
             <div>
-              <img src={myteacherLogo} alt="logo" />
+              <img src={myteacherLogo} alt="logo" onClick={handleHomeClick} style={{cursor: 'pointer'}} />
               <span>Get Start</span>
             </div>
             <h2>Full Name</h2>
