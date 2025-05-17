@@ -34,7 +34,7 @@ const Gallary = () => {
                 <h2>Our Gallary</h2>
                 <p>Explore our vibrant community and the exciting events we host.</p>
             </div>
-            <marquee className="gallary" scrollamount="20">
+            <marquee className="gallary" scrollamount="4">
                 {GallaryImages.map((item, index) => 
                     <img key={index} src={item.image} alt={item.alt} />
                 )}

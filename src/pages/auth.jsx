@@ -85,13 +85,13 @@ const Register = () => {
             <input className='input' placeholder='Confirm Password' type='password' />
             <button className='submit-btn'>Get Started</button>
             <div className="arg">
-            <label style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', width: '100%' }}>
+            {/* <label style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', width: '100%' }}>
               <input type="checkbox" style={{ minWidth: 18, minHeight: 18 }} />
               <span style={{ fontSize: '1rem', lineHeight: 1.3 }}>
                 By clicking you accept the <a href="" style={{ textDecoration: 'underline', color: '#4a90e2' }}>Terms and conditions</a>
               </span>
-            </label>
-            <a href="" style={{ marginLeft: 0, fontSize: '1rem', color: '#000', textDecoration: 'underline' }}>already have an account?</a>
+            </label> */}
+            <a href="">already have an account?</a>
             </div>
           </div>
         </div>

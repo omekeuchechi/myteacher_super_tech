@@ -41,6 +41,12 @@ const ContactUs = () => {
                 title="Myteacher Institute Location"
             ></iframe>
             <h2 className="fade-in">Contact Us</h2>
+            <div className="address-info">
+                <h2><span>Tel:</span> 09030057489</h2>
+                <address>
+                    Myteacher Intitute #14 Rumuaghulo road Tessy school junction, Rumuaghulo off Romuokoro flyover Port Harcourt River state
+                </address>
+            </div>
             <form className="fade-in">
                 <input type="text" placeholder="Your Name" required />
                 <input type="email" placeholder="Your Email" required />

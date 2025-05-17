@@ -13,7 +13,7 @@ import AiSection from "../components/aiSection";
 import Gallary from "../components/gallary";
 import Testimony from "../components/testimony";
 import Footer from "../components/footer";
-import Faq from "../components/faq";
+// import Faq from "../components/faq";
 import FunTech from "../components/funTech";
 import WhatAppInfo from "../components/whatappInfo";
 import AboutCom from "../components/aboutComponent/aboutBody";
@@ -55,7 +55,7 @@ useEffect(() => {
             <PopularCourses />
             {/* <AboutCom /> */}
             <Services />
-            <Faq /> 
+            {/* <Faq />  */}
             <TechRoadMap />
             <FunTech />
             <AiSection />

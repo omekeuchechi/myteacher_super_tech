@@ -6,6 +6,13 @@ import webDevImg from '../assets/images/webDevimg1.webp';
 import portfolioImg from '../assets/images/cyberSecurityImg1.webp';
 import personalClassImg from '../assets/images/privateClassesImg.webp';
 
+
+// illustrations image import
+import itSolutionImage from '../assets/illustrations/cop.jpg';
+import gadjectImage from '../assets/illustrations/tech_gadject.jpg';
+import corporate from '../assets/illustrations/copera.jpg';
+import basicImage from '../assets/illustrations/basicla.jpg';
+
 const Services = () => {
     const sectionRef = useRef(null);
 
@@ -57,40 +64,36 @@ const Services = () => {
                         <div className="service-card">
                             <div className="service-image">
                                 <img
-                                    src={dataAnalisImg}
+                                    src={basicImage}
                                     alt="Career Counseling"
                                     className="service-icon-img"
                                 />
                             </div>
                             <div className="service-content">
                                 <div className="service-accent">01</div>
-                                <h3 className="service-title">Career Counseling</h3>
+                                <h3 className="service-title">School of Computing</h3>
                                 <p className="service-description">
-                                    Receive personalized career guidance from industry professionals
-                                    who understand the tech landscape. We'll help you map out a clear path
-                                    toward your dream tech role.
+                                    We equip students and professionals with essential digital skills through hands-on training in modern computing. Our programs are designed to build competence, confidence, and creativity in today’s tech-driven world.
                                 </p>
-                                <a href="#" className="service-cta">Learn More</a>
+                                {/* <a href="#" className="service-cta">Learn More</a> */}
                             </div>
                         </div>
 
                         <div className="service-card">
                             <div className="service-image">
                                 <img
-                                    src={webDevImg}
+                                    src={itSolutionImage}
                                     alt="Job Placement"
                                     className="service-icon-img"
                                 />
                             </div>
                             <div className="service-content">
                                 <div className="service-accent">02</div>
-                                <h3 className="service-title">Job Placement</h3>
+                                <h3 className="service-title">IT Solutions & Consultancy</h3>
                                 <p className="service-description">
-                                    Gain access to our exclusive network of hiring partners and get
-                                    matched with positions at top companies. Our placement specialists
-                                    will help prepare you for interviews.
+                                    We deliver customized IT solutions and expert consultancy to help businesses optimize operations, improve efficiency, and stay ahead in the digital space. From strategy to implementation, we support your digital transformation journey.
                                 </p>
-                                <a href="#" className="service-cta">Learn More</a>
+                                {/* <a href="#" className="service-cta">Learn More</a> */}
                             </div>
                         </div>
                     </div>
@@ -99,40 +102,36 @@ const Services = () => {
                         <div className="service-card">
                             <div className="service-image">
                                 <img
-                                    src={portfolioImg}
+                                    src={gadjectImage}
                                     alt="Portfolio Review"
                                     className="service-icon-img"
                                 />
                             </div>
                             <div className="service-content">
                                 <div className="service-accent">03</div>
-                                <h3 className="service-title">Portfolio Review</h3>
+                                <h3 className="service-title">Tech Gadgets</h3>
                                 <p className="service-description">
-                                    Have your work evaluated by industry experts who will provide
-                                    detailed, constructive feedback to help you showcase your skills
-                                    effectively to potential employers.
+                                    We provide a range of reliable and affordable tech gadgets—from work tools to learning devices. Every product is selected to enhance productivity, learning, and everyday tech experiences.
                                 </p>
-                                <a href="#" className="service-cta">Learn More</a>
+                                {/* <a href="#" className="service-cta">Learn More</a> */}
                             </div>
                         </div>
 
                         <div className="service-card">
                             <div className="service-image">
                                 <img
-                                    src={personalClassImg}
+                                    src={corporate}
                                     alt="Tech Consultation"
                                     className="service-icon-img"
                                 />
                             </div>
                             <div className="service-content">
                                 <div className="service-accent">04</div>
-                                <h3 className="service-title">Tech Consultation</h3>
+                                <h3 className="service-title">Corporate Trainings</h3>
                                 <p className="service-description">
-                                    Get expert advice on technical challenges or project implementation
-                                    from our team of experienced developers and designers who can help
-                                    solve your specific problems.
+                                    Our corporate training programs focus on empowering teams with relevant digital skills and tools for growth. We help organizations stay competitive by building digital literacy and innovation capacity across departments.
                                 </p>
-                                <a href="#" className="service-cta">Learn More</a>
+                                {/* <a href="#" className="service-cta">Learn More</a> */}
                             </div>
                         </div>
                     </div>

@@ -40,6 +40,8 @@
 .side-background > p{
   font-size: 2rem;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+  margin-top: 15px;
 }
 
 .side-background > img {
@@ -69,7 +71,7 @@
   width: 60%;
   max-width: 500px;
   margin-left: 40%;
-  margin-top: -40px;
+  margin-top: -50px;
   padding: 40px 20px;
   /* background-color: #fff; */
   /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
@@ -196,7 +198,13 @@ button:disabled {
   /* display: inline-flex; */
 }
 
-.arg > label > a{
+.arg > a{
+  color: #000;
+  text-decoration: underline;
+  font-size: 1.5rem;
+}
+
+/* .arg > label > a{
   text-decoration: underline;
   font-size: 1rem;
-}
+} */

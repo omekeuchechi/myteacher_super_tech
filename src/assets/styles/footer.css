@@ -100,7 +100,7 @@
 }
 
 .footer-links > ul > li > a:hover {
-    color: var(--secondary-color);
+    color: #ccc;
 }
 
 .footer-bottom {
@@ -157,6 +157,16 @@
     background-color: var(--secondary-color);
     color: var(--text-color-dark);
     transform: scale(1.2);
+}
+
+
+/* ads */
+.address-info-footer{
+    margin-top: 10px;
+}
+
+.address-info-footer > address{
+    font-size: 1.5rem;
 }
 
 /* Responsive for iPads */

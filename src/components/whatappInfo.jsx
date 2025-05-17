@@ -126,7 +126,7 @@ const WhatAppInfo = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    +2349031592480
+                    +2349030057489
                 </a>
             </p>
         </div>
