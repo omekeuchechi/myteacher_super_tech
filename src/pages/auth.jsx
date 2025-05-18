@@ -46,7 +46,7 @@ const Register = () => {
           {/* Step 1 */}
           <div className='step'>
             <div>
-              <img src={myteacherLogo} alt="logo" style={{cursor: 'pointer'}} />
+              <img src={myteacherLogo} alt="logo" style={{cursor: 'pointer'}} onClick={handleHomeClick} />
               <span>Get Start</span>
             </div>
             <h2>Full Name</h2>

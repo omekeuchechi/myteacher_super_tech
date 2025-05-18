@@ -7,8 +7,12 @@ const Nav = () => {
 
   // navigation section
 
-  const handleLoginClick = () => {
+  const handleRegisterClick = () => {
     navigate('/auth');
+  }
+
+  const handleLoginClick = () => {
+    navigate('/login')
   }
   useEffect(() => {
     const navUl = document.querySelector('.nav-ul');
@@ -46,17 +50,17 @@ const Nav = () => {
         <i className="fas fa-bars"></i>
       </div>
       <ul className="nav-ul">
-        <li><a href="#">Home</a></li>
+        <li><a href="/">Home</a></li>
         {/* <li><a href="#">About Us</a></li> */}
         <li><a href="#">Courses</a></li>
         <li><a href="#">Contact Us</a></li>
         <li><a href="#">Tech Blog</a></li>
-        <li className="nav-link-hide"><a href="#">Login</a></li>
-        <li className="nav-link-hide" onClick={handleLoginClick}><a href="#">Register for a programme</a></li>
+        <li className="nav-link-hide" onClick={handleLoginClick}><a href="">Login</a></li>
+        <li className="nav-link-hide" onClick={handleRegisterClick}><a href="">Register for a programme</a></li>
       </ul>
       <div className="auth">
-        <a href="#" className="login active">Login</a>
-        <a href="#" className="signup" onClick={handleLoginClick}>Register for a programme</a>
+        <a href="" className="login active" onClick={handleLoginClick}>Login</a>
+        <a href="" className="signup" onClick={handleRegisterClick}>Register for a programme</a>
       </div>
     </nav>
   );

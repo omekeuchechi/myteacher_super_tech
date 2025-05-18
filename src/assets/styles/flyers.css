@@ -20,7 +20,7 @@
 /* Wrap each image for consistent sizing */
 .flyer-image-wrapper {
     flex: 1 1 200px;
-    max-width: 300px;
+    max-width: 400px;
     overflow: hidden;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
