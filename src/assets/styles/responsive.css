@@ -130,7 +130,7 @@
 
     .hero-content > h1 {
         display: inline;
-        font-size: 3rem;
+        font-size: 3.6rem;
     }
 
     .main {
@@ -228,7 +228,7 @@
 
 /* Tablet (max-width: 768px) */
 @media (max-width: 768px) {
-    .hero-content > h1 {
+    .hero-section > .hero-content > h1 {
         font-size: 3rem;
     }
 
@@ -346,6 +346,10 @@
         flex: 1 1 100%;
         box-shadow: none;
         padding: 10px 0;
+    }
+
+    .service-image{
+        height: 300px;
     }
 
     #ai-registration-section{

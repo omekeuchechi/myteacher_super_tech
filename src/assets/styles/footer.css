@@ -198,6 +198,10 @@
 
 /* Responsive for Mobile Devices */
 @media (max-width: 480px) {
+    .footer {
+        border-top-right-radius: 0%;
+        border-top-left-radius: 0%;
+    }
     .footer-content > h2 {
         font-size: 1.8rem;
     }
