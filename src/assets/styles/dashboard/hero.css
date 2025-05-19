@@ -1,0 +1,133 @@
+:root {
+  --primary-color: #086ccabb;
+  --primary-color-2: #3498db85;
+  --text-color: #000;
+  --text-color-gray: #4b4545;
+  --text-color-light: #fff;
+  --background-color: #f0f0f0;
+
+  /* Theme-dependent variables */
+  --hero-bg: #f9f9f9;
+  --hero-text-color: #2c3e50;
+  --hero-subtext-color: #34495e;
+  --dot-inactive: #ccc;
+  --dot-active: #2c3e50;
+}
+
+/* Theme: Dark */
+.dashboard-container.dark,
+body.dark {
+  --text-color: #fff;
+  --text-color-gray: #bbb;
+  --background-color: #222;
+
+  --hero-bg: #1e1e1e;
+  --hero-text-color: #f5f5f5;
+  --hero-subtext-color: #ccc;
+  --dot-inactive: #666;
+  --dot-active: #fff;
+}
+
+/* Theme: Light (optional if needed explicitly) */
+.dashboard-container.light,
+body.light {
+  --text-color: #fff;
+  --text-color-gray: #4b4545;
+  --background-color: #f9f9f9;
+
+  /* --hero-bg: #f9f9f9; */
+  --hero-bg: #086cca;
+  --hero-text-color: #fff;
+  --hero-subtext-color: #f0f0f0;
+  --dot-inactive: #ccc;
+  --dot-active: #2c3e50;
+}
+
+.dash-hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+  background-color: var(--hero-bg);
+  min-height: 300px;
+  border-radius: 10px;
+  flex-wrap: wrap;
+  margin-top: -20px;
+}
+
+.dash-txt-section {
+  flex: 1;
+  padding-right: 2rem;
+  min-width: 280px;
+}
+
+.dash-txt-section h1 {
+  font-size: 4rem;
+  margin-bottom: 0.8rem;
+  color: var(--hero-text-color);
+}
+
+.dash-txt-section p {
+  font-size: 1.6rem;
+  color: var(--hero-subtext-color);
+}
+
+.dash-img {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 280px;
+}
+
+.dash-img img {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+  transform: scale(1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.dash-img img.fade-in {
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+.dots {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--dot-inactive);
+  transition: background-color 0.3s;
+}
+
+.dot.active {
+  background-color: var(--dot-active);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dash-hero-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .dash-txt-section {
+    padding: 0;
+    margin-bottom: 2rem;
+  }
+
+  .dash-img img {
+    max-height: 250px;
+  }
+}

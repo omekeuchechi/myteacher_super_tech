@@ -3,6 +3,7 @@ import Home from './pages/home';
 import About from './pages/about';
 import Register from './pages/auth';
 import Login from './pages/login';
+import UserDashboard from './pages/userDashboard';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path="/auth" element={<Register />} />
         <Route path="/about" element={<About />} />
+        <Route path="/dashboard" element={<UserDashboard />} />
       </Routes>
     </Router>
   );

@@ -1,0 +1,151 @@
+/* Style for the top navigation bar */
+
+:root {
+    /* Fixed invalid comments and formatting */
+    /* --primary-color: #3498db; */
+    /* --primary-color: #0583f8d2; */
+    --primary-color: #086ccabb;
+    --primary-color-2: #3498db85;
+    /* --secondary-color: #086ccad7; */
+    --secondary-color: #086cca;
+    --text-color: #000;
+    --text-color-gray: #4b4545;
+    --text-color-light: #fff;
+    --background-color: #f0f0f0;
+}
+
+.up-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  /* background-color: #fff; Or your preferred background */
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  position: fixed; /* Keeps it fixed during scroll, optional */
+  top: 0;
+  width: 70%;
+  margin-left: 200px;
+  margin-right: auto;
+  min-width: 200px;
+  /* height: 30px; */
+  /* margin: 50px auto; */
+  z-index: 999; /* Ensures it stays above other content */
+}
+
+/* Company logo and caption */
+.company-caption {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between logo and text */
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.company-caption img {
+  height: 40px; /* Adjust logo size */
+  width: auto;
+  display: block;
+}
+
+/* Style for the link surrounding logo and text */
+.company-caption a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit; /* Or set a specific color */
+}
+
+/* Search box styles */
+.search > input[type="search"] {
+  padding: 12px 40px;
+  font-size: 1.6rem;
+  caret-color: var(--secondary-color);
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  outline: none;
+  color: #000;
+  transition: border-color 0.2s;
+  width: 400px; /* Adjust as needed */
+}
+
+/* Optional: Change border on focus */
+.search input[type="search"]:focus {
+  border-color: var(--primary-color);
+}
+
+/* Notification bell icon styles */
+.notification {
+  font-size: 20px;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Style for the icon itself */
+.notification i.light {
+  color: #555; /* Or your preferred color */
+  transition: color 0.2s;
+}
+
+.notification > i.dark{
+    color: #fff;
+}
+
+.notification > i:hover {
+  color: var(--primary-color);
+  animation: vibrate 0.6s ease-in;
+}
+
+@keyframes vibrate {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 0);
+  }
+  40% {
+    transform: translate(2px, 0);
+  }
+  60% {
+    transform: translate(-2px, 0);
+  }
+  80% {
+    transform: translate(2px, 0);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+.profile-image{
+    width: 20%;
+    height: 20%;
+    overflow: hidden;
+}
+
+.profile-image > img{
+    border-radius: 50px;
+    width: 20%;
+    height: 20%;
+    object-fit: fill;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  /* Stack elements vertically on small screens */
+  .up-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  /* Search input adjusts width on small screens */
+  .search input[type="search"] {
+    width: 150px;
+    margin-top: 10px;
+  }
+
+  /* Notification icon and logo container spacing */
+  .company-caption {
+    margin-bottom: 10px;
+  }
+}
