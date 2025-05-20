@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import '../assets/styles/dashboard/UserDashboard.css';
-import UpNav from "../components/userDashCom/upNav";
+// import UpNav from "../components/userDashCom/upNav";
 import HeroSection from "../components/userDashCom/hero";
+import CourseTaken from "../components/userDashCom/courseTaken";
+import FullscreenIcon from "../components/userDashCom/fullscreenIcon";
+import ActiveActivity from "../components/userDashCom/activeActivity";
+
 
 
 function UserDashboard() {
@@ -33,8 +37,9 @@ function UserDashboard() {
     <div className={`dashboard-container ${theme}`}>
       {/* Apply theme-specific CSS variables for seamless styling */}
       <ThemeStyles theme={theme} />
+      
 
-      <UpNav />
+      {/* <UpNav /> */}
 
       {/* Theme toggle button */}
       <button
@@ -71,6 +76,7 @@ function UserDashboard() {
 
         {/* Navigation Items */}
         <nav className="nav">
+          <FullscreenIcon />
           <NavItem icon="home" label="Home" isExpanded={isExpanded} />
           <NavItem icon="chart-bar" label="Dashboard" isExpanded={isExpanded} />
           <NavItem icon="chalkboard-teacher" label="Online Class" isExpanded={isExpanded} />
@@ -82,6 +88,10 @@ function UserDashboard() {
       {/* Main Content */}
       <div className="main-content">
       <HeroSection />
+
+      <CourseTaken />
+
+      <ActiveActivity />
       </div>
 
     </div>

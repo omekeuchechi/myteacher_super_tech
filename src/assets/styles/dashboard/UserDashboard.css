@@ -14,6 +14,11 @@
     --background-color: #f0f0f0;
 }
 
+/* body{
+  width: 100%;
+  overflow-x: hidden;
+} */
+
 .dashboard-container {
   display: flex;
   min-height: 100vh;
@@ -41,6 +46,10 @@
   background-color: #1f1f1f;
   /* background-color: var(--secondary-color); */
   display: flex;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
   flex-direction: column;
 }
 
@@ -105,8 +114,11 @@
 /* Main content area */
 .main-content {
   flex: 1;
-  margin-top: 50px;
+  margin-top: 0;
+  margin-left: 60px;
+  margin-right: 0px;
   padding: 40px;
+  overflow-x: hidden; 
   overflow-y: auto;
   background-color: inherit;
 }
@@ -116,7 +128,12 @@
 @media (max-width: 1024px) {
   /* Resize sidebar for tablets and smaller devices */
   .sidebar {
-    width: 180px;
+    /* width: 180px; */
+    display: none;
+  }
+
+  .main-content{
+    margin-left: 0;
   }
 }
 
@@ -131,6 +148,7 @@
     width: 100%; /* full width on small screens */
     flex-direction: row; /* optional, for horizontal menu if desired */
     height: auto; /* auto height for stacking */
+    display: none;
   }
 
   /* Make toggle button more prominent on small screens */

@@ -1,0 +1,45 @@
+/* Reset appearance and hide native thumbs */
+.range-slider-input {
+  appearance: none;
+  -webkit-appearance: none; /* Safari and Chrome */
+  -moz-appearance: none;    /* Firefox */
+  width: 100%;
+  height: 6px;
+  border-radius: 50em; /* Rounded track */
+  outline: none;
+  cursor: pointer;
+  background: transparent; /* We will override with inline styles */
+  transition: background 0.3s ease;
+  /* Optional: Add focus styles if needed */
+}
+
+/* Hide the thumbs for WebKit browsers (Chrome, Safari, Edge) */
+.range-slider-input::-webkit-slider-thumb {
+  display: none;
+}
+
+/* Hide the thumbs for Firefox */
+.range-slider-input::-moz-range-thumb {
+  display: none;
+}
+
+/* Hide the thumbs for IE/Edge */
+.range-slider-input::-ms-thumb {
+  display: none;
+}
+
+/* For WebKit, style the track with transparent background (we set color dynamically) */
+.range-slider-input::-webkit-slider-runnable-track {
+  height: 6px; /* Same as input height */
+  border-radius: 50em;
+  background: transparent;
+}
+
+/* For Firefox, style the track similarly */
+.range-slider-input::-moz-range-track {
+  height: 6px;
+  border-radius: 50em;
+  background: transparent;
+}
+
+/* Optional: For other browsers, you could add styling here if needed */

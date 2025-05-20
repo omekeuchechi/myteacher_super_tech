@@ -1,0 +1,289 @@
+/* Main section container */
+
+:root {
+  --primary-color: #086ccabb;
+  --primary-color-2: #3498db85;
+  --text-color: #000;
+  --text-color-gray: #4b4545;
+  --text-color-light: #fff;
+  --background-color: #f0f0f0;
+
+  --hero-bg: #f9f9f9;
+  --hero-text-color: #2c3e50;
+  --hero-subtext-color: #34495e;
+  --dot-inactive: #ccc;
+  --dot-active: #2c3e50;
+
+  /* Course Card Defaults */
+  --course-bg: #fff;
+  --course-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  --course-title-color: #222;
+  --course-content-color: #555;
+  --teacher-color: #444;
+  --scroll-button-color: #333;
+}
+
+.dashboard-container.dark,
+body.dark {
+  --text-color: #fff;
+  --text-color-gray: #bbb;
+  --background-color: #222;
+
+  --hero-bg: #1e1e1e;
+  --hero-text-color: #f5f5f5;
+  --hero-subtext-color: #ccc;
+  --dot-inactive: #666;
+  --dot-active: #fff;
+
+  --course-bg: #2a2a2a;
+  --course-title-color: #fff;
+  --course-content-color: #ccc;
+  --teacher-color: #ddd;
+  --scroll-button-color: #f1f1f1;
+}
+
+.dashboard-container.light,
+body.light {
+  --text-color: #000;
+  --text-color-gray: #4b4545;
+  --background-color: #f9f9f9;
+
+  --hero-bg: #086cca;
+  --hero-text-color: #fff;
+  --hero-subtext-color: #f0f0f0;
+  --dot-inactive: #ccc;
+  --dot-active: #2c3e50;
+
+  --course-bg: #fff;
+  --course-title-color: #222;
+  --course-content-color: #555;
+  --teacher-color: #444;
+  --scroll-button-color: #333;
+}
+
+
+.dash-course-taken-section {
+  padding: 30px;
+  margin-top: 20px;
+  border-radius: 8px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dash-course-taken-header h2 {
+  font-size: 20px;
+  margin: 0;
+  color: var(--text-color);
+}
+
+.carousel-container > .dash-course > .dash-course-header{
+  /* width: 50px; */
+  text-align: center;
+}
+
+.view-all-btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.view-all-btn:hover {
+  background-color: var(--primary-color-2);
+}
+
+.dash-course-scroll-buttons button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--scroll-button-color);
+  transition: color 0.3s ease;
+}
+
+.carousel-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 10px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.carousel-container::-webkit-scrollbar {
+  display: none;
+}
+
+.dash-course {
+  padding: 20px;
+  width: 40%;
+  margin-right: 15px;
+  border-radius: 8px;
+  box-shadow: var(--course-shadow);
+  background-color: var(--course-bg);
+  flex-shrink: 0;
+  transition: box-shadow 0.2s ease, background-color 0.3s ease;
+}
+
+.dash-course:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.dash-course-header {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--hero-text-color);
+  padding-top: 10px;
+  padding-bottom: 10px; 
+}
+
+.content {
+  display: block;
+  margin: 10px 0;
+  font-size: 14px;
+  color: var(--course-content-color);
+}
+
+.teacher-date {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.teacher-date h2 {
+  font-size: 16px;
+  margin: 0;
+  color: var(--teacher-color);
+}
+
+.progress-container {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.progress-wrapper {
+  padding: 10px 0;
+}
+
+.dash-course-taken-section > div > button > .clor.dark{
+  color: #fff;
+}
+
+.dash-course-taken-section > div > button > .clor{
+  color: var(--text-color-gray);
+}
+
+/* =======================
+   Responsive Design
+========================== */
+
+/* Tablets (portrait & landscape) */
+@media (max-width: 1024px) {
+  .dash-course {
+    min-width: 45%; /* Two cards per row-ish */
+  }
+
+  .dash-course-taken-header h2 {
+    font-size: 18px;
+  }
+
+  .view-all-btn {
+    font-size: 13px;
+    padding: 7px 14px;
+  }
+
+  .dash-course-header {
+    font-size: 18px;
+  }
+
+  .teacher-date h2 {
+    font-size: 14px;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 768px) {
+  .dash-course-taken-section {
+    padding: 20px;
+    box-shadow: none;
+  }
+
+  .carousel-container {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+  }
+
+  .dash-course {
+    min-width: 85%;
+    margin-right: 10px;
+  }
+
+  .dash-course-taken-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .dash-course-scroll-buttons {
+    justify-content: center;
+  }
+
+  .dash-course-header {
+    font-size: 16px;
+  }
+
+  .content {
+    font-size: 13px;
+  }
+
+  .teacher-date {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .teacher-date h2 {
+    font-size: 13px;
+  }
+
+  .view-all-btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .dash-course {
+    min-width: 95%;
+  }
+
+  .dash-course-header {
+    font-size: 15px;
+  }
+
+  .content {
+    font-size: 12px;
+  }
+
+  .teacher-date h2 {
+    font-size: 12px;
+  }
+
+  .view-all-btn {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+
+  .dash-course-scroll-buttons button {
+    font-size: 20px;
+  }
+}
