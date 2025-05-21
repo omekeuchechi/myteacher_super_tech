@@ -1,16 +1,17 @@
-:root {
+.dashboard-container.light {
   --bg: #f9f9f9;
   --text: #222;
   --card: #fff;
   --shadow: rgba(0, 0, 0, 0.1);
 }
 
-body.dark {
+.dashboard-container.dark {
   --bg: #1e1e1e;
   --text: #f1f1f1;
   --card: #2c2c2c;
   --shadow: rgba(255, 255, 255, 0.05);
 }
+
 
 .active-activity-section {
   /* background: var(--shadow); */

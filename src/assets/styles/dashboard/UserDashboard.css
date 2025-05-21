@@ -1,50 +1,37 @@
-/* Container styles for the entire dashboard */
-
-:root {
-    /* Fixed invalid comments and formatting */
-    /* --primary-color: #3498db; */
-    /* --primary-color: #0583f8d2; */
-    --primary-color: #086ccabb;
-    --primary-color-2: #3498db85;
-    /* --secondary-color: #086ccad7; */
-    --secondary-color: #086cca;
-    --text-color: #000;
-    --text-color-gray: #4b4545;
-    --text-color-light: #fff;
-    --background-color: #f0f0f0;
-}
-
-/* body{
-  width: 100%;
-  overflow-x: hidden;
-} */
-
+/* Scoped variable definitions under .dashboard-container */
 .dashboard-container {
+  --primary-color: #086ccabb;
+  --primary-color-2: #3498db85;
+  --secondary-color: #086cca;
+  --text-color: #000;
+  --text-color-gray: #4b4545;
+  --text-color-light: #fff;
+  --background-color: #f0f0f0;
+
   display: flex;
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
   font-family: Arial, sans-serif;
   transition: background-color 0.3s, color 0.3s;
-  flex-direction: row; /* default layout, horizontal flex for large screens */
+  flex-direction: row; /* default layout, horizontal for large screens */
 }
 
 /* Light and Dark themes */
 .dashboard-container.light {
   background-color: var(--background-color);
-  color: #000;
+  color: var(--text-color);
 }
 .dashboard-container.dark {
   background-color: #121212;
-  color: #fff;
+  color: var(--text-color-light);
 }
 
 /* Sidebar styles */
-.sidebar {
+.dashboard-container .sidebar {
   width: 220px;
   transition: width 0.3s ease;
   background-color: #1f1f1f;
-  /* background-color: var(--secondary-color); */
   display: flex;
   position: fixed;
   height: 100vh;
@@ -55,17 +42,16 @@
 
 /* Light mode sidebar adjustment */
 .dashboard-container.light .sidebar {
-  /* background-color: #ccc; */
   background-color: var(--secondary-color);
 }
 
-/* Collapsed sidebar for smaller screens */
-.sidebar.collapsed {
+/* Collapsed sidebar */
+.dashboard-container .sidebar.collapsed {
   width: 80px;
 }
 
-/* Toggle button styles */
-.toggle-button {
+/* Toggle button */
+.dashboard-container .toggle-button {
   margin-bottom: 30px;
   background-color: #333;
   border: none;
@@ -74,23 +60,24 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   width: 60%;
   transition: background-color 0.2s;
 }
-.toggle-button:hover {
+.dashboard-container .toggle-button:hover {
   background-color: #555;
 }
 
-/* Navigation styles */
-.nav {
+/* Navigation */
+.dashboard-container .nav {
   display: flex;
   flex-direction: column;
   width: 100%;
   position: sticky;
   align-items: center;
 }
-.nav-item {
+
+.dashboard-container .nav-item {
   display: flex;
   align-items: center;
   padding: 12px 20px;
@@ -99,66 +86,53 @@
   transition: background-color 0.2s;
   color: #eee;
 }
-.dashboard-container.light .sidebar > .nav > .nav-item:hover{
+.dashboard-container.light .sidebar > .nav > .nav-item:hover {
   background-color: var(--background-color);
   color: var(--secondary-color);
 }
-.nav-item:hover {
+.dashboard-container .nav-item:hover {
   background-color: #333;
 }
-.nav-icon {
+.dashboard-container .nav-icon {
   font-size: 22px;
   margin-right: 12px;
 }
 
 /* Main content area */
-.main-content {
+.dashboard-container .main-content {
   flex: 1;
-  margin-top: 0;
   margin-left: 60px;
-  margin-right: 0px;
   padding: 40px;
-  overflow-x: hidden; 
+  overflow-x: hidden;
   overflow-y: auto;
   background-color: inherit;
 }
 
-/* RESPONSIVE ADJUSTMENTS START */
-
+/* Responsive Adjustments */
 @media (max-width: 1024px) {
-  /* Resize sidebar for tablets and smaller devices */
-  .sidebar {
-    /* width: 180px; */
+  .dashboard-container .sidebar {
     display: none;
   }
 
-  .main-content{
+  .dashboard-container .main-content {
     margin-left: 0;
   }
 }
 
 @media (max-width: 768px) {
-  /* Stack layout for tablets and mobile devices */
   .dashboard-container {
-    flex-direction: column; /* stack sidebar and content vertically */
+    flex-direction: column;
   }
 
-  /* Sidebar should span full width or a smaller width */
-  .sidebar {
-    width: 100%; /* full width on small screens */
-    flex-direction: row; /* optional, for horizontal menu if desired */
-    height: auto; /* auto height for stacking */
+  .dashboard-container .sidebar {
+    width: 100%;
+    flex-direction: row;
+    height: auto;
     display: none;
   }
 
-  /* Make toggle button more prominent on small screens */
-  .toggle-button {
-    width: auto; /* shrink to fit */
+  .dashboard-container .toggle-button {
+    width: auto;
     margin: 10px;
   }
-
-  /* Optional: collapse sidebar on small screens for more space */
-  /* .sidebar.collapsed { width: 60px; } */
 }
-
-/* Additional media queries can be added for other breakpoints */

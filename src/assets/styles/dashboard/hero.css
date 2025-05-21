@@ -1,4 +1,4 @@
-:root {
+.dashboard-container.light {
   --primary-color: #086ccabb;
   --primary-color-2: #3498db85;
   --text-color: #000;
@@ -6,17 +6,15 @@
   --text-color-light: #fff;
   --background-color: #f0f0f0;
 
-  /* Theme-dependent variables */
-  --hero-bg: #f9f9f9;
-  --hero-text-color: #2c3e50;
-  --hero-subtext-color: #34495e;
+  --hero-bg: #086cca;
+  --hero-text-color: #fff;
+  --hero-subtext-color: #f0f0f0;
   --dot-inactive: #ccc;
   --dot-active: #2c3e50;
 }
 
-/* Theme: Dark */
-.dashboard-container.dark,
-body.dark {
+
+.dashboard-container.dark {
   --text-color: #fff;
   --text-color-gray: #bbb;
   --background-color: #222;
@@ -28,20 +26,7 @@ body.dark {
   --dot-active: #fff;
 }
 
-/* Theme: Light (optional if needed explicitly) */
-.dashboard-container.light,
-body.light {
-  --text-color: #fff;
-  --text-color-gray: #4b4545;
-  --background-color: #f9f9f9;
 
-  /* --hero-bg: #f9f9f9; */
-  --hero-bg: #086cca;
-  --hero-text-color: #fff;
-  --hero-subtext-color: #f0f0f0;
-  --dot-inactive: #ccc;
-  --dot-active: #2c3e50;
-}
 
 .dash-hero-section {
   display: flex;
