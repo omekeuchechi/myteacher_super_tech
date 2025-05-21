@@ -6,6 +6,7 @@ import HeroSection from "../components/userDashCom/hero";
 import CourseTaken from "../components/userDashCom/courseTaken";
 import FullscreenIcon from "../components/userDashCom/fullscreenIcon";
 import ActiveActivity from "../components/userDashCom/activeActivity";
+import { Link } from "react-router-dom";
 
 
 
@@ -77,11 +78,13 @@ function UserDashboard() {
         {/* Navigation Items */}
         <nav className="nav">
           <FullscreenIcon />
-          <NavItem icon="home" label="Home" isExpanded={isExpanded} />
-          <NavItem icon="chart-bar" label="Dashboard" isExpanded={isExpanded} />
-          <NavItem icon="chalkboard-teacher" label="Online Class" isExpanded={isExpanded} />
+          <NavItem icon="home" label="Home" move="/" isExpanded={isExpanded} />
+          <NavItem icon="chart-bar" label="Dashboard" isExpanded={isExpanded} move="/dashboard" />
+          <NavItem icon="chalkboard-teacher" move="/online-class" label="Online Class" isExpanded={isExpanded} />
+          <NavItem icon="briefcase" label="Assets" isExpanded={isExpanded} />
           <NavItem icon="cog" label="Settings" isExpanded={isExpanded} />
           <NavItem icon="question-circle" label="Help" isExpanded={isExpanded} />
+          <NavItem icon="right-from-bracket" label="Log Out" isExpanded={isExpanded} />
         </nav>
       </div>
 
@@ -99,9 +102,9 @@ function UserDashboard() {
 }
 
 // Helper component for navigation items
-function NavItem({ icon, label, isExpanded }) {
+function NavItem({ icon, label, isExpanded, move }) {
   return (
-    <div className="nav-item">
+    <Link className="nav-item" to={move}>
       <i
         className={`fas fa-${icon}`}
         style={{
@@ -110,7 +113,7 @@ function NavItem({ icon, label, isExpanded }) {
         }}
       ></i>
       {isExpanded && <span style={{ fontSize: '16px' }}>{label}</span>}
-    </div>
+    </Link>
   );
 }
 

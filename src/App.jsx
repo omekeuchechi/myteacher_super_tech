@@ -5,6 +5,8 @@ import Register from './pages/auth';
 import Login from './pages/login';
 import UserDashboard from './pages/userDashboard';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import OnlineClass from './pages/online';
+
 
 function App() {
   return (
@@ -14,6 +16,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path="/auth" element={<Register />} />
         <Route path="/about" element={<About />} />
+        <Route path="/online-class" element={<OnlineClass />} />
         <Route path="/dashboard" element={<UserDashboard />} />
       </Routes>
     </Router>

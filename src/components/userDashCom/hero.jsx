@@ -6,12 +6,15 @@ import myTeacherInstituteIllustration1 from "../../assets/illustrations/dashboar
 import myTeacherInstituteIllustration2 from "../../assets/illustrations/dashboard/myteacher_institute_illustration2.jpg";
 import myTeacherInstituteIllustration3 from "../../assets/illustrations/dashboard/myteacher_institute_illustration3.jpg";
 import myTeacherInstituteIllustration4 from "../../assets/illustrations/dashboard/myteacher_institute_illustration4.jpg";
+import myTeacherInstituteIllustration5 from "../../assets/illustrations/dashboard/myteacher-graphic-designer.jpg";
+
 
 const images = [
   myTeacherInstituteIllustration1,
   myTeacherInstituteIllustration2,
   myTeacherInstituteIllustration3,
   myTeacherInstituteIllustration4,
+  myTeacherInstituteIllustration5,
 ];
 
 const HeroSection = () => {
