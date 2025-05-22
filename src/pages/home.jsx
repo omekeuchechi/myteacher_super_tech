@@ -59,8 +59,8 @@ useEffect(() => {
             {/* <Faq />  */}
             <TechRoadMap />
             <FunTech />
-            <Flyers />
-            <AiSection />
+            {/* <Flyers /> */}
+            {/* <AiSection /> */}
             <Gallary />
             <Testimony />
             <WhatAppInfo />

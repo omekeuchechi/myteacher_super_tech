@@ -34,6 +34,30 @@
         text-decoration: none;
     }
 
+    .main > .main-content > .btn {
+        padding: 2.5rem 3rem;
+        margin: 0 auto;
+        width: 70%;
+    }
+    
+    #popular-courses{
+        margin: 20px auto;
+    }
+
+    #services-section > .containers > .section-header{
+        display: block;
+        margin-left: 0;
+    }
+    .service-card {
+        /* flex: ; */
+        width: 100%;
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+        border-radius: 0;
+        background-color: transparent;
+        box-shadow: none;
+    }
     .navbar .menu-icon-show {
         animation: menu-icon-rotate 1s linear 1;
     }
@@ -150,6 +174,10 @@
         width: 100%;
         padding: 0 1rem;
         text-align: left;
+    }
+
+    .services-container > .service-row{
+        margin: 20px auto;
     }
 }
 
@@ -534,9 +562,9 @@
         line-height: 1.5;
     }
 
-    .btn {
+    /* .btn {
         font-size: 1.3rem;
         padding: 12px 24px;
         margin-top: 1.5rem;
-    }
+    } */
 }

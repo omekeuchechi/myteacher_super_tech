@@ -20,7 +20,7 @@
     font-weight: bold;
     display: inline-flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0rem;
 }
 
 .navbar .logo > img {
@@ -53,6 +53,7 @@
     color: var(--text-color-light);
     cursor: pointer;
     font-weight: 800;
+    font-size: 2rem;
     transition: color 0.3s, transform 0.3s;
     padding: 0.5rem 0.8rem;
     border-radius: 4px;
@@ -66,7 +67,8 @@
 
 .navbar > ul > li:hover > a,
 .navbar > ul > li > a.active {
-    color: var(--secondary-color);
+    color: #f0f1f0;
+    border: 1px solid #fff;
     background: rgba(255,255,255,0.08);
     transform: scale(1.08);
 }
@@ -99,17 +101,21 @@
     background-color: var(--text-color-light);
     color: var(--primary-color);
     font-weight: 800;
+    font-size: 2rem;
 }
 
 .navbar > .auth > a:nth-child(1):hover {
     background-color: var(--primary-color);
     color: var(--text-color-light);
+    border: 1px solid var(--text-color-light);
 }
 
 .navbar > .auth > a:nth-child(2) {
     background-color: var(--secondary-color);
     color: var(--text-color-light);
     font-weight: 800;
+    font-size: 2rem;
+    border: 1px solid var(--text-color-light);
 }
 
 .navbar > .auth > a:nth-child(2):hover {

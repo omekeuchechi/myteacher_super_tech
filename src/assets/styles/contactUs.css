@@ -1,14 +1,15 @@
 .contact-us {
-    max-width: 520px;
+    max-width: 100%;
     margin: 60px auto 80px auto;
     padding: 36px 28px 32px 28px;
     /* background: #fff; */
     border-radius: 18px;
     /* box-shadow: 0 4px 24px rgba(0,0,0,0.09); */
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
+    text-align: start;
+    /* display: flex; */
+    /* align-items: center; */
+    /* flex-direction: column; */
+    /* gap: 28px; */
     /* Animation for entrance */
     animation: contactUsPopIn 1s cubic-bezier(.4,2,.3,1);
 }
@@ -31,7 +32,7 @@
     }
 }
 
-.contact-us h1 {
+.contact-us > .contact-us-header > h1 {
     font-size: 2.7rem;
     color: var(--secondary-color);
     font-weight: 800;
@@ -39,6 +40,21 @@
     letter-spacing: 0.5px;
     /* Animate heading */
     animation: fadeSlideDown 1s 0.2s both;
+}
+
+.contact-us > .contact-us-header{
+    margin: 0 90px;
+}
+
+.contact-us > .contact-us-box{
+    display: flex;
+    width: 100%;
+    margin: 0 30px;
+    gap: 4rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 60px;
 }
 
 .contact-us h2 {
@@ -63,8 +79,8 @@
 
 .contact-us p {
     color: #444;
-    font-size: 1.25rem;
-    margin-bottom: 10px;
+    font-size: 2rem;
+    margin-bottom: 0;
     animation: fadeSlideUp 1s 0.5s both;
 }
 
@@ -79,9 +95,10 @@
     }
 }
 
-.contact-us iframe {
-    width: 100%;
-    max-width: 100%;
+.contact-us > .contact-us-box > iframe {
+    /* width: 100%; */
+    width: 50%;
+    /* max-width: 50%; */
     min-height: 260px;
     border-radius: 12px;
     margin: 0 auto 18px auto;
@@ -101,8 +118,9 @@
     }
 }
 
-.contact-us form {
+.contact-us > .contact-us-box > form {
     display: flex;
+    width: 50%;
     flex-direction: column;
     gap: 16px;
     margin-top: 8px;
@@ -113,7 +131,7 @@
 .contact-us textarea {
     width: 100%;
     padding: 14px 16px;
-    border: 1.5px solid #e0eaff;
+    border: 1.5px solid #ccc;
     border-radius: 8px;
     font-size: 1.18rem;
     font-family: inherit;
@@ -168,8 +186,42 @@
         max-width: 98vw;
         padding: 18px 8px 18px 8px;
     }
-    .contact-us iframe {
+    .contact-us > .contact-us-box > iframe {
+        width: 100%;
         min-height: 180px;
+        border-radius: 0;
+    }
+    .contact-us > .contact-us-box{
+        display: flex;
+        width: 100%;
+        margin: 0 auto;
+        gap: 2rem;
+        flex-direction: column;
+        padding: 0;
+    }
+    .contact-us > .contact-us-box > form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 16px;
+    padding: 5px;
+    margin-top: 0;
+}
+.contact-us > .contact-us-box > form > input, .contact-us > .contact-us-box > form > textarea{
+    border-radius: 0;
+    font-size: 1.5rem;
+}
+    .contact-us > .contact-us-box > form > button{
+        border-radius: 0;
+    }
+    .contact-us > .contact-us-header{
+        margin: 5px auto;
+    }
+    .contact-us > .contact-us-header > h1 {
+        font-size: 2rem;
+    }
+    .contact-us > .contact-us-header > p {
+        font-size: 1.8rem;
     }
 }
 
@@ -181,7 +233,7 @@
         gap: 18px;
     }
     .contact-us h1 {
-        font-size: 1.7rem;
+        font-size: 2rem;
     }
     .contact-us h2 {
         font-size: 1.3rem;
