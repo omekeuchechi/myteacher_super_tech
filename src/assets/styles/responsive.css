@@ -562,6 +562,10 @@
         line-height: 1.5;
     }
 
+    .services-container > .service-row > .service-card > .service-image{
+        height: 300px;
+    }
+
     /* .btn {
         font-size: 1.3rem;
         padding: 12px 24px;

@@ -91,7 +91,7 @@ const Services = () => {
                                 <div className="service-accent">02</div>
                                 <h3 className="service-title">IT Solutions & Consultancy</h3>
                                 <p className="service-description">
-                                    We deliver customized IT solutions and expert consultancy to help businesses optimize operations, improve efficiency, and stay ahead in the digital space. From strategy to implementation, we support your digital transformation journey.
+                                    We provide tailored IT solutions and expert consulting to help businesses improve efficiency and stay competitive. From strategy to implementation, we're with you every step of your digital transformation.
                                 </p>
                                 {/* <a href="#" className="service-cta">Learn More</a> */}
                             </div>
@@ -129,7 +129,7 @@ const Services = () => {
                                 <div className="service-accent">04</div>
                                 <h3 className="service-title">Corporate Trainings</h3>
                                 <p className="service-description">
-                                    Our corporate training programs focus on empowering teams with relevant digital skills and tools for growth. We help organizations stay competitive by building digital literacy and innovation capacity across departments.
+                                    We empower teams with essential digital skills and tools to drive growth and innovation, helping organizations stay competitive.
                                 </p>
                                 {/* <a href="#" className="service-cta">Learn More</a> */}
                             </div>

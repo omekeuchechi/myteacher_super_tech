@@ -76,14 +76,14 @@ const ActiveActivity = () => {
         </div>
       </div>
 
-      <div className="course-illustrated-section">
+      {/* <div className="course-illustrated-section">
         {courses.map((course) => (
           <div className="illustrated-box" key={course.id} style={{background: `${course.color}`, color: '#fff'}}>
             <h2>{course.title}</h2>
             <img src={course.image} alt="myteacher course image" />
           </div>
         ))}
-      </div>
+      </div> */}
 
       <div className="resent-notification">
         <div className="notification-box">
