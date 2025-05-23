@@ -77,7 +77,7 @@ const DashMobileNav = ({ theme = "light" }) => {
           border-color: #ddd;
         }
 
-        .nav-item {
+        .nav-item-mobile {
           display: flex;
           align-items: center;
           padding: 10px 12px;
@@ -85,17 +85,17 @@ const DashMobileNav = ({ theme = "light" }) => {
           text-decoration: none;
         }
 
-        .simple-mobile-nav.dark .nav-item {
+        .simple-mobile-nav.dark .nav-item-mobile {
           color: white;
           border-color: #333;
         }
 
-        .simple-mobile-nav.light .nav-item {
+        .simple-mobile-nav.light .nav-item-mobile {
           color: black;
           border-color: #ccc;
         }
 
-        .nav-item:hover {
+        .nav-item-mobile:hover {
           opacity: 0.85;
         }
 
@@ -118,7 +118,7 @@ const DashMobileNav = ({ theme = "light" }) => {
 
 function NavItem({ icon, label, isExpanded, move }) {
   return (
-    <Link className="nav-item" to={move || "#"}>
+    <Link className="nav-item-mobile" to={move || "#"}>
       <i className={`fas fa-${icon}`} style={{ fontSize: "20px", marginRight: isExpanded ? "10px" : "0" }}></i>
       {isExpanded && <span>{label}</span>}
     </Link>
