@@ -159,13 +159,13 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   color: var(--text-color);
 }
 
 .dashboard-container > .main-content > .online-class-list > .online-class-card > p, .dashboard-container > .main-content > .online-class-list > .online-class-card > h3{
-  font-size: 1.1rem;
+  font-size: 1.5rem;
 }
 
 .dashboard-container .online-class-card .status {
@@ -244,10 +244,34 @@
 
   .dashboard-container .main-content {
     margin-left: 0 !important;
+    margin-top: 40px !important;
     padding: 1rem;
   }
 
   .dashboard-container .mobile-sidebar-toggle {
     display: none !important;
   }
+
+  .dashboard-container > .main-content > .online-class-list > .online-class-card > p, .dashboard-container > .main-content > .online-class-list > .online-class-card > h3{
+    font-size: 1.4rem;
+  }
+    .dashboard-container .online-class-card {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: 20px;
+      justify-content: space-around;
+      border-radius: 0;
+  }
+
+  .dashboard-container .join-class-btn {
+    padding: 8px 10px;
+    border-radius: 3px;
+  }
+  /* .dashboard-container .join-class-btn {
+    font-size: 1rem;
+    padding: 8px 5px;
+    border-radius: 20px;
+} */
 }

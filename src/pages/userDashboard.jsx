@@ -6,6 +6,7 @@ import HeroSection from "../components/userDashCom/hero";
 import CourseTaken from "../components/userDashCom/courseTaken";
 import FullscreenIcon from "../components/userDashCom/fullscreenIcon";
 import ActiveActivity from "../components/userDashCom/activeActivity";
+import DashMobileNav from '../components/userDashCom/dashMobileNav';
 import { Link } from "react-router-dom";
 
 
@@ -36,7 +37,7 @@ function UserDashboard() {
 
   return (
     <div className={`dashboard-container ${theme}`}>
-      {/* Apply theme-specific CSS variables for seamless styling */}
+      <DashMobileNav theme={theme} />
       <ThemeStyles theme={theme} />
       
 
