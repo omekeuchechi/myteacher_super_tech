@@ -141,7 +141,7 @@ const OnlineClass = () => {
         }}
       >
         <i className={`fas fa-${theme === 'light' ? 'moon' : 'sun'}`} style={{ marginRight: '6px' }} />
-        {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+        {/* {theme === 'light' ? 'Dark Mode' : 'Light Mode'} */}
       </button>
 
       <div className={`sidebar ${isExpanded ? 'expanded' : 'collapsed'}`}>
@@ -154,8 +154,8 @@ const OnlineClass = () => {
           <NavItem icon="home" label="Home" move="/" isExpanded={isExpanded} />
           <NavItem icon="chart-bar" label="Dashboard" move="/dashboard" isExpanded={isExpanded} />
           <NavItem icon="chalkboard-teacher" label="Classroom" isExpanded={isExpanded} />
-          <NavItem icon="briefcase" label="Assets" isExpanded={isExpanded} />
-          <NavItem icon="cog" label="Settings" isExpanded={isExpanded} />
+          <NavItem icon="briefcase" label="Assets" isExpanded={isExpanded} move="/assets" />
+          <NavItem icon="cog" label="Settings" move="/settings" isExpanded={isExpanded} />
           <NavItem icon="question-circle" label="Help" isExpanded={isExpanded} />
           <NavItem icon="right-from-bracket" label="Log Out" isExpanded={isExpanded} />
         </nav>

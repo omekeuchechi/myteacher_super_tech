@@ -92,10 +92,10 @@ const CourseTaken = () => {
               flexShrink: 0,
             }}
           >
-            <div className="dash-course-header" style={{background: `${course.color}`}}>{course.title}</div>
+            <div className="dash-course-header" style={{background: `${course.color}`, color: '#fff'}}>{course.title}</div>
             <span className="content">{course.description}</span>
             <div className="teacher-date">
-              <h2>{course.instructor}</h2>
+              <h2>%</h2>
               <ProgressBar progress={course.progress} color={course.color} />
             </div>
           </div>

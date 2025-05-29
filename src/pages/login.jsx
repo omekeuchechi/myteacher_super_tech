@@ -1,36 +1,58 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import '../assets/styles/authstyles/auth.css';
 import '../assets/styles/authstyles/res.css';
 import myteacherLogo from '../img/Untitled-1.png';
-import illusOne from '../assets/illustrations/Nerd-amico.png';
-import '@fortawesome/fontawesome-free/css/all.min.css';
+
+// Images
+import myTeacherInstituteIllustration1 from "../assets/illustrations/dashboard/myteacher_institute_illustration1.jpg";
+import myTeacherInstituteIllustration2 from "../assets/illustrations/dashboard/myteacher_institute_illustration2.jpg";
+import myTeacherInstituteIllustration3 from "../assets/illustrations/dashboard/myteacher_institute_illustration3.jpg";
+import myTeacherInstituteIllustration4 from "../assets/illustrations/dashboard/myteacher_institute_illustration4.jpg";
+import myTeacherInstituteIllustration5 from "../assets/illustrations/dashboard/myteacher-graphic-designer.jpg";
+
+const images = [
+  myTeacherInstituteIllustration1,
+  myTeacherInstituteIllustration2,
+  myTeacherInstituteIllustration3,
+  myTeacherInstituteIllustration4,
+  myTeacherInstituteIllustration5,
+];
 
 const Login = () => {
-  const [step, setStep] = useState(0);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [bgIndex, setBgIndex] = useState(0);
+  const [fade, setFade] = useState(true);
   const navigate = useNavigate();
 
-  const handleHomeClick = () => {
-    navigate('/');
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setBgIndex((prevIndex) => (prevIndex + 1) % images.length);
+        setFade(true);
+      }, 2000); // slow fade transition
+    }, 5000); // every 5 seconds
 
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleHomeClick = () => navigate('/');
   const handleNext = (e) => {
     e.preventDefault();
-    // Handle login logic here
-    // Example: if (email && password) { navigate('/dashboard'); }
-    // For now, just navigate to home
     navigate('/');
   };
 
   return (
     <div className='auth-container'>
-      <div className='side-background'>
-        <h1>Myteacher Login</h1>
-        <p>Welcome back! Please login to your account.</p>
-        <img src={illusOne} alt="illustration" />
-      </div>
+      <div
+        className={`side-background ${fade ? 'fade-in' : 'fade-out'}`}
+        style={{
+          backgroundImage: `url(${images[bgIndex]})`,
+        }}
+      />
+      
       <div className='sliding-form'>
         <form className='slider' onSubmit={handleNext}>
           <div className='step'>
@@ -65,9 +87,9 @@ const Login = () => {
             <div className="arg">
               <span>
                 Don't have an account?{' '}
-                <a href="/auth" style={{ textDecoration: 'underline', color: '#4a90e2' }}>
+                <Link to="/auth" style={{ textDecoration: 'underline', color: '#4a90e2' }}>
                   Register
-                </a>
+                </Link>
               </span>
             </div>
           </div>

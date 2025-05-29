@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 
 function UserDashboard() {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   // Initialize theme based on localStorage, defaulting to 'dark'
   const [theme, setTheme] = useState(() => {
@@ -65,7 +65,7 @@ function UserDashboard() {
           className={`fas fa-${isLightMode ? 'moon' : 'sun'}`}
           style={{ marginRight: '8px', fontSize: '16px' }}
         ></i>
-        {isLightMode ? 'Dark Mode' : 'Light Mode'}
+        {/* {isLightMode ? 'Dark Mode' : 'Light Mode'} */}
       </button>
 
       {/* Sidebar */}
@@ -82,8 +82,8 @@ function UserDashboard() {
           <NavItem icon="home" label="Home" move="/" isExpanded={isExpanded} />
           <NavItem icon="chart-bar" label="Dashboard" isExpanded={isExpanded} move="/dashboard" />
           <NavItem icon="chalkboard-teacher" move="/online-class" label="Online Class" isExpanded={isExpanded} />
-          <NavItem icon="briefcase" label="Assets" isExpanded={isExpanded} />
-          <NavItem icon="cog" label="Settings" isExpanded={isExpanded} />
+          <NavItem icon="briefcase" label="Assets" move="/assets" isExpanded={isExpanded} />
+          <NavItem icon="cog" label="Settings" move="/settings" isExpanded={isExpanded} />
           <NavItem icon="question-circle" label="Help" isExpanded={isExpanded} />
           <NavItem icon="right-from-bracket" label="Log Out" isExpanded={isExpanded} />
         </nav>

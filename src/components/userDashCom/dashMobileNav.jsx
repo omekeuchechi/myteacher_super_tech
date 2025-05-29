@@ -26,8 +26,8 @@ const DashMobileNav = ({ theme = "light" }) => {
           <NavItem icon="home" label="Home" move="/" isExpanded={true} />
           <NavItem icon="chart-bar" label="Dashboard" move="/dashboard" isExpanded={true} />
           <NavItem icon="chalkboard-teacher" label="Classroom" isExpanded={true} />
-          <NavItem icon="briefcase" label="Assets" isExpanded={true} />
-          <NavItem icon="cog" label="Settings" isExpanded={true} />
+          <NavItem icon="briefcase" label="Assets" isExpanded={true} move="/assets" />
+          <NavItem icon="cog" label="Settings" move="/settings" isExpanded={true} />
           <NavItem icon="question-circle" label="Help" isExpanded={true} />
           <NavItem icon="right-from-bracket" label="Log Out" isExpanded={true} />
         </div>
@@ -51,7 +51,7 @@ const DashMobileNav = ({ theme = "light" }) => {
         }
 
         .hamburger-btn.light {
-          color: black;
+          color: white;
         }
 
         .simple-mobile-nav {

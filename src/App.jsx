@@ -6,6 +6,9 @@ import Login from './pages/login';
 import UserDashboard from './pages/userDashboard';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import OnlineClass from './pages/online';
+import Assets from './pages/assets';
+import Settings from './pages/settings';
+// Settings
 
 
 function App() {
@@ -18,6 +21,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/online-class" element={<OnlineClass />} />
         <Route path="/dashboard" element={<UserDashboard />} />
+        <Route path="/assets" element={<Assets />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </Router>
   );

@@ -71,7 +71,7 @@ const Services = () => {
                             </div>
                             <div className="service-content">
                                 <div className="service-accent">01</div>
-                                <h3 className="service-title">School of Computing</h3>
+                                <h3 className="service-title">School of Computing (Physical)</h3>
                                 <p className="service-description">
                                     We equip students and professionals with essential digital skills through hands-on training in modern computing. Our programs are designed to build competence, confidence, and creativity in today’s tech-driven world.
                                 </p>
@@ -89,9 +89,9 @@ const Services = () => {
                             </div>
                             <div className="service-content">
                                 <div className="service-accent">02</div>
-                                <h3 className="service-title">IT Solutions & Consultancy</h3>
+                                <h3 className="service-title">School of Computing (Online)</h3>
                                 <p className="service-description">
-                                    We provide tailored IT solutions and expert consulting to help businesses improve efficiency and stay competitive. From strategy to implementation, we're with you every step of your digital transformation.
+                                    Myteacher Institute's Online School of Computing equips you with in-demand digital skills through flexible learning, expert support, and real world projects. Gain job ready experience, build your portfolio, boost confidence, and unlock, remote and global tech opportunities.
                                 </p>
                                 {/* <a href="#" className="service-cta">Learn More</a> */}
                             </div>
@@ -109,7 +109,7 @@ const Services = () => {
                             </div>
                             <div className="service-content">
                                 <div className="service-accent">03</div>
-                                <h3 className="service-title">Tech Gadgets</h3>
+                                <h3 className="service-title">IT solutions Consultancy & Tech Gadgets</h3>
                                 <p className="service-description">
                                     We provide a range of reliable and affordable tech gadgets—from work tools to learning devices. Every product is selected to enhance productivity, learning, and everyday tech experiences.
                                 </p>

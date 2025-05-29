@@ -92,7 +92,8 @@ const Gallary = () => {
 
         /* Style your images for a fantastic effect */
         .scrolling-content img {
-          width: 200px; /* Adjust size as needed */
+          width: 300px; /* Adjust size as needed */
+          aspect-ratio: 19/19;
           margin: 0 15px;
           border-radius: 10px;
           box-shadow: 0 4px 12px rgba(0,0,0,0.2);

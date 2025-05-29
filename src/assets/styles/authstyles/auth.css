@@ -14,21 +14,19 @@
 /* Side background styling */
 .side-background {
   position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
+  /* bottom: 0; */
   width: 50%;
-  background-color: #4a90e2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 20px;
-  box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1);
-  border-top-right-radius: 60px;
-  border-bottom-right-radius: 60px;
-  color: white;
-  z-index: 1;
+  height: 140vh;
+  /* background-color: #4a90e2; */
+  /* #086ccabb */
+  /* background-color: #086ccabb; */
+  /* background-image: url('../../../assets/illustrations/dashboard/myteacher-graphic-designer.jpg'); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: fill;
+  padding: 1px;
+  /* color: white; */
+  /* z-index: 1; */
 }
 
 .side-background > h1 {
@@ -123,7 +121,7 @@
   width: 32%;
   padding: 15px 15px;
   margin-bottom: 20px;
-  border-radius: 6px;
+  border-radius: 50px;
   border: 1px solid #ccc;
   font-size: 1.5rem;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -137,13 +135,15 @@
 
 .step > .submit-btn {
   /* width: 50% !important; */
-  padding: 20px 11.7%;
+  padding: 10px 90px;
   font-size: 2rem;
   /* margin: 20px auto; */
-  margin-left: auto;
+  margin-left: 100px;
+  background-color:rgb(60, 118, 184);
   margin-right: auto;
   margin-top: -10px;
   margin-bottom: 10px;
+  border-radius: 20px;
   border: 1.5px solid #fff;
   transition: 
     background 0.3s,
@@ -153,12 +153,44 @@
     width 0.3s,
     font-size 0.3s;
   box-shadow: 0 2px 8px rgba(74, 144, 226, 0.15);
+  color: #fff;
+}
+
+.step > .submit-btn-reg {
+  /* width: 50% !important; */
+  padding: 10px 90px;
+  font-size: 2rem;
+  /* margin: 20px auto; */
+  margin-left: 60px;
+  background-color:rgb(60, 118, 184);
+  margin-right: auto;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  border: 1.5px solid #fff;
+  transition: 
+    background 0.3s,
+    color 0.3s,
+    box-shadow 0.3s,
+    transform 0.2s,
+    width 0.3s,
+    font-size 0.3s;
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.15);
+  color: #fff;
+}
+
+.step > .submit-btn-reg:hover,
+.step > .submit-btn-reg:focus {
+  background: #357ABD;
+  color: #f2f2f2;
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 6px 18px rgba(74, 144, 226, 0.25);
 }
 
 .step > .submit-btn:hover,
 .step > .submit-btn:focus {
   background: #357ABD;
-  color: #fff;
+  color: #f2f2f2;
   transform: scale(1.05) translateY(-2px);
   box-shadow: 0 6px 18px rgba(74, 144, 226, 0.25);
 }
@@ -172,12 +204,37 @@
 }
 
 /* Buttons styles */
-button {
+/* .step > button {
+  padding: 10px 25px;
+  background-color:rgb(60, 118, 184);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: 900;
+  transition: background-color 0.3s, transform 0.1s;
+} */
+
+.buttons > button:nth-child(1) {
   padding: 12px 25px;
   background-color: #4a90e2;
   color: #fff;
   border: none;
-  border-radius: 6px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  cursor: pointer;
+  font-size: 2rem;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.buttons > button:nth-child(2) {
+  padding: 12px 25px;
+  background-color: #4a90e2;
+  color: #fff;
+  border: none;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
   cursor: pointer;
   font-size: 2rem;
   transition: background-color 0.3s, transform 0.1s;
@@ -208,3 +265,23 @@ button:disabled {
   text-decoration: underline;
   font-size: 1rem;
 } */
+
+/* side animation */
+
+.side-background {
+  top: -40px;
+  left: 0;
+  bottom: 0;
+  /* height: 100%; */
+  transition: opacity 1.5s ease-in-out;
+  z-index: 1;
+  opacity: 0;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
