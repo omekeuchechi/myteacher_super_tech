@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import HeroSection from "../components/hero";
 import Nav from "../components/nav";
-import HeroVideo from "../components/heroVideo";
+// import HeroVideo from "../components/heroVideo";
 import Main from "../components/main";
 import "../assets/styles/styles.css";
 import DigitalSkills from "../components/digitalSkills";
@@ -21,6 +21,7 @@ import ContactUs from "../components/contactUs";
 import Testimonial from "../components/testimonial";
 import Flyers from "../components/Flyers";
 import WhatsAppIconOnly from "../components/whatIconLink";
+import HeroBox from './../components/herobox';
 // WhatAppIconLink
 
 function Home() {
@@ -50,9 +51,10 @@ useEffect(() => {
 
     return(
         <>
-            <HeroVideo />
+            {/* <HeroVideo /> */}
             <Nav />
-            <HeroSection />
+            {/* <HeroSection /> */}
+            <HeroBox />
             <Main /> 
             {/* <DigitalSkills /> */}
             <PopularCourses />

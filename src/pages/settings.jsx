@@ -8,58 +8,91 @@ import FullscreenIcon from '../components/userDashCom/fullscreenIcon';
 
 import profileImgDefault from '../assets/illustrations/user_profile.png';
 
-// All supported countries and their states/provinces/regions
+// Country flags
+import myteacherNigeria from '../assets/illustrations/myteacher_nigeria.png';
+import myteacherGhana from '../assets/illustrations/myteacher_ghana.png';
+import myteacherKenya from '../assets/illustrations/myteacher_kenya.png';
+import myteacherSouthAfrica from '../assets/illustrations/myteacher_south-africa.png';
+import myteacherUsa from '../assets/illustrations/myteacher_usa.png';
+import myteacherUnitedKingdom from '../assets/illustrations/myteacher_united-kingdom.png';
+import myteacherCanada from '../assets/illustrations/myteacher_canada.png';
+import myteacherIndia from '../assets/illustrations/myteacher_india.png';
+
+// All supported countries and their states/provinces/regions, now with flag images
 const statesByCountry = {
-  Nigeria: [
-    "Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno",
-    "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT - Abuja", "Gombe",
-    "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos",
-    "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto",
-    "Taraba", "Yobe", "Zamfara"
-  ],
-  Ghana: [
-    "Ahafo", "Ashanti", "Bono", "Bono East", "Central", "Eastern", "Greater Accra",
-    "North East", "Northern", "Oti", "Savannah", "Upper East", "Upper West", "Volta",
-    "Western", "Western North"
-  ],
-  Kenya: [
-    "Baringo", "Bomet", "Bungoma", "Busia", "Elgeyo Marakwet", "Embu", "Garissa", "Homa Bay",
-    "Isiolo", "Kajiado", "Kakamega", "Kericho", "Kiambu", "Kilifi", "Kirinyaga", "Kisii",
-    "Kisumu", "Kitui", "Kwale", "Laikipia", "Lamu", "Machakos", "Makueni", "Mandera",
-    "Marsabit", "Meru", "Migori", "Mombasa", "Murang'a", "Nairobi", "Nakuru", "Nandi",
-    "Narok", "Nyamira", "Nyandarua", "Nyeri", "Samburu", "Siaya", "Taita Taveta", "Tana River",
-    "Tharaka Nithi", "Trans Nzoia", "Turkana", "Uasin Gishu", "Vihiga", "Wajir", "West Pokot"
-  ],
-  "South Africa": [
-    "Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga",
-    "Northern Cape", "North West", "Western Cape"
-  ],
-  "United States": [
-    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
-    "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa",
-    "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan",
-    "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire",
-    "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
-    "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
-    "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia",
-    "Wisconsin", "Wyoming"
-  ],
-  "United Kingdom": [
-    "England", "Northern Ireland", "Scotland", "Wales"
-  ],
-  Canada: [
-    "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador",
-    "Northwest Territories", "Nova Scotia", "Nunavut", "Ontario", "Prince Edward Island",
-    "Quebec", "Saskatchewan", "Yukon"
-  ],
-  India: [
-    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat",
-    "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh",
-    "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
-    "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh",
-    "Uttarakhand", "West Bengal", "Delhi", "Jammu and Kashmir", "Ladakh"
-  ]
-  // Add more countries and their states if needed
+  Nigeria: {
+    flag: myteacherNigeria,
+    states: [
+      "Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno",
+      "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT - Abuja", "Gombe",
+      "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos",
+      "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto",
+      "Taraba", "Yobe", "Zamfara"
+    ]
+  },
+  Ghana: {
+    flag: myteacherGhana,
+    states: [
+      "Ahafo", "Ashanti", "Bono", "Bono East", "Central", "Eastern", "Greater Accra",
+      "North East", "Northern", "Oti", "Savannah", "Upper East", "Upper West", "Volta",
+      "Western", "Western North"
+    ]
+  },
+  Kenya: {
+    flag: myteacherKenya,
+    states: [
+      "Baringo", "Bomet", "Bungoma", "Busia", "Elgeyo Marakwet", "Embu", "Garissa", "Homa Bay",
+      "Isiolo", "Kajiado", "Kakamega", "Kericho", "Kiambu", "Kilifi", "Kirinyaga", "Kisii",
+      "Kisumu", "Kitui", "Kwale", "Laikipia", "Lamu", "Machakos", "Makueni", "Mandera",
+      "Marsabit", "Meru", "Migori", "Mombasa", "Murang'a", "Nairobi", "Nakuru", "Nandi",
+      "Narok", "Nyamira", "Nyandarua", "Nyeri", "Samburu", "Siaya", "Taita Taveta", "Tana River",
+      "Tharaka Nithi", "Trans Nzoia", "Turkana", "Uasin Gishu", "Vihiga", "Wajir", "West Pokot"
+    ]
+  },
+  "South Africa": {
+    flag: myteacherSouthAfrica,
+    states: [
+      "Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga",
+      "Northern Cape", "North West", "Western Cape"
+    ]
+  },
+  "United States": {
+    flag: myteacherUsa,
+    states: [
+      "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
+      "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa",
+      "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan",
+      "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire",
+      "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
+      "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
+      "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia",
+      "Wisconsin", "Wyoming"
+    ]
+  },
+  "United Kingdom": {
+    flag: myteacherUnitedKingdom,
+    states: [
+      "England", "Northern Ireland", "Scotland", "Wales"
+    ]
+  },
+  Canada: {
+    flag: myteacherCanada,
+    states: [
+      "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador",
+      "Northwest Territories", "Nova Scotia", "Nunavut", "Ontario", "Prince Edward Island",
+      "Quebec", "Saskatchewan", "Yukon"
+    ]
+  },
+  India: {
+    flag: myteacherIndia,
+    states: [
+      "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat",
+      "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh",
+      "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
+      "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh",
+      "Uttarakhand", "West Bengal", "Delhi", "Jammu and Kashmir", "Ladakh"
+    ]
+  }
 };
 
 const Settings = () => {
@@ -189,21 +222,21 @@ const Settings = () => {
         <h1>⚙️ Account Settings</h1>
 
         {/* Theme toggle */}
-        <button onClick={toggleTheme} className="theme-toggle" 
-        style={{
-          position: 'fixed',
-          top: '10px',
-          right: '10px',
-          zIndex: 1000,
-          padding: '8px 12px',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          backgroundColor: theme ? '#333' : '#f0f0f0',
-          color: theme ? '#fff' : '#000',
-          display: 'flex',
-          alignItems: 'center',
-        }}
+        <button onClick={toggleTheme} className="theme-toggle"
+          style={{
+            position: 'fixed',
+            top: '10px',
+            right: '10px',
+            zIndex: 1000,
+            padding: '8px 12px',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            backgroundColor: theme ? '#333' : '#f0f0f0',
+            color: theme ? '#fff' : '#000',
+            display: 'flex',
+            alignItems: 'center',
+          }}
         >
           <i className={`fas fa-${theme === 'light' ? 'moon' : 'sun'}`} />
         </button>
@@ -262,28 +295,31 @@ const Settings = () => {
           <select
             value={country}
             onChange={e => setCountry(e.target.value)}
-            style={{ marginBottom: '1rem', padding: '0.75rem', borderRadius: '6px', width: '100%' }}
           >
             <option value="">Select Country</option>
-            <option value="Nigeria">Nigeria</option>
-            <option value="Ghana">Ghana</option>
-            <option value="Kenya">Kenya</option>
-            <option value="South Africa">South Africa</option>
-            <option value="United States">United States</option>
-            <option value="United Kingdom">United Kingdom</option>
-            <option value="Canada">Canada</option>
-            <option value="India">India</option>
+            {Object.entries(statesByCountry).map(([countryKey]) => (
+              <option key={countryKey} value={countryKey}>
+                {countryKey}
+              </option>
+            ))}
             <option value="Other">Other</option>
           </select>
+          {/* Show flag beside the select, not inside option */}
+          {country && statesByCountry[country]?.flag && (
+            <img
+              src={statesByCountry[country].flag}
+              alt={`${country} flag`}
+              style={{ width: 32, height: 20, margin: '8px 0 0 8px', borderRadius: 4, objectFit: 'cover', display: 'inline-block', verticalAlign: 'middle' }}
+            />
+          )}
           {/* Show state select if country is in the list, else show text input */}
           {statesByCountry[country] ? (
             <select
               value={stateOfOrigin}
               onChange={e => setStateOfOrigin(e.target.value)}
-              style={{ marginBottom: '1rem', padding: '0.75rem', borderRadius: '6px', width: '100%' }}
             >
               <option value="">Select State/Region</option>
-              {statesByCountry[country].map(state => (
+              {statesByCountry[country].states.map(state => (
                 <option key={state} value={state}>{state}</option>
               ))}
             </select>
@@ -302,51 +338,25 @@ const Settings = () => {
         <section className={`input-box-auth ${theme}`}>
           <h2 style={{ textAlign: 'center' }}>Profile Image</h2>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ position: 'relative', width: 120, height: 120 }}>
-              <img
-                src={previewImage || profileImgDefault}
-                alt="profile"
-                className="preview-avatar"
-                style={{
-                  width: 120,
-                  height: 120,
-                  objectFit: 'cover',
-                  borderRadius: '50%',
-                  border: `3px solid ${theme === 'dark' ? '#4a90e2' : '#357ab9'}`,
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-                  background: theme === 'dark' ? '#222' : '#fff',
-                }}
+          <div className="profile-img-container">
+            <img
+              src={previewImage || profileImgDefault}
+              alt="profile"
+              className="preview-avatar"
+            />
+            <label
+              htmlFor="profile-image-upload"
+              className="profile-img-upload-label"
+            >
+              <i className="fas fa-camera" />
+              <input
+                id="profile-image-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
               />
-              <label
-                htmlFor="profile-image-upload"
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  right: 0,
-                  background: theme === 'dark' ? '#222' : '#fff',
-                  borderRadius: '50%',
-                  width: 40,
-                  height: 40,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  border: `2px solid ${theme === 'dark' ? '#4a90e2' : '#357ab9'}`,
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.10)',
-                  cursor: 'pointer',
-                }}
-              >
-                <i className="fas fa-camera" style={{ fontSize: 20, color: theme === 'dark' ? '#4a90e2' : '#357ab9' }} />
-                <input
-                  id="profile-image-upload"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  style={{
-                    display: 'none'
-                  }}
-                />
-              </label>
-            </div>
+            </label>
+          </div>
             <button
               onClick={handleProfileImageUpload}
               style={{

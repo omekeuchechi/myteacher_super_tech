@@ -43,7 +43,7 @@ section {
     color: var(--text-color-gray);
 }
 .section-header2{
-    text-align: left;
+    text-align: center;
     margin-left: 1px;
     margin-bottom: 20px;
 }
@@ -52,7 +52,7 @@ section {
     color: var(--text-color-gray);
 }
 .section-header2 > h2{
-    font-size: 3.2rem;
+    font-size: 4rem;
     color: var(--text-color-dark);
 }
 .section-header h2 {
@@ -71,7 +71,22 @@ section {
 }
 
 #popular-courses{
-    margin: 20px 90px;
+    margin: 50px auto;
+    background: #fff;
+    width: 100vw;
+    box-shadow: 0 0 12px #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+
+}
+#popular-courses > .containers {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .course-cards {
@@ -193,7 +208,7 @@ section {
 
 .course-grid {
     gap: 20px;
-    width: 100%;
+    width: 87%;
     display: grid;
     margin-bottom: 40px;
     justify-content: center;

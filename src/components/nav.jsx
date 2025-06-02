@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import NavLogo from '../img/Untitled-1.png';
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -50,17 +51,17 @@ const Nav = () => {
         <i className="fas fa-bars"></i>
       </div>
       <ul className="nav-ul">
-        <li><a href="/">Home</a></li>
+        <li><Link to="/">Home</Link></li>
         {/* <li><a href="#">About Us</a></li> */}
-        <li><a href="#">Courses</a></li>
-        <li><a href="#">Contact Us</a></li>
-        <li><a href="#">Tech Blog</a></li>
-        <li className="nav-link-hide" onClick={handleLoginClick}><a href="">Login</a></li>
-        <li className="nav-link-hide" onClick={handleRegisterClick}><a href="">Register for a programme</a></li>
+        <li><Link to="/courses">Courses</Link></li>
+        <li><Link to="#">Contact Us</Link></li>
+        <li><Link to="#">Tech Blog</Link></li>
+        <li className="nav-link-hide" onClick={handleLoginClick}><Link to="">Login</Link></li>
+        <li className="nav-link-hide" onClick={handleRegisterClick}><Link to="">Register for a programme</Link></li>
       </ul>
       <div className="auth">
-        <a href="" className="login active" onClick={handleLoginClick}>Login</a>
-        <a href="" className="signup" onClick={handleRegisterClick}>Register for a programme</a>
+        <Link to="" className="login active" onClick={handleLoginClick}>Login</Link>
+        <Link to="" className="signup" onClick={handleRegisterClick}>Register for a programme</Link>
       </div>
     </nav>
   );

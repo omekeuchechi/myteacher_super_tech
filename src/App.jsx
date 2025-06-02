@@ -8,7 +8,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import OnlineClass from './pages/online';
 import Assets from './pages/assets';
 import Settings from './pages/settings';
-// Settings
+import Courses from './pages/courses';
 
 
 function App() {
@@ -23,6 +23,7 @@ function App() {
         <Route path="/dashboard" element={<UserDashboard />} />
         <Route path="/assets" element={<Assets />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/courses" element={<Courses />} />
       </Routes>
     </Router>
   );

@@ -13,7 +13,7 @@ const DashMobileNav = ({ theme = "light" }) => {
         className={`hamburger-btn ${isDark ? "dark" : "light"}`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <i className="fas fa-bars"></i>
+        <i className={`fas ${isOpen ? "fa-xmark" : "fa-bars"}`}></i>
       </button>
 
       {/* Mobile Nav */}
@@ -25,7 +25,7 @@ const DashMobileNav = ({ theme = "light" }) => {
           <FullscreenIcon />
           <NavItem icon="home" label="Home" move="/" isExpanded={true} />
           <NavItem icon="chart-bar" label="Dashboard" move="/dashboard" isExpanded={true} />
-          <NavItem icon="chalkboard-teacher" label="Classroom" isExpanded={true} />
+          <NavItem icon="chalkboard-teacher" label="Classroom" isExpanded={true} move="/online-class" />
           <NavItem icon="briefcase" label="Assets" isExpanded={true} move="/assets" />
           <NavItem icon="cog" label="Settings" move="/settings" isExpanded={true} />
           <NavItem icon="question-circle" label="Help" isExpanded={true} />

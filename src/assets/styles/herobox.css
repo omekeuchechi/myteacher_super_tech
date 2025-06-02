@@ -1,0 +1,91 @@
+.hero-box-section{
+    margin-top: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.hero-box-header{
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.hero-box-header > h1{
+    font-weight: 900;
+    font-size: 3rem;
+    text-align: center;
+    margin: 40px 0;
+    /* font-size: 3rem; */
+}
+.hero-box-header > .btn-box {
+    font-size: 2rem;
+    padding: 20px 40px;
+    border: 1px solid var(--secondary-color);
+    margin-bottom: 40px;
+    border-radius: 60px;
+    background: var(--secondary-color);
+    color: var(--text-color-light);
+    box-shadow: 0 0 10px rgba(130, 181, 218, 0.788);
+    cursor: pointer;
+    transition: 
+        background 0.3s,
+        color 0.3s,
+        box-shadow 0.3s,
+        transform 0.2s;
+}
+
+.hero-box-header > .btn-box:hover {
+    background: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 8px 32px rgba(53, 122, 185, 0.18), 0 0 0 4px rgba(53, 122, 185, 0.10);
+    transform: translateY(-4px) scale(1.04);
+    border-color: var(--primary-color);
+}
+
+.hero-box-section > video {
+    width: 80%;
+    aspect-ratio: 16 / 7;
+    border-radius: 40px;
+    max-width: 1800px;
+    max-height: 590px; /* further reduced for a sleeker look */
+    margin-bottom: 30px;
+    object-fit: cover;
+    background: #e9ecef;
+    box-shadow: 0 4px 32px rgba(53, 122, 185, 0.10);
+    transition: box-shadow 0.2s;
+}
+
+.hero-box-section > video:hover {
+    box-shadow: 0 8px 40px rgba(53, 122, 185, 0.18);
+}
+
+@media (orientation: portrait){
+    .hero-box-section > video{
+        margin-bottom: -30px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hero-box-section > video {
+        width: 95%;
+        max-width: 1000px;
+        max-height: 380px;
+        border-radius: 28px;
+    }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .hero-box-section > video {
+        width: 99%;
+        max-width: 100vw;
+        max-height: 180px;
+        border-radius: 16px;
+        margin-bottom: 10px;
+    }
+    .hero-box-header{
+        width: 80%;
+    }
+}
