@@ -281,7 +281,8 @@
     .gallary-section > .gallary-header > h2 {
         font-size: 3rem;
         margin-bottom: 20px;
-        color: var(--text-color-dark);
+        /* color: var(--text-color-dark); */
+        color: var(--primary-color);
         
     }
 

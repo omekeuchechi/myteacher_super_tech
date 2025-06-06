@@ -1,135 +1,94 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../assets/styles/authstyles/auth.css';
-import '../assets/styles/authstyles/res.css';
-import myteacherLogo from '../img/Untitled-1.png';
+import { Link } from 'react-router-dom';
+import '../assets/styles/authstyles/register.css';
+import googleImage from '../assets/images/google.png';
 
-// Images
-import illus1 from '../assets/illustrations/dashboard/myteacher_institute_illustration1.jpg';
-import illus2 from '../assets/illustrations/dashboard/myteacher_institute_illustration2.jpg';
-import illus3 from '../assets/illustrations/dashboard/myteacher_institute_illustration3.jpg';
-import illus4 from '../assets/illustrations/dashboard/myteacher_institute_illustration4.jpg';
-import illus5 from '../assets/illustrations/dashboard/myteacher-graphic-designer.jpg';
-
-const images = [illus1, illus2, illus3, illus4, illus5];
+const coursesDataValues = [
+  {id: 1, courseName: "Front-End Development", color: "orange", textcl: "#fff"},
+  {id: 2, courseName: "Backend Programming", color: "blue", textcl: "#fff"},
+  {id: 3, courseName: "Power BI", color: "gold", textcl: "#fff"},
+  {id: 4, courseName: "Content Creation & Social Media Marketing", color: "green", textcl: "#fff"},
+  {id: 5, courseName: "Data Entry", color: "black", textcl: "#fff"},
+  {id: 6, courseName: "Virtual Assistant", color: "#1a73e8", textcl: "#fff",},
+  {id: 7, courseName: "Basic Computing", color: "blue", textcl: "#fff"},
+  {id: 8, courseName: "Copy Writing", color: "green", textcl: "#fff"},
+  {id: 9, courseName: "Mobile App Development", color: "blue", textcl: "#fff"},
+  {id: 10, courseName: "Generative AI", color: "red", textcl: "#fff"},
+  {id: 11, courseName: "Project Management", color: "violet", textcl: "#fff"},
+  {id: 12, courseName: "Graphics Design", color: "green", textcl: "#fff"},
+  {id: 13, courseName: "UI/UX Design", color: "orange", textcl: "#fff"},
+  {id: 14, courseName: "Full Stack Development", color: "red", textcl: "#fff"},
+  {id: 15, courseName: "Cyber Security", color: "blue", textcl: "#fff"},
+  {id: 16, courseName: "Data Analytics", color: "gold", textcl: "#fff"},
+  {id: 17, courseName: "SQL Database", color: "blue", textcl: "#fff"},
+  {id: 18, courseName: "Python for Data Analysis", color: "gold", textcl: "#fff"},
+  {id: 19, courseName: "Excel for Data Analysis", color: "green", textcl: "#fff"},
+  {id: 20, courseName: "Digital Marketing", color: "red", textcl: "#fff"},
+];
 
 const Register = () => {
-  const [step, setStep] = useState(0);
-  const [bgIndex, setBgIndex] = useState(0);
-  const [fade, setFade] = useState(true);
-  const navigate = useNavigate();
+  const [course, setcourse] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setFade(false);
-      setTimeout(() => {
-        setBgIndex((prev) => (prev + 1) % images.length);
-        setFade(true);
-      }, 2000);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleHomeClick = () => {
-    navigate('/');
+  const togglePasswordVisibility = () => {
+    setShowPassword(prev => !prev);
   };
 
-  const handleNext = () => {
-    if (step < 2) setStep((prev) => prev + 1);
-  };
-
-  const handleBack = () => {
-    if (step > 0) setStep((prev) => prev - 1);
-  };
-
-  return (
-    <div className='auth-container'>
-      <div
-        className={`side-background ${fade ? 'fade-in' : 'fade-out'}`}
-        style={{
-          backgroundImage: `url(${images[bgIndex]})`,
-        }}
-      />
-
-      <div className='sliding-form'>
-        <div
-          className='slider'
-          style={{
-            transform: `translateX(-${step * 100}%)`,
-          }}
-        >
-          {/* Step 1 */}
-          <div className='step'>
-            <div>
-              <img
-                src={myteacherLogo}
-                alt='logo'
-                style={{ cursor: 'pointer' }}
-                onClick={handleHomeClick}
-              />
-              <span>Get Start</span>
-            </div>
-            <h2>Full Name</h2>
-            <input className='input' placeholder='Full Name' />
-            <h2>Email</h2>
-            <input className='input' placeholder='Email' />
-            <h2>Phone</h2>
-            <input className='input' placeholder='Phone' />
-            <div className='arg'>
-              <a href=''>already have an account</a>
-            </div>
-          </div>
-
-          {/* Step 2 */}
-          <div className='step'>
-            <div>
-              <img src={myteacherLogo} alt='logo' />
-              <span>User Info</span>
-            </div>
-            <h2>Address</h2>
-            <input className='input' placeholder='Address...' />
-            <h2>State Of Origin</h2>
-            <input className='input' placeholder='State Of Origin' />
-            <h2>Age</h2>
-            <input className='input' placeholder='Age' type='number' />
-            <div className='arg'>
-              <a href=''>already have an account</a>
-            </div>
-          </div>
-
-          {/* Step 3 */}
-          <div className='step'>
-            <div>
-              <img src={myteacherLogo} alt='logo' />
-              <span>Auth</span>
-            </div>
-            <h2>Password</h2>
-            <input className='input' placeholder='password' type='password' />
-            <h2>Confirm Password</h2>
-            <input className='input' placeholder='Confirm Password' type='password' />
-            <button className='submit-btn-reg'>Get Started</button>
-            <div className='arg'>
-              <a href=''>already have an account?</a>
-            </div>
-          </div>
-        </div>
-
-        {/* Navigation Buttons */}
-        <div className='buttons'>
-          {step > 0 && <button onClick={handleBack}>Back</button>}
-          <button
-            onClick={handleNext}
-            style={{
-              borderTopRightRadius: step < 2 ? '30px' : '0px',
-              borderBottomRightRadius: step < 2 ? '30px' : '0px',
-            }}
-          >
-            {step < 2 ? 'Next' : 'Finish'}
-          </button>
-        </div>
+  return(
+    <>
+    <div className="overlay-bg"></div>
+    <div className="authentication-container">
+      <div className="authentication-header">
+        <h1>Create Account</h1>
       </div>
+
+      <div className="other-auth">
+        <button><img src={googleImage} alt="google auth" /> Sign Up with Google</button>
+      </div>
+
+      <h2 style={{ color: '#fff', fontSize: '3rem', zIndex: 4, marginBottom: '10px', fontFamily: 'monospace' }}>Or</h2>
+
+
+      <div className="form-container">
+        <form action="" method="post">
+          <label htmlFor="FullName">Full Name</label>
+          <input type="text" />
+          <label htmlFor="Email">Email</label>
+          <input type="email" />
+          <label htmlFor="Password">Password</label>
+          <div className="password-wrapper" style={{ position: 'relative' }}>
+            <input type={showPassword ? "text" : "password"} />
+            <span className='eyes' onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
+              <i className={`fas ${showPassword ? "fa-eye" : "fa-eye-slash"}`}></i>
+            </span>
+          </div>
+
+          <input type="hidden" value={course} />
+          <label htmlFor="course">choose course by clicking</label>
+
+          <div className="courses-section">
+            {coursesDataValues.map((data) => (
+            <span className="cr-value" 
+              onClick={() => setcourse(data.courseName)} 
+              key={data.id} 
+              style={{ color: `${course == data.courseName ? '#000' : `${data.textcl}`}`, 
+                       backgroundColor: `${course == data.courseName ? '#fff' : `${data.color}` }`,
+                       cursor: 'pointer',
+             }}> 
+                {course == data.courseName ? `✅ ${data.courseName}` : `${data.courseName}`}
+            </span>
+            ))}
+          </div>
+
+          <Link className='aha' to="/login">Already have an account?</Link>
+
+          <button type="submit">Get Started</button>
+        </form>
+      </div>
+      
     </div>
+    </>
   );
-};
+}
 
 export default Register;

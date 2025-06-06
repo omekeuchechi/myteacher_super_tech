@@ -95,7 +95,12 @@ function UserDashboard() {
 
       <CourseTaken />
 
-      <ActiveActivity />
+      <div className={`apply-for-course-section ${theme}`}>
+        <h2 className={`${theme}`}>Apply for another Course by clicking the Button.</h2>
+        <Link to="" className='apply'><i className='fas fa-plus'></i> Apply</Link>        
+      </div>
+
+      {/* <ActiveActivity /> */}
       </div>
 
     </div>

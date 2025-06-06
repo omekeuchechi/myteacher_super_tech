@@ -1,5 +1,5 @@
 .navbar {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -94,7 +94,7 @@
 .navbar > .auth > a:hover {
     color: var(--secondary-color);
     background: rgba(255,255,255,0.08);
-    transform: scale(1.08);
+    /* transform: scale(1.08); */
 }
 
 .navbar > .auth > a:nth-child(1) {
@@ -147,6 +147,12 @@
     .navbar > .auth > a {
         font-size: 1rem;
         padding: 0.6rem 1rem;
+    }
+    .navbar > ul > li:hover > a,
+.navbar > ul > li > a.active {
+        border: none;
+        background: transparent;
+        transform: scale(1);
     }
 }
 

@@ -1,0 +1,214 @@
+.copy-wrapper {
+  background: #f9f9f9;
+  color: #333;
+  font-family: sans-serif;
+}
+
+.copy-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.copy-header{
+  margin-top: 70px;
+}
+
+.copy-header h1 {
+  font-size: 20px;
+  color: #000;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  margin-bottom: 0.5rem;
+}
+
+.copy-header p {
+  font-size: 2rem;
+  color: #000;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  margin-bottom: 0.5rem;
+}
+
+.copy-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.copy-side {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.box {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.box > span {
+  font-size: 2rem;
+}
+
+.btn {
+  padding: 20px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.btn.local {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn.remote {
+  background-color: #28a745;
+  color: white;
+}
+
+.copy-description {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.copy-description > h2{
+  font-size: 3.5rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  margin-bottom: 10px;
+}
+
+.copy-description .section {
+  margin-bottom: 1.5rem;
+}
+
+.copy-description > .section > h3{
+  font-size: 2.5rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.copy-description > .section > p{
+  font-size: 2rem;
+  margin-top: 10px;
+}
+
+.copy-description .highlight {
+  background: #ffeaa7;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.copy-description .external-link {
+  color: #0066cc;
+  text-decoration: underline;
+  display: inline-block;
+  margin: 1rem 0;
+  font-size: 2.5rem;
+}
+
+.list,
+.benefits {
+  padding-left: 1.25rem;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.benefits li {
+  margin-bottom: 1rem;
+}
+
+.syllabus h3{
+  font-size: 2rem;
+}
+
+.syllabus p {
+  margin: 0.3rem 0;
+  font-size: 1.8rem;
+}
+
+.project h4 {
+  margin: 0.5rem 0 0.2rem;
+  font-size: 2rem;
+}
+
+.project p{
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.final-info {
+  text-align: center;
+  background: #d1f7d6;
+  padding: 1.5rem;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 2.5rem;
+}
+
+/* === Responsive Styles === */
+@media (min-width: 768px) {
+  .copy-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .copy-image,
+  .copy-side,
+  .copy-description {
+    flex: 1 1 100%;
+  }
+
+  .copy-side {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .copy-container {
+    gap: 3rem;
+  }
+
+  .copy-side {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .copy-header h1 {
+    font-size: 4.5rem;
+  }
+}
+
+@media (orientation: portrait) {
+  .box > span {
+    font-size: 1.5rem;
+  }
+  .copy-header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+  .copy-header p {
+    font-size: 1.5rem;
+  }
+  .copy-description .external-link{
+    font-size: 1.6rem;
+  }
+  .list,
+  .benefits {
+    font-size: 1.5rem;
+  }
+  .syllabus p {
+    font-size: 1.5rem;
+  }
+  .final-info{
+    font-size: 1.3rem;
+  }
+}

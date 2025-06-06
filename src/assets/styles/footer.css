@@ -1,15 +1,16 @@
 .footer {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     color: var(--text-color-light);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    /* text-align: center; */
+    display: block;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* justify-content: space-between; */
+    /* align-items: start; */
     padding: 20px;
     margin-top: 60px;
-    border-top-right-radius: 50%;
-    border-top-left-radius: 50%;
+    /* border-top-right-radius: 50%; */
+    /* border-top-left-radius: 50%; */
     bottom: 0;
     width: 100%;
     height: auto;
@@ -20,8 +21,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    gap: 20px;
+    /* align-items: center; */
+    align-items: start;
+    gap: 10px;
     padding: 20px;
 }
 
@@ -47,7 +49,6 @@
     font-size: 1.8rem;
     color: var(--text-color-light);
     font-weight: 300;
-    text-align: center;
     margin-bottom: 2rem;
     line-height: 1.5;
 }
@@ -64,21 +65,78 @@
     transition: all 0.3s ease-in-out;
 }
 
-.socials > a:hover {
-    color: var(--secondary-color);
-    background-color: var(--text-color-light);
-    border-radius: 50%;
+/* Social icon brand colors on hover */
+.socials > a.facebook:hover {
+    /* color: #1877f3; */
+    /* background-color: #fff; */
+    background: #1877f3;
+    color: #fff;
+}
+.socials > a.twitter:hover {
+    /* color: #1da1f2; */
+    /* background-color: #fff; */
+    background: #1da1f2;
+    color: #fff;
+}
+.socials > a.instagram:hover {
+    /* color: #e1306c; */
+    /* background-color: #fff; */
+    background: #e1306c;
+    color: #fff;
+}
+.socials > a.linkedin:hover {
+    /* color: #0077b5; */
+    /* background-color: #fff; */
+    background: #0077b5;
+    color: #fff;
+}
+.socials > a.whatsapp:hover {
+    /* color: #25d366; */
+    /* background-color: #fff; */
+    background: #25d366;
+    color: #fff;
+}
+
+/* Social icon brand colors on hover */
+.socials > a.facebook {
+    color: #1877f3;
+    background-color: #fff;
+}
+.socials > a.twitter {
+    color: #1da1f2;
+    background-color: #fff;
+}
+.socials > a.instagram {
+    color: #e1306c;
+    background-color: #fff;
+}
+.socials > a.linkedin {
+    color: #0077b5;
+    background-color: #fff;
+}
+.socials > a.whatsapp {
+    color: #25d366;
+    background-color: #fff;
+}
+.socials > a > i{
     padding: 10px;
-    transform: scale(1.2);
+}
+.socials > a{
+    border-radius: 20px;
 }
 
 .footer-links {
     margin-top: 20px;
-    text-align: center;
+    margin-bottom: 50px;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    margin-left: 17px;
+    /* text-align: center; */
 }
 
 .footer-links > h3 {
-    font-size: 2rem;
+    font-size: 4rem;
     color: var(--text-color-light);
     margin-bottom: 10px;
 }
@@ -87,9 +145,9 @@
     list-style: none;
     padding: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    /* justify-content: center; */
     gap: 15px;
-    flex-wrap: wrap;
 }
 
 .footer-links > ul > li > a {
@@ -163,10 +221,22 @@
 /* ads */
 .address-info-footer{
     margin-top: 10px;
+    margin-left: 17px;
+    width: 50%;
+}
+
+.address-info-footer > h2{
+    font-size: 3rem;
 }
 
 .address-info-footer > address{
-    font-size: 1.5rem;
+    font-size: 2.5rem;
+}
+
+.footer-bottom{
+    text-align: left;
+    font-size: 3rem;
+    margin-left: 10px;
 }
 
 /* Responsive for iPads */
@@ -193,6 +263,15 @@
 
     .footer-bottom {
         font-size: 1.4rem;
+    }
+    .address-info-footer{
+        width: 90%;
+    }
+    .address-info-footer > h2{
+        font-size: 2rem;
+    }
+    .address-info-footer > address{
+        font-size: 1.5rem;
     }
 }
 

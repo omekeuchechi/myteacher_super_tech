@@ -5,6 +5,16 @@ import CyberSecurityImg from '../assets/images/cyberSecurityImg1.webp';
 import UXUIDesignImg from '../assets/images/UXUIDesignImg1.webp';
 import AppDevelopmentImg from '../assets/images/mobileDevelopmentImg1.webp';
 
+
+// new images
+
+import uiUxImage from '../assets/crimage/myteacher-uiux.jpg';
+import fullStackImage from '../assets/crimage/fullstack-at-myteacher-intitute.png';
+import cyberSecurityImage from '../assets/crimage/cyber-security-at-myteacher-intitute.png';
+import dataAnalysicImage from '../assets/crimage/data-analytics-at-myteacher-intitute.jpg';
+import mobileAppImage from '../assets/crimage/myteacher-intitute-mobile-app.png';
+import { Link } from "react-router-dom";
+
 const PopularCourses = () => {
     return (
         <section id="popular-courses" className="fade-in">
@@ -18,7 +28,7 @@ const PopularCourses = () => {
                     <div className="course-item">
                         <div className="course-items-image">
                             <a href="#">
-                                <img src={WebDevelopmentImg} alt="Web Development" />
+                                <img src={fullStackImage} alt="Web Development" />
                                 <span>AI skills included</span>
                             </a>
                         </div>
@@ -39,7 +49,7 @@ const PopularCourses = () => {
                     <div className="course-item">
                         <div className="course-items-image">
                             <a href="#">
-                                <img src={DataAnalysisImg} alt="Data Analysis" />
+                                <img src={dataAnalysicImage} alt="Data Analysis" />
                                 <span>AI skills included</span>
                             </a>
                         </div>
@@ -60,7 +70,7 @@ const PopularCourses = () => {
                     <div className="course-item">
                         <div className="course-items-image">
                             <a href="#">
-                                <img src={CyberSecurityImg} alt="Cyber Security" />
+                                <img src={cyberSecurityImage} alt="Cyber Security" />
                                 <span>AI skills included</span>
                             </a>
                         </div>
@@ -81,7 +91,7 @@ const PopularCourses = () => {
                     <div className="course-item">
                         <div className="course-items-image">
                             <a href="#">
-                                <img src={UXUIDesignImg} alt="UX/UI Design" />
+                                <img src={uiUxImage} alt="UX/UI Design" />
                                 <span>AI skills included</span>
                             </a>
                         </div>
@@ -102,7 +112,7 @@ const PopularCourses = () => {
                     <div className="course-item">
                         <div className="course-items-image">
                             <a href="#">
-                                <img src={AppDevelopmentImg} alt="App Development" />
+                                <img src={mobileAppImage} alt="App Development" />
                                 <span>AI skills included</span>
                             </a>
                         </div>
@@ -122,10 +132,10 @@ const PopularCourses = () => {
                     </div>
                 </div>
                 <div className="popular-courses-more-btn-container">
-                    <button className="btn btn--primary">
-                        Show 8 more
-                    </button>
-                    <a href="#" className="btn btn--outline">
+                    <Link to="/auth" className="btn btn--primary">
+                        Start Now
+                    </Link>
+                    <Link to="/courses" className="btn btn--outline">
                         View all
                         <svg aria-hidden="true" fill="none" focusable="false" height="24" viewBox="0 0 20 20" width="24">
                             <path
@@ -133,7 +143,7 @@ const PopularCourses = () => {
                                 fill="#008ed6">
                             </path>
                         </svg>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </section>

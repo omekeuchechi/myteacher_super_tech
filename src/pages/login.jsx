@@ -1,98 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import '../assets/styles/authstyles/auth.css';
-import '../assets/styles/authstyles/res.css';
-import myteacherLogo from '../img/Untitled-1.png';
-
-// Images
-import myTeacherInstituteIllustration1 from "../assets/illustrations/dashboard/myteacher_institute_illustration1.jpg";
-import myTeacherInstituteIllustration2 from "../assets/illustrations/dashboard/myteacher_institute_illustration2.jpg";
-import myTeacherInstituteIllustration3 from "../assets/illustrations/dashboard/myteacher_institute_illustration3.jpg";
-import myTeacherInstituteIllustration4 from "../assets/illustrations/dashboard/myteacher_institute_illustration4.jpg";
-import myTeacherInstituteIllustration5 from "../assets/illustrations/dashboard/myteacher-graphic-designer.jpg";
-
-const images = [
-  myTeacherInstituteIllustration1,
-  myTeacherInstituteIllustration2,
-  myTeacherInstituteIllustration3,
-  myTeacherInstituteIllustration4,
-  myTeacherInstituteIllustration5,
-];
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import '../assets/styles/authstyles/register.css';
+import googleImage from '../assets/images/google.png';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [bgIndex, setBgIndex] = useState(0);
-  const [fade, setFade] = useState(true);
-  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setFade(false);
-      setTimeout(() => {
-        setBgIndex((prevIndex) => (prevIndex + 1) % images.length);
-        setFade(true);
-      }, 2000); // slow fade transition
-    }, 5000); // every 5 seconds
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleHomeClick = () => navigate('/');
-  const handleNext = (e) => {
-    e.preventDefault();
-    navigate('/');
+  const togglePasswordVisibility = () => {
+    setShowPassword(prev => !prev);
   };
 
   return (
-    <div className='auth-container'>
-      <div
-        className={`side-background ${fade ? 'fade-in' : 'fade-out'}`}
-        style={{
-          backgroundImage: `url(${images[bgIndex]})`,
-        }}
-      />
-      
-      <div className='sliding-form'>
-        <form className='slider' onSubmit={handleNext}>
-          <div className='step'>
-            <div>
-              <img
-                src={myteacherLogo}
-                alt="logo"
-                style={{ cursor: 'pointer' }}
-                onClick={handleHomeClick}
-              />
-              <span>Login</span>
-            </div>
-            <h2>Email</h2>
-            <input
-              className='input'
-              placeholder='Email'
-              type='email'
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-            />
-            <h2>Password</h2>
-            <input
-              className='input'
-              placeholder='Password'
-              type='password'
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-            />
-            <button className='submit-btn' type='submit'>Login</button>
-            <div className="arg">
-              <span>
-                Don't have an account?{' '}
-                <Link to="/auth" style={{ textDecoration: 'underline', color: '#4a90e2' }}>
-                  Register
-                </Link>
-              </span>
-            </div>
+    <div className="authentication-container">
+      <div className="authentication-header">
+        <h1>Welcome Back</h1>
+      </div>
+
+      <div className="other-auth">
+        <button><img src={googleImage} alt="google auth" /> Sign in with Google</button>
+      </div>
+
+      <h2 style={{ color: '#fff', fontSize: '3rem', zIndex: 4, marginBottom: '10px', fontFamily: 'monospace' }}>Or</h2>
+
+      <div className="overlay-bg"></div>
+
+      <div className="form-container">
+        <form action="" method="post">
+          <label htmlFor="Email">Email</label>
+          <input type="email" />
+
+          <label htmlFor="Password">Password</label>
+          <div className="password-wrapper" style={{ position: 'relative' }}>
+            <input type={showPassword ? "text" : "password"} />
+            <span className='eyes' onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
+              <i className={`fas ${showPassword ? "fa-eye" : "fa-eye-slash"}`}></i>
+            </span>
           </div>
+
+          <div className="form-links">
+            <div className="reb">
+            <input type="checkbox" />
+            <p>Remember me</p>
+            </div>
+            <Link to="/forgot-password" className="forgot-password-link">Forgot Password?</Link>
+          </div>
+
+          <button type="submit">Login</button>
+
+          <p className="switch-auth-link">
+            Don't have an account? <Link to="/auth">Create one</Link>
+          </p>
         </form>
       </div>
     </div>

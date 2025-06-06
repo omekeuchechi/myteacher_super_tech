@@ -1,6 +1,12 @@
 import { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const TechRoadMap = () => {
+    const navigate = useNavigate();
+
+    const handleEnrollClick = () => {
+        navigate('/auth');
+    }
     return (
         // How to Get Into Tech Section
         <section id="tech-journey-section" className="fade-in">
@@ -73,7 +79,7 @@ const TechRoadMap = () => {
 
                 <div className="journey-cta">
                     <p>Ready to begin your tech journey?</p>
-                    <button className="journey-btn">Start Your Tech Career Today</button>
+                    <button className="journey-btn" onClick={handleEnrollClick}>Start Your Tech Career Today</button>
                 </div>
             </div>
         </section>

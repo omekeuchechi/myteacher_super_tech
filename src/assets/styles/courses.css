@@ -3,205 +3,254 @@
   min-height: 100vh;
   background: #f8f9fa;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-top: 60px;
 }
 
 /* Header */
 .courses-section-header {
   text-align: center;
-  padding: 2rem 0 1rem 0;
-  /* margin-top: 70px; */
-  position: fixed;
-  top: 60px;
-  /* right: 700px; */
-  z-index: 2000;
+  padding: 2rem 1rem;
   background: #fff;
-  width: 100%;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .courses-section-header h2 {
-  font-size: 2.2rem;
+  font-size: 3rem;
+  font-weight: 900;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   margin-bottom: 0.5rem;
   color: #357ab9;
 }
 
 .courses-section-header p {
   color: #555;
-  font-size: 1.1rem;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 1.9rem;
 }
 
-.crs-wrapper-container{
-  margin-bottom: 200px;
-}
-
-/* Search */
+/* Search and View Toggle */
 .search-div {
-  position: relative;
-  top: 400px;
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto 30px auto;
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin: 1.5rem 0 2rem 0;
   gap: 0.5rem;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 2rem 1rem;
+  border-radius: 8px;
 }
 
 .search-div input[type="search"] {
-  width: 320px;
-  max-width: 90vw;
-  padding: 0.7rem 1.2rem;
-  border: 1px solid #357ab9;
-  border-radius: 6px;
-  font-size: 1.1rem;
+  flex: 1;
+  border: none;
+  font-size: 1.6rem;
   outline: none;
-  transition: border 0.2s;
 }
 
-.search-div input[type="search"]:focus {
-  border: 2px solid #357ab9;
+.search-div i.fa-search {
+  color: #666;
+  font-size: 1.9rem;
 }
 
-.search-div i {
-  color: #357ab9;
-  font-size: 1.3rem;
-}
-
-/* Courses Grid */
-.crs-wrapper-container {
+.crs-gride-toggle {
+  margin-left: auto;
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: center;
-  padding-bottom: 2rem;
+  gap: 0.8rem;
+}
+
+.crs-gride-toggle i {
+  font-size: 1.9rem;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.crs-gride-toggle i.active {
+  color: #357ab9;
+}
+
+/* Course Container */
+.crs-wrapper-container {
+  display: grid;
+  gap: 1.5rem;
+  padding: 0 1rem;
+  margin: 0 auto 5rem auto;
+  max-width: 1200px;
+}
+
+/* Grid View */
+.grid-view {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* List View */
+.list-view {
+  display: flex;
+  flex-direction: column;
 }
 
 /* Course Card */
 .crs-wrapper-box {
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(53, 122, 185, 0.08);
-  width: 340px;
-  max-width: 95vw;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  transition: box-shadow 0.2s;
+}
+
+.list-view .crs-wrapper-box {
+  flex-direction: row;
+  align-items: stretch;
+  gap: 1rem;
+  padding: 1rem;
 }
 
 .crs-wrapper-box:hover {
-  box-shadow: 0 4px 20px rgba(53, 122, 185, 0.18);
+  transform: translateY(-5px);
 }
 
 .crs-wrapper-box img {
   width: 100%;
-  height: 180px;
+  height: 200px;
   object-fit: cover;
-  background: #e9ecef;
 }
 
+.list-view .crs-wrapper-box img {
+  width: 220px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Course Description */
 .crs-des {
-  padding: 1.2rem 1rem 1rem 1rem;
+  padding: 1rem;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
 }
 
-.crs-des h2 {
-  font-size: 1.3rem;
-  color: #357ab9;
+.crs-des .h1-texte {
   margin: 0;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #333;
+  transition: all 0.6s ease-in-out;
+}
+
+.crs-des .h1-texte:hover{
+  text-decoration: solid underline 2px #357ab9;
 }
 
 .crs-des span {
-  color: #666;
-  font-size: 0.98rem;
+  color: #777;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
 }
 
 .timeDur {
   display: flex;
-  gap: 1.2rem;
-  font-size: 0.98rem;
-  color: #357ab9;
-  font-weight: 500;
+  justify-content: space-between;
+  color: #444;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .des {
-  font-size: 1rem;
-  color: #222;
-  margin: 0.5rem 0;
+  font-size: 1.5rem;
+  color: #555;
+  margin-bottom: 1rem;
 }
 
+.readmore-btn {
+  background: #357ab9;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background 0.3s ease;
+}
+.readmore-btn:hover {
+  background: #2b5f91;
+}
+
+/* Pricing Section */
 .money-section {
   display: flex;
-  gap: 1.5rem;
-  margin-top: 0.7rem;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.money-section > div {
+.money-section div {
   flex: 1;
-  background: #f3f8fc;
+  background: #f1f1f1;
+  padding: 0.8rem;
   border-radius: 8px;
-  padding: 0.7rem 0.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
 }
 
 .money-section span {
-  font-size: 0.95rem;
-  color: #357ab9;
-  font-weight: 600;
+  display: block;
+  font-size: 1.5rem;
+  color: #666;
 }
 
 .money-section p {
-  font-size: 1.1rem;
-  color: #222;
-  margin: 0.3rem 0 0.7rem 0;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #357ab9;
+  margin: 0.5rem 0;
 }
 
 .money-section button {
   background: #357ab9;
   color: #fff;
   border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1.5rem;
   border-radius: 5px;
-  padding: 0.5rem 1.2rem;
-  font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.3s ease;
 }
 
 .money-section button:hover {
-  background: #285a8c;
+  background: #2b5f91;
 }
 
-/* Responsive Styles */
-@media (max-width: 900px) {
-  .crs-wrapper-container {
-    gap: 1.2rem;
-  }
-  .crs-wrapper-box {
-    width: 95vw;
-    min-width: 0;
-  }
-}
-
-@media (max-width: 600px) {
+/* Responsive Adjustments */
+@media (max-width: 768px) {
   .courses-section-header h2 {
-    font-size: 1.3rem;
+    font-size: 2rem;
   }
+
+  .courses-section-header p {
+    font-size: 1rem;
+  }
+
+  .list-view .crs-wrapper-box {
+    flex-direction: column;
+  }
+
   .crs-wrapper-box img {
-    height: 120px;
+    height: 180px;
   }
-  .crs-des {
-    padding: 0.8rem 0.5rem 0.7rem 0.5rem;
+
+  .search-div {
+    width: 95%;
+    flex-wrap: wrap;
   }
+
   .money-section {
     flex-direction: column;
-    gap: 0.7rem;
-  }
-  .search-div input[type="search"] {
-    width: 98vw;
-    font-size: 1rem;
-    padding: 0.6rem 0.8rem;
   }
 }

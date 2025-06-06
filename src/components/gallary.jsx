@@ -59,11 +59,11 @@ const Gallary = () => {
           margin-bottom: 20px;
         }
         .gallary-header h2 {
-          font-size: 2em;
+          font-size: 1.8em;
           margin-bottom: 10px;
         }
         .gallary-header p {
-          font-size: 1.1em;
+          font-size: 0.9em;
           color: #555;
         }
 

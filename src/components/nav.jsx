@@ -15,6 +15,15 @@ const Nav = () => {
   const handleLoginClick = () => {
     navigate('/login')
   }
+
+  const handleHomeClick = () => {
+    navigate('/')
+  }
+
+  const handleCoursesClick = () => {
+    navigate('/courses')
+  }
+
   useEffect(() => {
     const navUl = document.querySelector('.nav-ul');
     const navLiHide = document.querySelectorAll('.nav-link-hide');
@@ -51,17 +60,17 @@ const Nav = () => {
         <i className="fas fa-bars"></i>
       </div>
       <ul className="nav-ul">
-        <li><Link to="/">Home</Link></li>
+        <li onClick={handleHomeClick}><Link to="/">Home</Link></li>
         {/* <li><a href="#">About Us</a></li> */}
-        <li><Link to="/courses">Courses</Link></li>
-        <li><Link to="#">Contact Us</Link></li>
+        <li onClick={handleCoursesClick}><Link to="/courses">Courses</Link></li>
+        {/* <li><Link to="#">Contact Us</Link></li> */}
         <li><Link to="#">Tech Blog</Link></li>
         <li className="nav-link-hide" onClick={handleLoginClick}><Link to="">Login</Link></li>
         <li className="nav-link-hide" onClick={handleRegisterClick}><Link to="">Register for a programme</Link></li>
       </ul>
       <div className="auth">
-        <Link to="" className="login active" onClick={handleLoginClick}>Login</Link>
-        <Link to="" className="signup" onClick={handleRegisterClick}>Register for a programme</Link>
+        <Link to="/login" className="login active">Login</Link>
+        <Link to="/auth" className="signup">Register for a programme</Link>
       </div>
     </nav>
   );

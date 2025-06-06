@@ -108,6 +108,32 @@
   background-color: inherit;
 }
 
+.apply-for-course-section {
+  margin-top: 20px;
+  padding: 90px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.apply-for-course-section.light{
+  background: #ffffff5b;
+}
+.apply-for-course-section > h2 {
+  font-size: 24px;
+  margin-bottom: 30px;
+  color: #333;
+}
+.apply-for-course-section > h2.dark{
+  color: #fff;
+}
+.apply-for-course-section > .apply {
+  font-size: 16px;
+  color: #fff;
+  background: #086cca;
+  padding: 20px 30px;
+  border-radius: 30px;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 1024px) {
   .dashboard-container .sidebar {

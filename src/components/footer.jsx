@@ -1,25 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import myteacherFooterLogo from "../img/Untitled-1.png";
+import { Link } from 'react-router-dom';
+
 
 const Footer = () => {
+    const [showScrollToTop, setShowScrollToTop] = useState(false);
+
     useEffect(() => {
-        const scrollToTopBtn = document.querySelector(".scroll-to-top");
-        const scrollToTop = () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-            });
+        const handleScroll = () => {
+            const scrollY = window.scrollY || window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            // Show button if scrolled past half the page or near the bottom
+            setShowScrollToTop(scrollY > docHeight / 2);
         };
 
-        if (scrollToTopBtn) {
-            scrollToTopBtn.addEventListener("click", scrollToTop);
-        }
-
-        return () => {
-            if (scrollToTopBtn) {
-                scrollToTopBtn.removeEventListener("click", scrollToTop);
-            }
-        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     return (
@@ -31,26 +27,27 @@ const Footer = () => {
                 </h2>
                 <p>Empowering you with the skills to succeed in the digital world.</p>
                 <div className="socials">
-                    <a href="#"><i className="fab fa-facebook-f"></i></a>
-                    <a href="#"><i className="fab fa-twitter"></i></a>
-                    <a href="#"><i className="fab fa-instagram"></i></a>
-                    <a href="#"><i className="fab fa-linkedin-in"></i></a>
-                    <a href="#"><i className="fab fa-whatsapp"></i></a>
+                    <a href="#" className="facebook"><i className="fab fa-facebook-f"></i></a>
+                    <a href="#" className="twitter"><i className="fab fa-twitter"></i></a>
+                    <a href="#" className="instagram"><i className="fab fa-instagram"></i></a>
+                    <a href="#" className="linkedin"><i className="fab fa-linkedin-in"></i></a>
+                    <a href="#" className="whatsapp"><i className="fab fa-whatsapp"></i></a>
                 </div>
             </div>
             <div className="footer-links">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="/">Home</a></li>
+                    <li><Link to="/">Home</Link></li>
                     {/* <li><a href="#">About</a></li> */}
-                    <li><a href="#">Courses</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Tech Blog</a></li>
+                    <li><Link to="#">Courses</Link></li>
+                    <li><Link to="#">Tech Blog</Link></li>
                 </ul>
             </div>
-            <div className="scroll-to-top">
-                <i className="fas fa-chevron-up"></i>
-            </div>
+                {showScrollToTop && (
+                    <div className="scroll-to-top" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+                        <i className="fas fa-chevron-up"></i>
+                    </div>
+                )}
             {/* <div className="footer-credits">
                 <p>Designed by <a href="#">Omeke Joseph</a> and <a href="#">Teresar</a></p>
                 <p>Developed by <a href="#">Omeke Joseph</a> and <a href="#">Teresar</a></p>

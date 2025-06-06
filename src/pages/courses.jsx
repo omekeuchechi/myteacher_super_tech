@@ -3,6 +3,7 @@ import Nav from './../components/nav';
 import Footer from './../components/footer';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import '../assets/styles/courses.css';
+import { useNavigate } from 'react-router-dom';
 
 // image place
 import copyWritingImage from '../assets/crimage/learn-copy-writing-in-Port-Harcourt-at-myteacher-intitute.png';
@@ -25,6 +26,7 @@ import sqlDataBaseImage from '../assets/crimage/sql-couser-at-myteacher-intitute
 import pyDataImage from '../assets/crimage/python-for-data-analysis-course-at-myteacher-intitute.png';
 import excelDataImage from '../assets/crimage/Data-Analysis-Using-Excel-at-myteacher-intitute.jpg';
 import digitalMarketingImage from '../assets/crimage/learn-digital-marjeting-in-port-harcourt-at-myteacher-intitute.jpg';
+import { Link } from "react-router-dom";
 
 const courseDataInfo = [
     {
@@ -34,10 +36,11 @@ const courseDataInfo = [
         duration: '10 Weeks',
         lessonAmount: '10 Lessons',
         location: 'Myteacher Institute Tessy School Junction Rumuagholu off Rumuokoro flyover Port Harcourt',
-        description: "Copywriting is the art of crafting persuasive text that prompts a specific action, like clicking, buying, or signing up. It’s essential for marketing, helping brands communicate value and connect with their audience.",
+        description: "Copywriting is crafting persuasive text that drives actions like clicking or buying, essential for marketing success.",
         remotePrice: '30,000,00',
         locally: '90,000,00',
         myTeacherAdmin: 'Bright Owen',
+        link: "/copy-right",
         courseImage: copyWritingImage,
     },
     {
@@ -51,6 +54,7 @@ const courseDataInfo = [
         remotePrice: '25,000,00',
         locally: '70,000,00',
         myTeacherAdmin: 'Jane Smith',
+        link: "/basic-computing",
         courseImage: basicComputingImage,
     },
     {
@@ -64,6 +68,7 @@ const courseDataInfo = [
         remotePrice: '20,000,00',
         locally: '60,000,00',
         myTeacherAdmin: 'John Doe',
+        link: "/virtual-assistant",
         courseImage: visualAssitantImage,
     },
     {
@@ -77,6 +82,7 @@ const courseDataInfo = [
         remotePrice: '15,000,00',
         locally: '50,000,00',
         myTeacherAdmin: 'Mary Johnson',
+        link: "/data-entry",
         courseImage: dataEntryImage,
     },
     {
@@ -290,6 +296,7 @@ const courseDataInfo = [
 ];
 
 const Courses = () => {
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
 
   // Filter courses by courseName, courseref, admin, price, or description
@@ -304,6 +311,13 @@ const Courses = () => {
       data.description.toLowerCase().includes(searchLower)
     );
   });
+
+  const handleEnrollClick = () => {
+    navigate('/auth');
+  }
+
+  const [isGridView, setIsGridView] = useState(true);
+
 
   return (
     <div className="cr-container">
@@ -322,8 +336,23 @@ const Courses = () => {
               onChange={e => setSearch(e.target.value)}
             />
             <i className="fas fa-search"></i>
+
+            <div className="crs-gride-toggle">
+              <i 
+                className={`fas fa-th ${isGridView ? 'active' : ''}`}
+                onClick={() => setIsGridView(true)}
+                style={{ cursor: 'pointer' }}
+              ></i>
+
+              <i 
+                className={`fas fa-list ${!isGridView ? 'active' : ''}`}
+                onClick={() => setIsGridView(false)}
+                style={{ cursor: 'pointer' }}
+              ></i>
+            </div>
+
           </div>
-        <div className="crs-wrapper-container">
+        <div className={`crs-wrapper-container ${isGridView ? "grid-view" : "list-view"}`}>
           {filteredCourses.length === 0 && (
             <p style={{ padding: "2rem", textAlign: "center" }}>No courses found.</p>
           )}
@@ -331,23 +360,25 @@ const Courses = () => {
             <div className="crs-wrapper-box" key={data.id}>
               <img src={data.courseImage} alt={data.courseName} />
               <div className="crs-des">
-                <h2>{data.courseName}</h2>
+                <Link to={data.link} className="h1-texte">{data.courseName}</Link>
                 <span>By {data.myTeacherAdmin} in {data.courseref}</span>
                 <div className="timeDur">
                   <span>{data.duration}</span>
                   <span>{data.lessonAmount}</span>
                 </div>
                 <p className="des">✅ {data.description}</p>
+                <Link to={data.link} className="readmore-btn">Read more <i className="fas fa-arrow-right-long"></i></Link>
+
                 <div className="money-section">
                   <div>
                     <span>Remote</span>
                     <p>{data.remotePrice}</p>
-                    <button>Enroll</button>
+                    <button onClick={handleEnrollClick}>Enroll</button>
                   </div>
                   <div>
-                    <span>At the Location</span>
+                    <span>Locally</span>
                     <p>{data.locally}</p>
-                    <button>Enroll</button>
+                    <button onClick={handleEnrollClick}>Enroll</button>
                   </div>
                 </div>
               </div>
