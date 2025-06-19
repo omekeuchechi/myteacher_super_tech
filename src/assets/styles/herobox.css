@@ -68,6 +68,13 @@
     .hero-box-section > video{
         margin-bottom: -30px;
     }
+    .hero-box-header{
+        width: 90%;
+        margin-top: 20px;
+    }
+    .hero-box-header > h1{
+        font-size: 2rem;
+    }
 }
 
 @media (max-width: 1024px) {

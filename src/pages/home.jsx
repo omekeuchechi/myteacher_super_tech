@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from '../../context/Authcontext';
 import { useNavigate } from "react-router-dom";
 import HeroSection from "../components/hero";
 import Nav from "../components/nav";
@@ -25,6 +26,7 @@ import HeroBox from './../components/herobox';
 // WhatAppIconLink
 
 function Home() {
+    const { user, logout } = useContext(AuthContext);
 
 useEffect(() => {
     const fadeInElements = document.querySelectorAll(".fade-in");

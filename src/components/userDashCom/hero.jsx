@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import '../../assets/styles/dashboard/hero.css';
+import { AuthContext } from '../../../context/Authcontext';
 
 // Images
 import myTeacherInstituteIllustration1 from "../../assets/illustrations/dashboard/myteacher_institute_illustration1.jpg";
@@ -21,6 +22,8 @@ const HeroSection = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [fade, setFade] = useState(true);
 
+  const { user, logout } = useContext(AuthContext);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setFade(false); // start fade-out
@@ -36,7 +39,7 @@ const HeroSection = () => {
   return (
     <div className="dash-hero-section">
       <div className="dash-txt-section">
-        <h1>Welcome Joseph</h1>
+        <h1>Welcome {user.name}</h1>
         <p>Education is the passport to the future, so learn more & more.</p>
       </div>
       <div className="dash-img">

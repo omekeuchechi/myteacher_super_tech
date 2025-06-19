@@ -25,6 +25,7 @@ const DashMobileNav = ({ theme = "light" }) => {
           <FullscreenIcon />
           <NavItem icon="home" label="Home" move="/" isExpanded={true} />
           <NavItem icon="chart-bar" label="Dashboard" move="/dashboard" isExpanded={true} />
+          <NavItem icon="user" label="Profile" move="/profile" isExpanded={true} />
           <NavItem icon="chalkboard-teacher" label="Classroom" isExpanded={true} move="/online-class" />
           <NavItem icon="briefcase" label="Assets" isExpanded={true} move="/assets" />
           <NavItem icon="cog" label="Settings" move="/settings" isExpanded={true} />
@@ -41,7 +42,7 @@ const DashMobileNav = ({ theme = "light" }) => {
           font-size: 24px;
           position: fixed;
           padding: 8px;
-          top: 0;
+          top: 10px;
           left: 2px;
           z-index: 200;
         }
@@ -99,13 +100,13 @@ const DashMobileNav = ({ theme = "light" }) => {
           opacity: 0.85;
         }
 
-        @media screen and (max-width: 1024px) {
+        @media screen and (max-width: 900px) {
           .hamburger-btn {
             display: block;
           }
         }
 
-        @media screen and (min-width: 1025px) {
+        @media screen and (min-width: 800px) {
           .hamburger-btn,
           .simple-mobile-nav {
             display: none !important;

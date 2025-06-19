@@ -124,6 +124,9 @@
 }
 
 @media (max-width: 768px) and (orientation: portrait) {
+  .dashboard-container{
+    margin-left: 0;
+  }
   .dashboard-container .mobile-sidebar-toggle {
     display: block;
     position: fixed;

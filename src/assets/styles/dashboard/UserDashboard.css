@@ -132,10 +132,17 @@
   background: #086cca;
   padding: 20px 30px;
   border-radius: 30px;
+  transition: all 0.2s ease-in-out;
+}
+
+.apply-for-course-section > .apply:hover{
+  background: #043f77;
+  transform: translateY(-2px);
+  color: #fff;
 }
 
 /* Responsive Adjustments */
-@media (max-width: 1024px) {
+@media (max-width: 1180px) {
   .dashboard-container .sidebar {
     display: none;
   }
@@ -160,5 +167,19 @@
   .dashboard-container .toggle-button {
     width: auto;
     margin: 10px;
+  }
+  .apply-for-course-section{
+    padding: 20px;
+  }
+  .apply-for-course-section > .apply{
+    padding: 10px 10px;
+    border-radius: 30px;
+    color: #fff;
+    font-size: 16px;
+  }
+  .apply-for-course-section > h2{
+    font-size: 20px;
+    text-align: left;
+    margin-bottom: 20px;
   }
 }
