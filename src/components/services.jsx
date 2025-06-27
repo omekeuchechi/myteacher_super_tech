@@ -1,10 +1,6 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import dataAnalisImg from '../assets/images/dataAnaylsisImg1.webp';
-import webDevImg from '../assets/images/webDevimg1.webp';
-import portfolioImg from '../assets/images/cyberSecurityImg1.webp';
-import personalClassImg from '../assets/images/privateClassesImg.webp';
 
 
 // illustrations image import

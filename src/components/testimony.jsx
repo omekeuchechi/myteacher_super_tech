@@ -1,11 +1,4 @@
-import { useEffect } from "react";
 import DImage35 from "../img/download (35).jpeg";
-import DImage36 from "../img/download (36).jpeg";
-import DImage37 from "../img/download (37).jpeg";
-import DImage38 from "../img/download (38).jpeg";
-import DImage39 from "../img/download (39).jpeg";
-import DImage40 from "../img/download (40).jpeg";
-import DImage41 from "../img/download (41).jpeg";
 
 const Testimony = () => {
     useEffect(() => {
@@ -61,27 +54,27 @@ const Testimony = () => {
                             <h4>Obi James</h4>
                         </div>
                         <div className="testimonial-card">
-                            <img src={DImage37} alt="Testimonial from Obi James" />
+                            <img src={DImage35} alt="Testimonial from Obi James" />
                             <p>"The digital skills bootcamp was a game-changer for my career. I landed my dream job within weeks of completing the course!"</p>
                             <h4>Obi James</h4>
                         </div>
                         <div className="testimonial-card">
-                            <img src={DImage36} alt="Testimonial from Obi James" />
+                            <img src={DImage35} alt="Testimonial from Obi James" />
                             <p>"The digital skills bootcamp was a game-changer for my career. I landed my dream job within weeks of completing the course!"</p>
                             <h4>Obi James</h4>
                         </div>
                         <div className="testimonial-card">
-                            <img src={DImage38} alt="Testimonial from Obi James" />
+                            <img src={DImage35} alt="Testimonial from Obi James" />
                             <p>"The digital skills bootcamp was a game-changer for my career. I landed my dream job within weeks of completing the course!"</p>
                             <h4>Obi James</h4>
                         </div>
                         <div className="testimonial-card">
-                            <img src={DImage39} alt="Testimonial from Mason Grace" />
+                            <img src={DImage35} alt="Testimonial from Mason Grace" />
                             <p>"The instructors were knowledgeable and supportive. I highly recommend this program to anyone looking to upskill."</p>
                             <h4>Mason Grace</h4>
                         </div>
                         <div className="testimonial-card">
-                            <img src={DImage40} alt="Testimonial from Amaka Joy" />
+                            <img src={DImage35} alt="Testimonial from Amaka Joy" />
                             <p>"The instructors were knowledgeable and supportive. I highly recommend this program to anyone looking to upskill."</p>
                             <h4>Amaka Joy</h4>
                         </div>
@@ -91,7 +84,7 @@ const Testimony = () => {
                             <h4>Simon Grace</h4>
                         </div>
                         <div className="testimonial-card">
-                            <img src={DImage39} alt="Testimonial from Paul Grace" />
+                            <img src={DImage35} alt="Testimonial from Paul Grace" />
                             <p>"The instructors were knowledgeable and supportive. I highly recommend this program to anyone looking to upskill."</p>
                             <h4>Paul Grace</h4>
                         </div>
