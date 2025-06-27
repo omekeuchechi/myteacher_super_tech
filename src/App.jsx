@@ -30,7 +30,7 @@ import DataEntry from './pages/coursesPages/dataEntry';
 // email verification pages
 import VerifyEmailInfo from './pages/verifyEmailInfo';
 import VerifyEmail from "./pages/verifyEmail";
-import ResendVerification from './pages/ResendVerification';
+import ResendVerification from './pages/resendVerification';
 import GoogleSuccess from './pages/GoogleSuccess';
 
 // forgot password pages
