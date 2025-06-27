@@ -1,11 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Pusher from 'pusher-js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AdminNav from "../../components/adminCom/navSection";
+import { AuthContext } from '../../../context/Authcontext';
+import '../../assets/styles/admin/transaction.css';
 
 const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
 
 const Transactions = () => {
+  const { logout } = useContext(AuthContext);
+  const navLinks = [
+    { to: "/", label: "Home" },
+    { to: "/admin/ui-settings", label: "UI Settings" },
+    { to: "/admin/take-lecture", label: "Take Lecture" },
+    { to: "/admin/profile", label: "Profile" },
+    { to: "/admin/users", label: "Users" },
+    { to: "/admin/transactions", label: "Transactions" },
+    { to: "/admin/enrollments", label: "Enrollment" },
+    { to: "/admin/admin-list", label: "Admin List" },
+    { to: "/admin/contact-messages", label: "Contact Messages" },
+    { to: "/admin/publish-asset", label: "Publish Asset" },
+    { to: "/admin/post-blog", label: "Post Blog" },
+  ];
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -75,70 +92,122 @@ const Transactions = () => {
   };
 
   if (loading && transactions.length === 0) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loading-state">
+        <p>Loading transactions...</p>
+      </div>
+    );
   }
 
   if (error && transactions.length === 0) {
-    return <div>Error: {error}</div>;
+    return (
+      <div className="error-state">
+        <p>Error: {error}</p>
+        <button 
+          onClick={() => window.location.reload()}
+          className="pagination-button"
+        >
+          Retry
+        </button>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <h2>All Transactions</h2>
-      {transactions.length === 0 && !loading ? (
-        <p>No transactions found.</p>
-      ) : (
-        <>
-          <div style={{ padding: '1rem' }}>
-            {transactions.map((transaction) => (
-              <div key={transaction._id} style={{ display: 'flex', alignItems: 'center', border: '1px solid #ccc', borderRadius: '8px', padding: '1rem', marginBottom: '1rem' }}>
-                <img src={transaction.user?.avatar || 'https://via.placeholder.com/50'} alt={transaction.user?.name} style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '1rem' }} />
-                <div>
-                  <div style={{ marginBottom: '0.5rem' }}>
-                    <strong>User:</strong> <span>{transaction.user?.name || 'N/A'}</span>
-                  </div>
-                  <div style={{ marginBottom: '0.5rem' }}>
-                    <strong>Email:</strong> <span>{transaction.user?.email || 'N/A'}</span>
-                  </div>
-                  <div style={{ marginBottom: '0.5rem' }}>
-                    <strong>Course:</strong> <span>{transaction.course?.course || 'N/A'}</span>
-                  </div>
-                  <div style={{ marginBottom: '0.5rem' }}>
-                    <strong>Price:</strong> <span>{transaction.course ? `$${transaction.course.price}` : 'N/A'}</span>
-                  </div>
-                  <div>
-                    <strong>Date:</strong> <span>{new Date(transaction.createdAt).toLocaleDateString()}</span>
+    <>
+      <AdminNav navLinks={navLinks} onLogout={logout} />
+      <div className="transactions-container">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        
+        <header className="transactions-header">
+          <h2>All Transactions</h2>
+        </header>
+
+        {transactions.length === 0 && !loading ? (
+          <div className="empty-state">
+            <p>No transactions found.</p>
+          </div>
+        ) : (
+          <>
+            <div className="transaction-list">
+              {transactions.map((transaction) => (
+                <div key={transaction._id} className="transaction-card">
+                  <img 
+                    src={transaction.user?.avatar || 'https://via.placeholder.com/50'} 
+                    alt={transaction.user?.name || 'User'} 
+                    className="transaction-avatar"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = 'https://via.placeholder.com/50';
+                    }}
+                  />
+                  <div className="transaction-content">
+                    <div className="transaction-row">
+                      <span className="transaction-label">User:</span>
+                      <span className="transaction-value">{transaction.user?.name || 'N/A'}</span>
+                    </div>
+                    <div className="transaction-row">
+                      <span className="transaction-label">Email:</span>
+                      <span className="transaction-value">{transaction.user?.email || 'N/A'}</span>
+                    </div>
+                    <div className="transaction-row">
+                      <span className="transaction-label">Course:</span>
+                      <span className="transaction-value">{transaction.course?.course || 'N/A'}</span>
+                    </div>
+                    <div className="transaction-row">
+                      <span className="transaction-label">Price:</span>
+                      <span className="transaction-value transaction-price">
+                        {transaction.course?.price ? `₦${transaction.course.price}` : 'N/A'}
+                      </span>
+                    </div>
+                    <div className="transaction-row">
+                      <span className="transaction-label">Date:</span>
+                      <span className="transaction-value">
+                        {new Date(transaction.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-          <div style={{ textAlign: 'center', marginTop: '1rem' }}>
-            <button onClick={handlePrevPage} disabled={!pagination.hasPreviousPage} style={{ marginRight: '0.5rem' }}>
-              Previous
-            </button>
-            <span>
-              Page {pagination.currentPage} of {pagination.totalPages}
-            </span>
-            <button onClick={handleNextPage} disabled={!pagination.hasNextPage} style={{ marginLeft: '0.5rem' }}>
-              Next
-            </button>
-          </div>
-          <p style={{ textAlign: 'center', marginTop: '1rem' }}>Total transactions: {pagination.totalItems}</p>
-        </>
-      )}
-    </div>
+              ))}
+            </div>
+
+            <div className="pagination">
+              <button 
+                onClick={handlePrevPage} 
+                disabled={!pagination.hasPreviousPage}
+                className="pagination-button"
+              >
+                Previous
+              </button>
+              <span className="pagination-info">
+                Page {pagination.currentPage || 1} of {pagination.totalPages || 1}
+              </span>
+              <button 
+                onClick={handleNextPage} 
+                disabled={!pagination.hasNextPage}
+                className="pagination-button"
+              >
+                Next
+              </button>
+            </div>
+            
+            <p className="pagination-total">
+              Total transactions: {pagination.totalItems || 0}
+            </p>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

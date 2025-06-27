@@ -1,24 +1,55 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import axios from 'axios';
 import '../../assets/styles/dashboard/courseTaken.css';
 import ProgressBar from './progressBar';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-const CourseTaken = () => {
+const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+
+const CourseTaken = ({theme}) => {
   const [isViewAll, setIsViewAll] = useState(false);
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const containerRef = useRef(null);
 
-  const courses = [
-    { id: 1, title: 'MERN STACK', description: 'Web Development with MongoDB, Express.js, React, Node.js', instructor: 'Richard', progress: 60, color: 'green' },
-    { id: 2, title: 'Python Basics', description: 'Learn Python fundamentals', instructor: 'Alice', progress: 45, color: '#FF5733' },
-    { id: 3, title: 'UI and UX with Figma Design', description: 'Design user-friendly interfaces', instructor: 'Bob', progress: 80, color: 'orange' },
-    { id: 4, title: 'Data Science with Python', description: 'Analyze data and build models', instructor: 'Sara', progress: 50, color: '#3399FF' },
-    { id: 5, title: 'React Native Mobile App', description: 'Build mobile apps with React Native', instructor: 'James', progress: 30, color: '#00BFFF' },
-    { id: 6, title: 'Cybersecurity Essentials', description: 'Learn about protecting systems', instructor: 'DaviD', progress: 70, color: '#800080' },
-    { id: 7, title: 'Machine Learning', description: 'Build intelligent algorithms', instructor: 'Emma', progress: 55, color: '#FF69B4' },
-    { id: 8, title: 'Blockchain Basics', description: 'Understand blockchain technology', instructor: 'Liam', progress: 40, color: '#8A2BE2' },
-    { id: 9, title: 'JavaScript Fundamentals', description: 'Master JavaScript core concepts', instructor: 'Olivia', progress: 65, color: '#FFD700' },
-    { id: 10, title: 'Cloud Computing', description: 'Learn AWS and cloud services', instructor: 'Mike', progress: 35, color: '#4682B4' },
-  ];
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${API_BASE}/certificates/student/results`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (response.data.success && response.data.results) {
+          // Transform the API response to match our course structure
+          const formattedCourses = response.data.results.map((result, index) => ({
+            id: index + 1,
+            title: result.assignmentName || `Assignment ${index + 1}`,
+            description: result.correction || 'No feedback available',
+            instructor: 'Instructor',
+            progress: result.score || 0,
+            color: getRandomColor(),
+            graded: result.graded,
+            submittedAt: new Date(result.submittedAt).toLocaleDateString()
+          }));
+          setCourses(formattedCourses);
+        }
+      } catch (err) {
+        console.error('Error fetching courses:', err);
+        setError('Failed to load course data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  const getRandomColor = () => {
+    const colors = ['#4CAF50', '#2196F3', '#9C27B0', '#FF9800', '#E91E63', '#00BCD4'];
+    return colors[Math.floor(Math.random() * colors.length)];
+  };
 
   const handleViewToggle = () => {
     const container = containerRef.current;
@@ -41,62 +72,52 @@ const CourseTaken = () => {
     }
   };
 
+  if (loading) return <div className="loading">Loading courses...</div>;
+  if (error) return <div className="error">{error}</div>;
+  if (courses.length === 0) return <div className="no-courses">No courses found</div>;
+
   return (
-    <div className="dash-course-taken-section">
-      {/* Header */}
-      <div
-        className="dash-course-taken-header"
-        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-      >
-        <h2>Current Running Courses</h2>
+    <div className={theme === 'dark' ? "dash-course-taken-section dark" : "dash-course-taken-section"}>
+      <div className={theme === 'dark' ? "dash-course-taken-header dark" : "dash-course-taken-header"}>
+        <h2>My Course Progress</h2>
         <button className="view-all-btn" onClick={handleViewToggle}>
           {isViewAll ? 'View less' : 'View all'}
         </button>
       </div>
 
-      {/* Arrow buttons */}
-      <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '10px' }}>
-        <button
-          onClick={() => scrollByCard('left')}
-          style={{ marginRight: '10px', background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer' }}
-        >
-          <i className="fas fa-chevron-left clor"></i>
+      <div className={theme === 'dark' ? "carousel-controls dark" : "carousel-controls"}>
+        <button onClick={() => scrollByCard('left')} className="carousel-arrow">
+          <i className="fas fa-chevron-left"></i>
         </button>
-        <button
-          onClick={() => scrollByCard('right')}
-          style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer' }}
-        >
-          <i className="fas fa-chevron-right clor"></i>
+        <button onClick={() => scrollByCard('right')} className="carousel-arrow">
+          <i className="fas fa-chevron-right"></i>
         </button>
       </div>
 
-      {/* Carousel container */}
       <div
         ref={containerRef}
-        className="carousel-container"
-        style={{
-          display: 'flex',
-          overflowX: 'auto',
-          scrollBehavior: 'smooth',
-          scrollbarWidth: 'none', // Firefox
-          msOverflowStyle: 'none', // IE/Edge
-        }}
+        className={theme === 'dark' ? "carousel-container dark" : "carousel-container"}
       >
         {courses.map((course) => (
           <div
             key={course.id}
-            className="dash-course"
-            style={{
-              minWidth: '250px',
-              marginRight: '15px',
-              flexShrink: 0,
-            }}
+            className={theme === 'dark' ? "dash-course dark" : "dash-course"}
+            style={{ '--course-color': course.color }}
           >
-            <div className="dash-course-header" style={{background: `${course.color}`, color: '#fff'}}>{course.title}</div>
-            <span className="content">{course.description}</span>
-            <div className="teacher-date">
-              <h2>%</h2>
-              <ProgressBar progress={course.progress} color={course.color} />
+            <div className={theme === 'dark' ? "dash-course-header dark" : "dash-course-header"}>
+              {course.title}
+              {course.graded && <span className="graded-badge">Graded</span>}
+            </div>
+            <div className={theme === 'dark' ? "course-content dark" : "course-content"}>
+              <p className="course-description">{course.description}</p>
+              <div className={theme === 'dark' ? "course-meta dark" : "course-meta"}>
+                <span className="instructor">Instructor: {course.instructor}</span>
+                <span className="submission-date">Submitted: {course.submittedAt}</span>
+              </div>
+              <div className={theme === 'dark' ? "progress-section dark" : "progress-section"}>
+                <ProgressBar progress={course.progress} color={course.color} />
+                <span className={theme === 'dark' ? "progress-text dark" : "progress-text"}>{course.progress}% Complete</span>
+              </div>
             </div>
           </div>
         ))}

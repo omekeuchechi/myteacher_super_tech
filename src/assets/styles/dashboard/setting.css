@@ -465,6 +465,10 @@
   transform: translateY(0) rotate(0);
 }
 
+.fb-upload-preview > video{
+  width: 100%;
+}
+
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }

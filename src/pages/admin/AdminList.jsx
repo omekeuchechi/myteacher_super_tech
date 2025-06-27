@@ -1,15 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { toast, ToastContainer } from 'react-toastify'; // Optional: if you want to show toasts
+import React, { useEffect, useState, useContext } from "react";
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AdminNav from "../../components/adminCom/navSection";
+import { AuthContext } from "../../../context/Authcontext";
+import '../../assets/styles/admin/adminList.css'; // Import the CSS file
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
 
 const AdminList = () => {
+  const { logout } = useContext(AuthContext);
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [processingId, setProcessingId] = useState(null); // For delete/suspend operations
+
+  const navLinks = [
+    { to: "/", label: "Home" },
+    { to: "/admin/ui-settings", label: "UI Settings" },
+    { to: "/admin/take-lecture", label: "Take Lecture" },
+    { to: "/admin/profile", label: "Profile" },
+    { to: "/admin/users", label: "Users" },
+    { to: "/admin/transactions", label: "Transactions" },
+    { to: "/admin/enrollments", label: "Enrollment" },
+    { to: "/admin/admin-list", label: "Admin List" },
+    { to: "/admin/contact-messages", label: "Contact Messages" },
+    { to: "/admin/publish-asset", label: "Publish Asset" },
+    { to: "/admin/post-blog", label: "Post Blog" },
+  ];
 
   useEffect(() => {
     const fetchAdmins = async () => {
@@ -105,7 +124,6 @@ const AdminList = () => {
       const res = await fetch(endpoint, {
         method: "PATCH",
         headers: {
-          // "Content-Type": "application/json", // Usually not needed if the PATCH request doesn't send a body
           Authorization: `Bearer ${token}`,
         },
       });
@@ -132,84 +150,124 @@ const AdminList = () => {
     }
   };
 
+  if (loading && admins.length === 0) {
+    return (
+      <div className="loading-state">
+        <i className="fas fa-spinner fa-spin spinner"></i>
+        <p>Loading admins...</p>
+      </div>
+    );
+  }
+
+  if (error && admins.length === 0) {
+    return (
+      <div className="error-state">
+        <p>{error}</p>
+        <button 
+          onClick={() => window.location.reload()}
+          className="btn btn-delete"
+          style={{ marginTop: '1rem' }}
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div style={{ padding: "20px" }} className="admin-admins-page">
-      <ToastContainer position="top-right" autoClose={3000} />
-      <h2>Admin Users</h2>
-      <p>List of users with administrative privileges.</p>
+    <>
+      <AdminNav navLinks={navLinks} onLogout={logout} />
+      <div className="admin-list-container">
+        <ToastContainer position="top-right" autoClose={3000} />
+        
+        <header className="admin-list-header">
+          <h2>Admin Users</h2>
+          <p>List of users with administrative privileges.</p>
+        </header>
 
-      <input
-        type="search"
-        placeholder="Search by name or email..."
-        className="search-admin" // You might want to add specific styles for this
-        value={searchQuery}
-        onChange={handleSearchChange}
-        style={{ marginBottom: "1rem", padding: "8px", width: "300px" }}
-      />
+        <div className="search-container">
+          <input
+            type="search"
+            placeholder="Search by name or email..."
+            className="search-admin"
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+        </div>
 
-      {loading && <div>Loading admins...</div>}
-      {error && <div style={{ color: "red", marginTop: "1rem" }}>Error: {error}</div>}
-
-      {!loading && !error && (
-        filteredAdmins.length === 0 ? <p style={{ marginTop: "1rem" }}>{searchQuery ? "No admins match your search." : "No admin users found."}</p> :
-        <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "1rem" }}>
-          <thead>
-            <tr>
-              <th style={{ border: "1px solid #ccc", padding: "8px", textAlign: "left" }}>Name</th>
-              <th style={{ border: "1px solid #ccc", padding: "8px", textAlign: "left" }}>Email</th>
-              <th style={{ border: "1px solid #ccc", padding: "8px", textAlign: "left" }}>Status</th>
-              <th style={{ border: "1px solid #ccc", padding: "8px", textAlign: "left" }}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredAdmins.map((admin) => (
-              <tr key={admin._id}>
-                <td style={{ border: "1px solid #ccc", padding: "8px" }}>{admin.name}</td>
-                <td style={{ border: "1px solid #ccc", padding: "8px" }}>{admin.email}</td>
-                <td style={{ border: "1px solid #ccc", padding: "8px" }}>
-                  {admin.isSuspended ? <span style={{color: "orange"}}>Suspended</span> : <span style={{color: "green"}}>Active</span>}
-                </td>
-                <td style={{ border: "1px solid #ccc", padding: "8px" }}>
-                  <button
-                    onClick={() => handleToggleAdminSuspension(admin._id, admin.isSuspended)}
-                    disabled={processingId === admin._id}
-                    style={{
-                      padding: "5px 10px",
-                      backgroundColor: processingId === admin._id 
-                                        ? "#ccc" 
-                                        : admin.isSuspended ? "#28a745" : "#f0ad4e", // Green for Unsuspend, Orange for Suspend
-                      color: "white",
-                      border: "none",
-                      borderRadius: "4px",
-                      cursor: processingId === admin._id ? "not-allowed" : "pointer",
-                      marginRight: "5px",
-                    }}
-                  >
-                    {processingId === admin._id 
-                      ? (admin.isSuspended ? "Unsuspending..." : "Suspending...") 
-                      : (admin.isSuspended ? "Unsuspend" : "Suspend")}
-                  </button>
-                  <button
-                    onClick={() => handleDeleteAdmin(admin._id)}
-                    disabled={processingId === admin._id}
-                    style={{
-                      padding: "5px 10px",
-                      backgroundColor: processingId === admin._id ? "#ccc" : "#ff4d4f",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "4px",
-                      cursor: processingId === admin._id ? "not-allowed" : "pointer",
-                    }}
-                  >
-                    {processingId === admin._id ? "Deleting..." : "Delete"}
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
+        {!loading && !error && (
+          filteredAdmins.length === 0 ? (
+            <div className="empty-state">
+              {searchQuery ? "No admins match your search." : "No admin users found."}
+            </div>
+          ) : (
+            <div className="table-responsive">
+              <table className="admins-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredAdmins.map((admin) => {
+                    const isProcessing = processingId === admin._id;
+                    const isSuspended = admin.isSuspended;
+                    
+                    return (
+                      <tr key={admin._id}>
+                        <td data-label="Name">{admin.name || 'N/A'}</td>
+                        <td data-label="Email">{admin.email || 'N/A'}</td>
+                        <td data-label="Status">
+                          <span className={`status-badge ${isSuspended ? 'suspended' : 'active'}`}>
+                            {isSuspended ? 'Suspended' : 'Active'}
+                          </span>
+                        </td>
+                        <td data-label="Actions">
+                          <div className="action-buttons">
+                            <button
+                              onClick={() => handleToggleAdminSuspension(admin._id, isSuspended)}
+                              disabled={isProcessing}
+                              className={`btn ${isSuspended ? 'btn-unsuspend' : 'btn-suspend'}`}
+                            >
+                              {isProcessing ? (
+                                <>
+                                  <i className="fas fa-spinner fa-spin spinner"></i>
+                                  {isSuspended ? 'Unsuspending...' : 'Suspending...'}
+                                </>
+                              ) : (
+                                <>
+                                  {isSuspended ? <i className="fas fa-user-check"></i> : <i className="fas fa-user-slash"></i>}
+                                  {isSuspended ? 'Unsuspend' : 'Suspend'}
+                                </>
+                              )}
+                            </button>
+                            <button
+                              onClick={() => handleDeleteAdmin(admin._id)}
+                              disabled={isProcessing}
+                              className="btn btn-delete"
+                            >
+                              {isProcessing ? (
+                                <FontAwesomeIcon icon={faSpinner} className="spinner" spin />
+                              ) : (
+                                <i className="fas fa-trash"></i>
+                              )}
+                              <span>Delete</span>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )
+        )}
+      </div>
+    </>
   );
 };
 

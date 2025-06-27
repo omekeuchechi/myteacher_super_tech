@@ -1,99 +1,83 @@
-.dashboard-container.dark {
-  --text-color: #fff;
-  --text-color-gray: #bbb;
-  --background-color: #222;
-
-  --hero-bg: #1e1e1e;
-  --hero-text-color: #f5f5f5;
-  --hero-subtext-color: #ccc;
-  --dot-inactive: #666;
-  --dot-active: #fff;
-
-  --course-bg: #2a2a2a;
-  --course-title-color: #fff;
-  --course-content-color: #ccc;
-  --teacher-color: #ddd;
-  --scroll-button-color: #f1f1f1;
-}
-
-
-.dashboard-container.light {
-  --primary-color: #086ccabb;
-  --primary-color-2: #3498db85;
-  --text-color: #000;
-  --text-color-gray: #4b4545;
-  --text-color-light: #fff;
-  --background-color: #f0f0f0;
-
-  --hero-bg: #f9f9f9;
-  --hero-text-color: #2c3e50;
-  --hero-subtext-color: #34495e;
-  --dot-inactive: #ccc;
-  --dot-active: #2c3e50;
-
-  /* Course Card Defaults */
-  --course-bg: #fff;
-  --course-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  --course-title-color: #222;
-  --course-content-color: #555;
-  --teacher-color: #444;
-  --scroll-button-color: #333;
-}
-
-
-
+/* courseTaken.css */
 .dash-course-taken-section {
-  padding: 30px;
-  margin-top: 20px;
-  border-radius: 8px;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 1.5rem;
+  margin-top: 40px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.dash-course-taken-section.dark {
+  background: #333;
+}
+
+.dash-course-taken-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.dash-course-taken-header.dark {
+  background: #333;
 }
 
 .dash-course-taken-header h2 {
-  font-size: 20px;
   margin: 0;
-  color: var(--text-color);
+  color: #000;
+  font-size: 2rem;
 }
 
-.carousel-container > .dash-course > .dash-course-header{
-  /* width: 50px; */
-  text-align: center;
+.dash-course-taken-header.dark h2 {
+  color: #fff;
 }
 
 .view-all-btn {
-  padding: 8px 16px;
-  font-size: 14px;
-  background-color: var(--primary-color);
-  color: var(--text-color-light);
-  border: none;
-  border-radius: 4px;
+  background: none;
+  border: 1px solid #4a5568;
+  color: #4a5568;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .view-all-btn:hover {
-  background-color: var(--primary-color-2);
+  background: #3fa8eeb6;
 }
 
-.dash-course-scroll-buttons button {
-  background: none;
+.carousel-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.carousel-arrow {
+  background: #edf2f7;
   border: none;
-  font-size: 24px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  color: var(--scroll-button-color);
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.carousel-arrow:hover {
+  background: #e2e8f0;
 }
 
 .carousel-container {
   display: flex;
   overflow-x: auto;
+  gap: 1rem;
+  padding: 1rem 0;
   scroll-behavior: smooth;
-  padding-bottom: 10px;
   scrollbar-width: none;
-  -ms-overflow-style: none;
 }
 
 .carousel-container::-webkit-scrollbar {
@@ -101,169 +85,97 @@
 }
 
 .dash-course {
-  padding: 20px;
-  width: 40%;
-  margin-right: 15px;
+  min-width: 280px;
+  background: #fff;
   border-radius: 8px;
-  box-shadow: var(--course-shadow);
-  background-color: var(--course-bg);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
   flex-shrink: 0;
-  transition: box-shadow 0.2s ease, background-color 0.3s ease;
+  font-size: 1rem;
 }
 
 .dash-course:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transform: translateY(-5px);
 }
 
 .dash-course-header {
-  font-size: 20px;
+  background: var(--course-color, #4a5568);
+  color: white;
+  padding: 1rem;
   font-weight: 600;
-  color: var(--hero-text-color);
-  padding-top: 10px;
-  padding-bottom: 10px; 
-}
-
-.content {
-  display: block;
-  margin: 10px 0;
-  font-size: 14px;
-  color: var(--course-content-color);
-}
-
-.teacher-date {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-top: 15px;
-  gap: 10px;
+  align-items: center;
 }
 
-.teacher-date h2 {
-  font-size: 16px;
-  margin: 0;
-  color: var(--teacher-color);
+.graded-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
-.progress-container {
-  margin-top: 10px;
-  width: 100%;
+.course-content {
+  padding: 1.25rem;
 }
 
-.progress-wrapper {
-  padding: 10px 0;
+.course-description {
+  color: #4a5568;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.dash-course-taken-section > div > button > .clor.dark{
-  color: #fff;
+.course-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #718096;
 }
 
-.dash-course-taken-section > div > button > .clor{
-  color: var(--text-color-gray);
+.progress-section {
+  margin-top: 1rem;
 }
 
-/* =======================
-   Responsive Design
-========================== */
-
-/* Tablets (portrait & landscape) */
-@media (max-width: 1024px) {
-  .dash-course {
-    min-width: 45%; /* Two cards per row-ish */
-  }
-
-  .dash-course-taken-header h2 {
-    font-size: 18px;
-  }
-
-  .view-all-btn {
-    font-size: 13px;
-    padding: 7px 14px;
-  }
-
-  .dash-course-header {
-    font-size: 18px;
-  }
-
-  .teacher-date h2 {
-    font-size: 14px;
-  }
+.progress-text {
+  display: block;
+  text-align: right;
+  font-size: 1.5rem;
+  color: #4a5568;
+  margin-top: 0.5rem;
 }
 
-/* Mobile devices */
+.loading, .error, .no-courses {
+  text-align: center;
+  padding: 2rem;
+  color: #4a5568;
+}
+
+.error {
+  color: #e53e3e;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .dash-course-taken-section {
-    padding: 20px;
-    box-shadow: none;
-  }
-
-  .carousel-container {
-    flex-wrap: nowrap;
-    overflow-x: scroll;
-  }
-
   .dash-course {
-    min-width: 85%;
-    margin-right: 10px;
+    min-width: 250px;
   }
-
+  
   .dash-course-taken-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 1rem;
   }
-
-  .dash-course-scroll-buttons {
+  
+  .carousel-controls {
     justify-content: center;
-  }
-
-  .dash-course-header {
-    font-size: 16px;
-  }
-
-  .content {
-    font-size: 13px;
-  }
-
-  .teacher-date {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-  }
-
-  .teacher-date h2 {
-    font-size: 13px;
-  }
-
-  .view-all-btn {
-    font-size: 12px;
-    padding: 6px 12px;
-  }
-}
-
-/* Small phones */
-@media (max-width: 480px) {
-  .dash-course {
-    min-width: 95%;
-  }
-
-  .dash-course-header {
-    font-size: 15px;
-  }
-
-  .content {
-    font-size: 12px;
-  }
-
-  .teacher-date h2 {
-    font-size: 12px;
-  }
-
-  .view-all-btn {
-    font-size: 11px;
-    padding: 5px 10px;
-  }
-
-  .dash-course-scroll-buttons button {
-    font-size: 20px;
   }
 }

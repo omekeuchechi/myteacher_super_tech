@@ -18,6 +18,8 @@ import OnlineClass from './pages/online';
 import Assets from './pages/assets';
 import Settings from './pages/settings';
 import Profile from './pages/profile';
+import GeneralProfile from './pages/generalProfile';
+import Assignment from './pages/assignment';
 
 // courses pages
 import CopyRight from './pages/coursesPages/copyRight';
@@ -36,7 +38,7 @@ import ForgotPassword from './pages/forgotPassword';
 import ResetPassword from './pages/resetPassword';
 
 // admin pages
-import Dashboard from './pages/admin/dashboard';
+import Dashboard from './pages/admin/Dashboard';
 import UISettings from "./pages/admin/UISettings";
 import TakeLecture from "./pages/admin/TakeLecture";
 import AdminProfile from "./pages/admin/Profile";
@@ -49,6 +51,9 @@ import PublishAsset from "./pages/admin/PublishAsset";
 import PostBlog from "./pages/admin/PostBlog";
 import Apply from './pages/apply';
 import SuperAdminList from './pages/admin/superAdminList';
+import Mailer from './pages/admin/mailer';
+import CreateAssignment from './pages/admin/createAssignment';
+import AssignmentCorrections from './pages/admin/assignmentCorrections';
 
 // Helper component for protected routes
 function ProtectedRoute({ children, adminOnly, userOnly, verificationOnly }) {
@@ -167,11 +172,23 @@ function AppRoutes() {
           <Apply />
         </ProtectedRoute>
       } />
+      {/* Specific route must come before the general one */}
+      <Route path="/profile-search/:userId" element={
+        <ProtectedRoute userOnly>
+          <GeneralProfile />
+        </ProtectedRoute>
+      } />
       <Route path="/profile" element={
         <ProtectedRoute userOnly>
           <Profile />
         </ProtectedRoute>
       } />
+      <Route path="/assignment" element={
+        <ProtectedRoute userOnly>
+          <Assignment />
+        </ProtectedRoute>
+      } />
+
       <Route path="/courses" element={<Courses />} />
 
       {/* Course description pages */}
@@ -189,19 +206,19 @@ function AppRoutes() {
 
       {/* Email verification pages (only if not verified) */}
       <Route path="/verify-email-info" element={
-        // <ProtectedRoute verificationOnly>
+        <ProtectedRoute verificationOnly>
           <VerifyEmailInfo />
-        // </ProtectedRoute>
+        </ProtectedRoute>
       } />
       <Route path="/verify-email" element={
-        // <ProtectedRoute verificationOnly>
+        <ProtectedRoute verificationOnly>
           <VerifyEmail />
-        // </ProtectedRoute>
+        </ProtectedRoute>
       } />
       <Route path="/resend-verification" element={
-        // <ProtectedRoute verificationOnly>
+        <ProtectedRoute verificationOnly>
           <ResendVerification />
-        // </ProtectedRoute>
+        </ProtectedRoute>
       } />
 
       {/* Admin dashboard pages (adminOnly) */}
@@ -263,6 +280,21 @@ function AppRoutes() {
       <Route path="/admin/super-admin-list" element={
         <ProtectedRoute adminOnly>
           <SuperAdminList />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin/mailer" element={
+        <ProtectedRoute adminOnly>
+          <Mailer />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin/create-assignment" element={
+        <ProtectedRoute adminOnly>
+          <CreateAssignment />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin/assignment-corrections" element={
+        <ProtectedRoute adminOnly>
+          <AssignmentCorrections />
         </ProtectedRoute>
       } />
     </Routes>

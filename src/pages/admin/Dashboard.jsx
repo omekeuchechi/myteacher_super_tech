@@ -1,81 +1,123 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import { AuthContext } from "../../../context/Authcontext";
 import { CourseContext } from "../../../context/CourseContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Pusher from "pusher-js";
 import "../../assets/styles/admin/dashboard.css";
+import AdminNav from "../../components/adminCom/navSection";
+
 const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
 
 const navLinks = [
+  { to: "/", label: "Home" },
   { to: "/admin/ui-settings", label: "UI Settings" },
   { to: "/admin/take-lecture", label: "Take Lecture" },
   { to: "/admin/profile", label: "Profile" },
-  { to: "/admin/users", label: "Users" },
-  { to: "/admin/transactions", label: "Transactions" },
+  // { to: "/admin/users", label: "Users" },
+  // { to: "/admin/transactions", label: "Transactions" },
   { to: "/admin/enrollments", label: "Enrollment" },
   { to: "/admin/admin-list", label: "Admin List" },
   { to: "/admin/contact-messages", label: "Contact Messages" },
-  { to: "/admin/publish-asset", label: "Publish Asset" },
-  { to: "/admin/post-blog", label: "Post Blog" },
+  { to: "/admin/create-assignment", label: "Create Assignment" },
+  { to: "/admin/assignment-corrections", label: "Assignment Corrections" },
+  // { to: "/admin/publish-asset", label: "Publish Asset" },
+  // { to: "/admin/post-blog", label: "Post Blog" },
+  // { to: "/admin/mailer", label: "Mailer" },
 ];
 
 const Dashboard = () => {
-  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { user, logout, loading: authLoading } = useContext(AuthContext);
   const { courses, loading: coursesLoading, fetchCourses } = useContext(CourseContext);
-  const [stats, setStats] = useState({
+  // Initialize stats with default values
+  const defaultStats = {
     users: 0,
     enrollments: 0,
     transactions: 0,
     messages: 0,
     assets: 0,
     blogs: 0,
-  });
+  };
+
+  const [stats, setStats] = useState({ ...defaultStats });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Fetch dashboard stats
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const res = await fetch(`${API_BASE}/admin/dashboard-stats`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        if (res.ok) {
-          const data = await res.json();
-          setStats(data);
-        }
-      } catch (err) {}
-      setLoading(false);
-    };
-    fetchStats();
+  const fetchStats = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No authentication token found");
+      }
 
-    // Listen for real-time updates via Pusher
+      const res = await fetch(`${API_BASE}/admin/dashboard-stats`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        if (res.status === 401) {
+          // Token expired or invalid
+          logout();
+          navigate('/login');
+          return;
+        }
+        throw new Error('Failed to fetch dashboard stats');
+      }
+
+      const data = await res.json();
+      // Ensure all expected stats are present with valid numbers
+      const safeData = {
+        ...defaultStats,
+        ...data,
+      };
+
+      // Convert all values to numbers and ensure they're valid
+      Object.keys(safeData).forEach(key => {
+        safeData[key] = isNaN(Number(safeData[key])) ? 0 : Number(safeData[key]);
+      });
+
+      setStats(safeData);
+    } catch (err) {
+      console.error("Error fetching dashboard stats:", err);
+      setError(err.message || "Failed to load dashboard data. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  }, [navigate, logout]);
+
+  useEffect(() => {
+    fetchStats();
+  }, [fetchStats]);
+
+  // Initialize Pusher for real-time updates
+  useEffect(() => {
     const pusherKey = import.meta.env.VITE_PUSHER_KEY;
     const pusherCluster = import.meta.env.VITE_PUSHER_CLUSTER;
-    let pusher, channel;
-    if (pusherKey && pusherCluster) {
-      pusher = new Pusher(pusherKey, {
-        cluster: pusherCluster,
-        forceTLS: true,
-      });
 
-      channel = pusher.subscribe("admin-dashboard");
-      channel.bind("stats-updated", function (data) {
-        setStats(data);
-      });
+    if (!pusherKey || !pusherCluster) {
+      console.warn('Pusher key or cluster not found. Real-time updates disabled.');
+      return;
     }
 
+    const pusher = new Pusher(pusherKey, {
+      cluster: pusherCluster,
+      encrypted: true
+    });
+
+    const channel = pusher.subscribe('admin-dashboard');
+    channel.bind('stats-updated', fetchStats);
+
     return () => {
-      if (channel) {
-        channel.unbind_all();
-        channel.unsubscribe();
-      }
-      if (pusher) {
-        pusher.disconnect();
-      }
+      channel.unbind_all();
+      channel.unsubscribe();
+      pusher.disconnect();
     };
-  }, []);
+  }, [fetchStats]);
 
   // Handle course update
   const handleUpdateCourse = async (id, updatedData, cb) => {
@@ -122,81 +164,150 @@ const Dashboard = () => {
     }
   };
 
+  // Handle loading state
+  if (authLoading || (loading && !error)) {
+    return (
+      <div className="admin-dashboard">
+        <AdminNav navLinks={navLinks} onLogout={logout} />
+        <main className="admin-main-content">
+          <div className="loading-container">
+            <div className="spinner"></div>
+            <p>Loading dashboard...</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // Handle case when user is not authenticated
+  if (!user) {
+    return (
+      <div className="admin-dashboard">
+        <AdminNav navLinks={navLinks} onLogout={logout} />
+        <main className="admin-main-content">
+          <div className="error-container">
+            <h2>Not Authorized</h2>
+            <p>Please log in to access the admin dashboard.</p>
+            <Link to="/login" className="btn btn-primary">Go to Login</Link>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // Display error message if fetch failed
+  if (error) {
+    return (
+      <div className="admin-dashboard">
+        <AdminNav navLinks={navLinks} onLogout={logout} />
+        <main className="admin-main-content">
+          <div className="error-container">
+            <h2>Error Loading Dashboard</h2>
+            <p>{error}</p>
+            <button
+              className="btn btn-primary"
+              onClick={fetchStats}
+            >
+              Retry
+            </button>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="admin-dashboard">
-      <nav className="admin-nav">
-        <div className="admin-logo">Admin Dashboard</div>
-        <input type="checkbox" id="admin-nav-toggle" className="admin-nav-toggle" />
-        <label htmlFor="admin-nav-toggle" className="admin-nav-hamburger">
-          <span></span>
-          <span></span>
-          <span></span>
-        </label>
-        <ul className="admin-nav-links">
-          {navLinks.map(link => (
-            <li key={link.to}>
-              <Link to={link.to}>{link.label}</Link>
-            </li>
-          ))}
-          <li onClick={logout} className="admin-nav-logout">
-              <i className="fas fa-sign-out-alt"></i> Logout
-          </li>
-        </ul>
-      </nav>
+      <AdminNav navLinks={navLinks} onLogout={logout} />
       <main className="admin-main-content">
-        <h1>Welcome, Admin {user.name}!</h1>
-        <p>Select a section from the navigation above to manage the platform.</p>
-        <Link to="/admin/super-admin-list">
-          <i className="fas fa-user-tie"></i>
-        </Link>
-        <div className="admin-dashboard-stats">
-          {loading ? (
-            <div>Loading stats...</div>
-          ) : (
-            <div className="stats-grid">
-              <div className="stat-card">
-                <h2>{stats.users}</h2>
-                <p>Users</p>
-              </div>
-              <div className="stat-card">
-                <h2>{stats.enrollments}</h2>
-                <p>Enrollments</p>
-              </div>
-              <div className="stat-card">
-                <h2>{stats.transactions}</h2>
-                <p>Transactions</p>
-              </div>
-              <div className="stat-card">
-                <h2>{stats.messages}</h2>
-                <p>Contact Messages</p>
-              </div>
-              <div className="stat-card">
-                <h2>{stats.assets}</h2>
-                <p>Assets</p>
-              </div>
-              <div className="stat-card">
-                <h2>{stats.blogs}</h2>
-                <p>Blogs</p>
-              </div>
-            </div>
-          )}
-        </div>
+        <header className="dashboard-header">
+          <h1>Welcome back, {user.name || 'Admin'}!</h1>
+          <p className="dashboard-subtitle">Here's what's happening with your platform today.</p>
+        </header>
 
-        <div className="add-course-section">
-          <h2 className="add-course-title">Add New Course</h2>
-          <AddCourseForm onSuccess={fetchCourses} />
+        <section className="admin-dashboard-stats">
+          <h2 className="section-title">Platform Overview</h2>
+          <div className="stats-grid">
+            <div className="stat-card">
+              <h2>{typeof stats.users === 'number' ? stats.users.toLocaleString() : '0'}</h2>
+              <p>Total Users</p>
+            </div>
+            <div className="stat-card">
+              <h2>{typeof stats.enrollments === 'number' ? stats.enrollments.toLocaleString() : '0'}</h2>
+              <p>Enrollments</p>
+            </div>
+            <div className="stat-card">
+              <h2>{typeof stats.transactions === 'number' ? stats.transactions.toLocaleString() : '0'}</h2>
+              <p>Transactions</p>
+            </div>
+            <div className="stat-card">
+              <h2>{typeof stats.messages === 'number' ? stats.messages.toLocaleString() : '0'}</h2>
+              <p>Messages</p>
+            </div>
+            <div className="stat-card">
+              <h2>{typeof stats.assets === 'number' ? stats.assets.toLocaleString() : '0'}</h2>
+              <p>Assets</p>
+            </div>
+            <div className="stat-card">
+              <h2>{typeof stats.blogs === 'number' ? stats.blogs.toLocaleString() : '0'}</h2>
+              <p>Blog Posts</p>
+            </div>
+          </div>
+        </section>
+
+        <div className="dashboard-actions">
+          <div className="add-course-section">
+            <h2 className="section-title">Add New Course</h2>
+            <AddCourseForm onSuccess={() => {
+              fetchStats();
+              fetchCourses();
+            }} />
+          </div>
+
+          <div className="quick-links">
+            <h2 className="section-title">Quick Actions</h2>
+            <div className="quick-links-grid">
+              <Link to="/admin/users" className="quick-link">
+                <i className="fas fa-users"></i>
+                <span>Manage Users</span>
+              </Link>
+              <Link to="/admin/publish-asset" className="quick-link">
+                <i className="fas fa-upload"></i>
+                <span>Upload Asset</span>
+              </Link>
+              <Link to="/admin/post-blog" className="quick-link">
+                <i className="fas fa-edit"></i>
+                <span>Write Blog Post</span>
+              </Link>
+              <Link to="/admin/transactions" className="quick-link">
+                <i className="fas fa-exchange-alt"></i>
+                <span>View Transactions</span>
+              </Link>
+              <Link to="/admin/mailer" className="quick-link">
+                <i className="fas fa-envelope"></i>
+                <span>Mailer</span>
+              </Link>
+            </div>
+          </div>
         </div>
 
         <div className="course-list-section">
-          <h2 className="add-course-title" style={{ marginTop: 32 }}>All Courses</h2>
+          <div className="section-header">
+            <h2 className="section-title">Your Courses</h2>
+          </div>
           {coursesLoading ? (
-            <div>Loading courses...</div>
-          ) : (
+            <div className="loading-text">Loading courses...</div>
+          ) : courses && courses.length > 0 ? (
             <CourseList
-              courses={courses}
+              courses={courses.slice(0, 5)} // Show only first 5 courses
               onUpdate={handleUpdateCourse}
               onDelete={handleDeleteCourse}
             />
+          ) : (
+            <div className="empty-state">
+              <i className="fas fa-book-open"></i>
+              <p>No courses found. Create your first course to get started!</p>
+            </div>
           )}
         </div>
       </main>

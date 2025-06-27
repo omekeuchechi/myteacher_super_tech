@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../../context/Authcontext';
 import { toast, ToastContainer } from 'react-toastify';
 import Pusher from 'pusher-js';
+import { useDropzone } from 'react-dropzone';
+import { fromEvent } from 'file-selector';
 
 import 'react-toastify/dist/ReactToastify.css';
 import '../assets/styles/dashboard/setting.css';
@@ -124,6 +126,37 @@ const Settings = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [profileImage, setProfileImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
+
+  const onDrop = useCallback((acceptedFiles, fileRejections) => {
+    if (fileRejections.length > 0) {
+      toast.error('Only JPG, PNG, or AVIF images are allowed.');
+      return;
+    }
+    
+    const file = acceptedFiles[0];
+    if (!file) return;
+    
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/avif', 'image/jpg'];
+    if (!allowedTypes.includes(file.type)) {
+      toast.error('Only JPG, PNG, or AVIF images are allowed.');
+      return;
+    }
+    
+    setProfileImage(file);
+    const reader = new FileReader();
+    reader.onload = () => setPreviewImage(reader.result);
+    reader.readAsDataURL(file);
+  }, []);
+  
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      'image/*': ['.jpeg', '.jpg', '.png', '.avif']
+    },
+    maxFiles: 1,
+    multiple: false
+  });
   const [enable2FA, setEnable2FA] = useState(false);
   const [stateOfOrigin, setStateOfOrigin] = useState('');
   const [country, setCountry] = useState('');
@@ -138,13 +171,68 @@ const Settings = () => {
   const [storyImage, setStoryImage] = useState('');
   const [storyVideo, setStoryVideo] = useState('');
   const [userInfoExists, setUserInfoExists] = useState(false);
-  const [storyImageFile, setStoryImageFile] = useState(null);
   const [storyVideoFile, setStoryVideoFile] = useState(null);
-  const [storyImageUploading, setStoryImageUploading] = useState(false);
   const [storyVideoUploading, setStoryVideoUploading] = useState(false);
+  const [isVideoDragActive, setIsVideoDragActive] = useState(false);
+  const [isImageDragActive, setIsImageDragActive] = useState(false);
+  const [storyImageFile, setStoryImageFile] = useState(null);
+  const [storyImageUploading, setStoryImageUploading] = useState(false);
+
+  const onImageDrop = useCallback((acceptedFiles) => {
+    const file = acceptedFiles[0];
+    if (!file) return;
+    
+    // Validate image type
+    if (!file.type.startsWith('image/')) {
+      toast.error('Only image files are allowed');
+      return;
+    }
+    
+    setStoryImageFile(file);
+    const imageUrl = URL.createObjectURL(file);
+    setStoryImage(imageUrl);
+  }, []);
+  
+  const { getRootProps: getImageRootProps, getInputProps: getImageInputProps } = useDropzone({
+    onDrop: onImageDrop,
+    accept: {
+      'image/*': ['.jpeg', '.jpg', '.png', '.webp', '.gif']
+    },
+    onDragEnter: () => setIsImageDragActive(true),
+    onDragLeave: () => setIsImageDragActive(false),
+    onDropAccepted: () => setIsImageDragActive(false),
+    multiple: false
+  });
+
+  const onVideoDrop = useCallback((acceptedFiles) => {
+    const file = acceptedFiles[0];
+    if (!file) return;
+    
+    // Validate video type
+    if (!file.type.startsWith('video/')) {
+      toast.error('Only video files are allowed');
+      return;
+    }
+    
+    setStoryVideoFile(file);
+    const videoUrl = URL.createObjectURL(file);
+    setStoryVideo(videoUrl);
+  }, []);
+  
+  const { getRootProps: getVideoRootProps, getInputProps: getVideoInputProps } = useDropzone({
+    onDrop: onVideoDrop,
+    accept: {
+      'video/*': ['.mp4', '.webm', '.mov', '.avi', '.mkv']
+    },
+    onDragEnter: () => setIsVideoDragActive(true),
+    onDragLeave: () => setIsVideoDragActive(false),
+    onDropAccepted: () => setIsVideoDragActive(false),
+    multiple: false
+  });
   // Modal and spinner state
   const [openSection, setOpenSection] = useState(null);
   const [modalLoading, setModalLoading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -181,7 +269,7 @@ const Settings = () => {
           setStoryImage(data.storyImage || '');
           setStoryVideo(data.storyVideo || '');
           // If address is also part of user_info, you might want to set it here too or decide which one takes precedence
-          // setAddress(data.address || user.address || ''); 
+          setAddress(data.address || user.address || ''); 
           setUserInfoExists(true);
         } else {
           setUserInfoExists(false);
@@ -432,39 +520,60 @@ const Settings = () => {
 
   const handleUserInfoSubmit = async (e) => {
     e.preventDefault();
+    setModalLoading(true);
     try {
-      const token = localStorage.getItem('token');
-      const method = userInfoExists ? 'PATCH' : 'POST';
-      // Note: The backend /user_info/me endpoint is not shown in the provided backend code.
-      // Assuming it exists and handles these fields.
-      // Also, decide if 'address' is part of UserInfo or just User model.
-      // If UserInfo also has 'address', include it here.
-      const res = await fetch(`${API_BASE}/user_info/me`, {
-        method: method,
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ aboutYourSelf, hobbies, marritaStatus /*, address: address */ }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        toast.success(data.message || `User info ${userInfoExists ? 'updated' : 'created'} successfully!`);
-        setUserInfoExists(true);
-        // Update local state from response if needed
-        if (data.userInfo) {
-            setAboutYourSelf(data.userInfo.aboutYourSelf || '');
-            setHobbies(data.userInfo.hobbies || '');
-            setMarritaStatus(data.userInfo.marritaStatus || '');
-            // if (data.userInfo.address) setAddress(data.userInfo.address);
+        const token = localStorage.getItem('token');
+        const payload = {};
+        
+        // Only include fields that have values
+        if (aboutYourSelf !== undefined) payload.aboutYourSelf = aboutYourSelf;
+        if (hobbies !== undefined) payload.hobbies = hobbies;
+        if (marritaStatus !== undefined) payload.marritaStatus = marritaStatus;
+        if (address !== undefined) payload.address = address;
+
+        // If no fields to update
+        if (Object.keys(payload).length === 0) {
+            toast.error('No fields to update');
+            return;
         }
-        setOpenSection(null);
-      } else {
-        toast.error(data.message || "Failed to save user info.");
-      }
+
+        const res = await fetch(`${API_BASE}/user_info/update`, {
+            method: 'PATCH',  // Using PATCH for partial updates
+            headers: { 
+                'Content-Type': 'application/json', 
+                'Authorization': `Bearer ${token}` 
+            },
+            body: JSON.stringify(payload),
+        });
+        
+        const data = await res.json();
+        
+        if (res.ok) {
+            toast.success(data.message || 'User info updated successfully!');
+            // Update local state from response
+            if (data.userInfo) {
+                setAboutYourSelf(prev => data.userInfo.aboutYourSelf ?? prev);
+                setHobbies(prev => data.userInfo.hobbies ?? prev);
+                setMarritaStatus(prev => data.userInfo.marritaStatus ?? prev);
+                if (data.userInfo.address) setAddress(data.userInfo.address);
+            }
+            setOpenSection(null);
+        } else {
+            if (res.status === 400) {
+                toast.error(data.message || 'Invalid update data');
+            } else if (res.status === 404) {
+                toast.error('Please create your user info first');
+            } else {
+                toast.error(data.message || 'Failed to update user info');
+            }
+        }
     } catch (err) {
-      toast.error("Network error. Please try again.");
+        console.error('Update error:', err);
+        toast.error('Network error. Please try again.');
     } finally {
-      setModalLoading(false);
+        setModalLoading(false);
     }
-  };
+};
 
 
   // Modal rendering logic
@@ -509,8 +618,6 @@ const Settings = () => {
           }}>
             <h2>Change Address & info</h2>
             <textarea type="text" placeholder="Change Address" value={address} onChange={e => setAddress(e.target.value)} style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }} />
-            {/* This 'about' is for the main User model. Ensure backend /user/profile handles it if uncommented. */}
-            {/* <textarea type="text" placeholder="About you (User model)" value={about} onChange={e => setAbout(e.target.value)} /> */}
             <button type="submit">Update Profile</button>
           </form>
         );
@@ -558,7 +665,7 @@ const Settings = () => {
             <h2>User Info (Profile Details)</h2>
             <textarea placeholder="About Yourself" value={aboutYourSelf} onChange={e => setAboutYourSelf(e.target.value)} style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }} />
             <input type="text" placeholder="Hobbies (comma separated)" value={hobbies} onChange={e => setHobbies(e.target.value)} style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }} />
-            <input type="text" placeholder="Marital Status" value={marritaStatus} onChange={e => setMarritaStatus(e.target.value)} style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }} />
+            <input type="text" placeholder="Marital Status" value={marritaStatus} onChange={e => setMarritaStatus(e.target.value)} style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }} /><textarea type="text" placeholder="Change Address" value={address} onChange={e => setAddress(e.target.value)} style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }} />
             <button type="submit">{userInfoExists ? 'Update User Info' : 'Create User Info'}</button>
           </form>
         );
@@ -596,13 +703,45 @@ const Settings = () => {
             }
           }}>
             <h2>Story Image</h2>
-            <div className="fb-upload-preview" style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }}>
-              {storyImage && (<img src={storyImage} alt="Story" />)}
+            <div 
+              className="fb-upload-preview" 
+              style={{ 
+                backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff',
+                minHeight: '200px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+                borderRadius: '8px',
+                border: isImageDragActive ? '2px dashed #4CAF50' : '2px dashed #ccc',
+                transition: 'border 0.3s ease',
+                cursor: 'pointer',
+                overflow: 'hidden'
+              }}
+              {...getImageRootProps()}
+            >
+              <input {...getImageInputProps()} />
+              {storyImage ? (
+                <img 
+                  src={storyImage} 
+                  alt="Story" 
+                  style={{ 
+                    maxWidth: '100%', 
+                    maxHeight: '300px',
+                    display: 'block',
+                    objectFit: 'contain'
+                  }} 
+                />
+              ) : (
+                <div style={{ textAlign: 'center', padding: '20px' }}>
+                  <i className="fas fa-image" style={{ fontSize: '48px', marginBottom: '10px', color: '#666' }}></i>
+                  <p style={{ margin: '10px 0' }}>
+                    {isImageDragActive ? 'Drop the image here' : 'Drag & drop an image here, or click to select'}
+                  </p>
+                  <p style={{ fontSize: '0.9em', color: '#999' }}>Supports: JPG, PNG, WebP, GIF</p>
+                </div>
+              )}
             </div>
-            <label className="fb-file-upload-label">
-              <i className="fas fa-camera fb-file-upload-icon"></i>
-              <input type="file" accept="image/*" onChange={e => setStoryImageFile(e.target.files[0])} style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }} />
-            </label>
             <button type="submit" disabled={storyImageUploading}>{storyImageUploading ? 'Uploading...' : 'Upload Story Image'}</button>
           </form>
         );
@@ -639,13 +778,44 @@ const Settings = () => {
             }
           }}>
             <h2>Story Video</h2>
-            <div className="fb-upload-preview" style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }}>
-              {storyVideo && (<video src={storyVideo} controls />)}
+            <div 
+              className="fb-upload-preview" 
+              style={{ 
+                backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff',
+                minHeight: '200px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+                borderRadius: '8px',
+                border: isVideoDragActive ? '2px dashed #4CAF50' : '2px dashed #ccc',
+                transition: 'border 0.3s ease',
+                cursor: 'pointer',
+                overflow: 'hidden'
+              }}
+              {...getVideoRootProps()}
+            >
+              <input {...getVideoInputProps()} />
+              {storyVideo ? (
+                <video 
+                  src={storyVideo} 
+                  controls 
+                  style={{ 
+                    maxWidth: '100%', 
+                    maxHeight: '300px',
+                    display: 'block'
+                  }} 
+                />
+              ) : (
+                <div style={{ textAlign: 'center', padding: '20px' }}>
+                  <i className="fas fa-video" style={{ fontSize: '48px', marginBottom: '10px', color: '#666' }}></i>
+                  <p style={{ margin: '10px 0' }}>
+                    {isVideoDragActive ? 'Drop the video here' : 'Drag & drop a video here, or click to select'}
+                  </p>
+                  <p style={{ fontSize: '0.9em', color: '#999' }}>Supports: MP4, WebM, MOV, AVI, MKV</p>
+                </div>
+              )}
             </div>
-            <label className="fb-file-upload-label">
-              <i className="fas fa-video fb-file-upload-icon"></i>
-              <input type="file" accept="video/*" onChange={e => setStoryVideoFile(e.target.files[0])} style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }} />
-            </label>
             <button type="submit" disabled={storyVideoUploading}>{storyVideoUploading ? 'Uploading...' : 'Upload Story Video'}</button>
           </form>
         );
@@ -701,7 +871,7 @@ const Settings = () => {
       }}>
       <h2 style={{ textAlign: 'center' }}>Profile Image</h2>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-      <div className="profile-img-container">
+      <div className="profile-img-container" style={{ position: 'relative', width: '120px', height: '120px' }}>
       {(() => {
       const imgSrc = previewImage
       ? previewImage
@@ -726,28 +896,102 @@ const Settings = () => {
       />
       );
       })()}
-      <label className="fb-file-upload-label">
-      <i className="fas fa-camera fb-file-upload-icon" />
-      <input type="file" accept="image/*,.avif" onChange={e => {
-      const file = e.target.files[0];
-      if (file) {
-        // Basic client-side validation for allowed types (backend does the robust check)
-        const allowedTypes = ['image/jpeg', 'image/png', 'image/avif'];
-        if (!allowedTypes.includes(file.type)) {
-            toast.error('Only JPG, PNG, or AVIF images are allowed.');
-            return;
-        }
-        setProfileImage(file);
-        const reader = new FileReader();
-        reader.onload = () => setPreviewImage(reader.result);
-        reader.readAsDataURL(file);
-      }
-      }} />
-      </label>
+      <div 
+        {...getRootProps()}
+        className="fb-file-upload-label" 
+        style={{
+          background: 'red',
+          cursor: 'pointer',
+          width: '40px',
+          height: '40px',
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'absolute',
+          bottom: '0',
+          right: '0',
+          border: `2px solid ${theme === 'dark' ? '#23272f' : '#fff'}`,
+          zIndex: 5
+        }}
+      >
+        <input {...getInputProps()} />
+        <i className="fas fa-camera" style={{ color: 'white' }} />
+        {isDragActive && (
+          <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+            color: 'white',
+            fontSize: '24px',
+            fontWeight: 'bold'
+          }}>
+            Drop the image here...
+          </div>
+        )}
       </div>
-      <button type="submit" style={{ width: '100%', maxWidth: 200, alignSelf: 'center' }}>
-      Upload Profile Image
-      </button>
+      </div>
+      <div style={{ position: 'relative', width: '100%', maxWidth: 200, alignSelf: 'center' }}>
+        <button 
+          type="submit" 
+          style={{ 
+            width: '100%',
+            position: 'relative',
+            zIndex: 1,
+            opacity: modalLoading ? 0.7 : 1,
+            pointerEvents: modalLoading ? 'none' : 'auto',
+            padding: '10px',
+            backgroundColor: '#4CAF50',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            fontSize: '16px',
+            marginTop: '10px',
+            transition: 'opacity 0.3s ease',
+            ':hover': {
+              backgroundColor: '#45a049',
+            },
+            ':disabled': {
+              backgroundColor: '#cccccc',
+              cursor: 'not-allowed'
+            }
+          }}
+          disabled={modalLoading}
+        >
+          {modalLoading ? 'Uploading...' : 'Upload Profile Image'}
+        </button>
+        {modalLoading && (
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.7)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: '4px',
+            zIndex: 2
+          }}>
+            <div className="spinner-border text-light" role="status" style={{
+              width: '1.5rem',
+              height: '1.5rem',
+              borderWidth: '0.2em'
+            }}>
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        )}
+      </div>
       </div>
       </form>
       );
@@ -789,6 +1033,7 @@ const Settings = () => {
     <NavItem icon="user" label="Profile" move="/profile" isExpanded={isExpanded} />
     <NavItem icon="chalkboard-teacher" label="Online Class" move="/online-class" isExpanded={isExpanded} />
     <NavItem icon="briefcase" label="Assets" move="/assets" isExpanded={isExpanded} />
+    <NavItem icon="book" label="Assignment" move="/assignment" isExpanded={isExpanded} />
     <NavItem icon="cog" label="Settings" move="/settings" isExpanded={isExpanded} />
     <NavItem icon="question-circle" label="Help" move="/help" isExpanded={isExpanded} />
     <NavItem icon="right-from-bracket" label="Log Out" move="" isExpanded={isExpanded} onClick={logout} />

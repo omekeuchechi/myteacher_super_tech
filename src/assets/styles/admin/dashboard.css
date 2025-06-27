@@ -1,6 +1,6 @@
 .admin-dashboard {
   font-family: 'Segoe UI', Arial, sans-serif;
-  background: #f4f6fa;
+  /* background: #f4f6fa; */
   min-height: 100vh;
 }
 
@@ -39,9 +39,9 @@
   transition: background 0.2s;
 }
 
-.admin-nav-links li a:hover {
+/* .admin-nav-links li a:hover {
   background: #1565c0;
-}
+} */
 
 .admin-nav-logout{
   background: #d32f2f;
@@ -115,10 +115,10 @@
 
 .admin-main-content {
   max-width: 900px;
-  margin: 40px auto;
+  margin: 100px auto;
   background: #fff;
   border-radius: 10px;
-  box-shadow: 0 2px 16px rgba(25, 118, 210, 0.08);
+  /* box-shadow: 0 2px 16px rgba(25, 118, 210, 0.08); */
   padding: 40px 28px;
   text-align: center;
 }
@@ -130,9 +130,68 @@
   }
 }
 
+/* Quick Actions Section */
+.quick-links {
+  margin-top: 2rem;
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  color: #2c3e50;
+  font-size: 1.3rem;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quick-links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.2rem;
+  margin-top: 1rem;
+}
+
+.quick-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #2c3e50;
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+.quick-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #1976d2;
+  color: #1976d2;
+}
+
+.quick-link i {
+  font-size: 1.8rem;
+  margin-bottom: 0.8rem;
+  color: #1976d2;
+}
+
+.quick-link span {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
 /* --- Dashboard Stats Section --- */
 .admin-dashboard-stats {
-  margin-top: 36px;
+  margin-top: 20px;
 }
 
 .stats-grid {

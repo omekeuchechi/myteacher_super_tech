@@ -144,9 +144,14 @@
 
 /* Online Class List */
 .dashboard-container .online-class-list {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.dashboard-container .online-class-list > * {
+  flex: 1 1 280px;
+  min-width: 0;
 }
 
 @media (max-width: 600px) {
@@ -160,6 +165,7 @@
   padding: 1rem;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
   border-radius: 10px;

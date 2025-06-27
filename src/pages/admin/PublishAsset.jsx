@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useDropzone } from 'react-dropzone';
 import { fromEvent } from 'file-selector';
+import AdminNav from "../../components/adminCom/navSection";
+import { AuthContext } from "../../../context/Authcontext";
 
 const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
 
@@ -29,6 +31,7 @@ function getCurrentUser() {
 }
 
 const PublishAsset = () => {
+  const { logout } = useContext(AuthContext);
   const [lectures, setLectures] = useState([]);
   const [selectedLecture, setSelectedLecture] = useState("");
   const [zipName, setZipName] = useState("");
@@ -208,7 +211,23 @@ const PublishAsset = () => {
     );
   });
 
+  const navLinks = [
+    { to: "/", label: "Home" },
+    { to: "/admin/ui-settings", label: "UI Settings" },
+    { to: "/admin/take-lecture", label: "Take Lecture" },
+    { to: "/admin/profile", label: "Profile" },
+    { to: "/admin/users", label: "Users" },
+    { to: "/admin/transactions", label: "Transactions" },
+    { to: "/admin/enrollments", label: "Enrollment" },
+    { to: "/admin/admin-list", label: "Admin List" },
+    { to: "/admin/contact-messages", label: "Contact Messages" },
+    { to: "/admin/publish-asset", label: "Publish Asset" },
+    { to: "/admin/post-blog", label: "Post Blog" },
+  ];
+
   return (
+    <>
+    <AdminNav navLinks={navLinks} onLogout={logout} />
     <div className="publish-asset-container" style={{ maxWidth: 700, margin: "0 auto", padding: 24 }}>
       <h2 style={{ marginBottom: 12 }}>Publish Asset</h2>
       <p style={{ marginBottom: 24 }}>Upload and manage assets here. All files will be zipped before upload.</p>
@@ -399,6 +418,7 @@ const PublishAsset = () => {
         </table>
       )}
     </div>
+    </>
   );
 };
 

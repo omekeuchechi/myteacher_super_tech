@@ -1,0 +1,131 @@
+.assignment-page-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--bg-color, #fff);
+    color: var(--text-color, #000);
+}
+
+.sidebar {
+    width: 200px;
+    background-color: var(--sidebar-bg, #f5f5f5);
+    color: var(--sidebar-text, #000);
+    transition: width 0.3s;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    padding-top: 60px; /* Space for header */
+}
+
+.sidebar.collapsed {
+    width: 80px;
+}
+
+.toggle-button {
+    background: none;
+    border: none;
+    color: var(--sidebar-text, #000);
+    cursor: pointer;
+    font-size: 20px;
+    padding: 10px;
+    text-align: right;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: var(--sidebar-text, #000);
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.nav-item.light{
+    color: #fff;
+}
+
+.nav-item.dark{
+    color: #000;
+}
+
+.nav-item:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 2rem;
+    width: 100%;
+    transition: margin-left 0.3s;
+}
+
+.sidebar.collapsed ~ .main-content {
+    margin-left: 80px;
+}
+
+.assignment-card {
+    background: var(--card-bg, #fff);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border-color, #e5e7eb);
+}
+
+.submit-button {
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    border: none;
+    cursor: pointer;
+}
+
+.submit-button.submitted {
+    background-color: #10B981;
+}
+
+.submit-button:not(.submitted) {
+    background-color: #3B82F6;
+}
+
+/* Dark theme variables */
+.assignment-page-container.dark {
+    --bg-color: #1a202c;
+    --text-color: #e2e8f0;
+    --sidebar-bg: #333;
+    --sidebar-text: #e2e8f0;
+    --card-bg: #2d3748;
+    --border-color: #4a5568;
+}
+
+/* Light theme variables */
+.assignment-page-container.light {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --sidebar-bg: #086cca;
+    --sidebar-text: #000000;
+    --card-bg: #ffffff;
+    --border-color: #e5e7eb;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}

@@ -47,7 +47,10 @@
     border-radius: 50%;
     border: 4px solid var(--background-color);
     margin-bottom: -30px; /* Pulls avatar down to overlap sections */
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-20%, 0);
     z-index: 2;
     background-color: #ccc;
   }
@@ -115,6 +118,56 @@
     width: 20px;
     text-align: center;
     color: #888;
+  }
+
+  .social-reflection-section {
+    margin: 25px 0;
+    padding: 0 15px;
+  }
+
+  .search-user-query {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .search-user-query input {
+    width: 100%;
+    padding: 12px 20px;
+    padding-right: 45px;
+    border: 2px solid #e0e0e0;
+    border-radius: 30px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .search-user-query input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 2px 12px rgba(74, 144, 226, 0.2);
+  }
+
+  .search-user-query input::placeholder {
+    color: #999;
+  }
+
+  .search-user-query:after {
+    content: '🔍';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    pointer-events: none;
+  }
+
+  .search-loading {
+    text-align: center;
+    color: #4a90e2;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    font-style: italic;
   }
 
   /* Mobile styles (up to 767px) */

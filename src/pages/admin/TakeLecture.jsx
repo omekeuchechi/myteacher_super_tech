@@ -3,6 +3,9 @@ import { AuthContext } from "../../../context/Authcontext";
 import { CourseContext } from "../../../context/CourseContext";
 import "../../assets/styles/admin/takeLecture.css";
 import { Link } from 'react-router-dom';
+import AdminNav from "../../components/adminCom/navSection";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
 
@@ -285,16 +288,32 @@ const TakeLecture = () => {
     }
   };
 
-  // When clicking "Edit", fetch lecture and open update form
   const handleEdit = (lectureId) => {
     fetchLecture(lectureId);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const navLinks = [
+    { to: "/", label: "Home" },
+    { to: "/admin/ui-settings", label: "UI Settings" },
+    { to: "/admin/take-lecture", label: "Take Lecture" },
+    { to: "/admin/profile", label: "Profile" },
+    { to: "/admin/users", label: "Users" },
+    { to: "/admin/transactions", label: "Transactions" },
+    { to: "/admin/enrollments", label: "Enrollment" },
+    { to: "/admin/admin-list", label: "Admin List" },
+    { to: "/admin/contact-messages", label: "Contact Messages" },
+    { to: "/admin/publish-asset", label: "Publish Asset" },
+    { to: "/admin/post-blog", label: "Post Blog" },
+  ];
+
+  const { logout } = useContext(AuthContext);
+
   return (
     <div className="take-lecture-wrapper">
+      <AdminNav navLinks={navLinks} onLogout={logout} />
       <div className="take-lecture-container">
-        <Link to="/admin/dashboard" className="back-to-admin"><i className="fas fa-chevron-left"></i></Link>
+        <ToastContainer position="top-right" autoClose={3000} />
 
         <div className="set-class-section">
           <h3 className="set-class-title">Create Lecture Batch</h3>
