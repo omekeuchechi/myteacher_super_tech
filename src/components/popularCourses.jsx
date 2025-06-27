@@ -1,10 +1,3 @@
-import { useEffect } from "react";
-import WebDevelopmentImg from '../assets/images/webDevimg1.webp';
-import DataAnalysisImg from '../assets/images/dataAnaylsisImg1.webp';
-import CyberSecurityImg from '../assets/images/cyberSecurityImg1.webp';
-import UXUIDesignImg from '../assets/images/UXUIDesignImg1.webp';
-import AppDevelopmentImg from '../assets/images/mobileDevelopmentImg1.webp';
-
 
 // new images
 
