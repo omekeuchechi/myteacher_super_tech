@@ -17,10 +17,8 @@ import Footer from "../components/footer";
 // import Faq from "../components/faq";
 import FunTech from "../components/funTech";
 // import WhatAppInfo from "../components/whatappInfo";
-import AboutCom from "../components/aboutComponent/aboutBody";
 import ContactUs from "../components/contactUs";
 import Testimonial from "../components/testimonial";
-import Flyers from "../components/Flyers";
 import WhatsAppIconOnly from "../components/whatIconLink";
 import HeroBox from './../components/herobox';
 // WhatAppIconLink
