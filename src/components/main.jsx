@@ -1,6 +1,6 @@
 import { useState } from "react";
 import MainImage from '../img/myteacher_main.jpeg';
-import myteacherLogo from '../img/untitled-1.png';
+import myteacherLogo from '../img/Untitled-1.png';
 
 const Main = () => {
     const [clicked, setClicked] = useState(false);
