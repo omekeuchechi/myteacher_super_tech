@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import DImage35 from "../img/download (35).jpeg";
 
 const Testimony = () => {

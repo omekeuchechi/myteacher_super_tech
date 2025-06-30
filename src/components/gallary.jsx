@@ -49,7 +49,7 @@ const Gallary = () => {
       </div>
 
       {/* Inline styles for the scrolling effect */}
-      <style jsx>{`
+      <style scoped>{`
         .gallary-section {
           padding: 40px 20px;
           background-color: #f9f9f9;

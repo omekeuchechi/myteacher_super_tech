@@ -1,8 +1,12 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useCallback, useContext, useRef } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { fromEvent } from 'file-selector';
 import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { FaBold, FaItalic, FaListUl, FaListOl, FaLink, FaPaperclip, FaCode, FaQuoteLeft, FaUnderline } from 'react-icons/fa';
+import { MdTitle, MdOutlineTitle } from 'react-icons/md';
+import { BiCodeBlock } from 'react-icons/bi';
+import ReactMarkdown from 'react-markdown';
 import '../assets/styles/dashboard/assignment.css';
 import DashMobileNav from '../components/userDashCom/dashMobileNav';
 import Header from '../components/userDashCom/header';
@@ -40,14 +44,38 @@ const toBase64 = file => new Promise((resolve, reject) => {
     reader.onerror = error => reject(error);
 });
 
+// Helper function to format text with prefix and suffix
+const formatText = (prefix, suffix = '', textarea) => {
+    if (!textarea) return;
+    
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = textarea.value.substring(start, end);
+    const beforeText = textarea.value.substring(0, start);
+    const afterText = textarea.value.substring(end);
+    
+    const newText = beforeText + prefix + selectedText + suffix + afterText;
+    
+    // Set cursor position after the inserted text
+    const newCursorPos = start + prefix.length + selectedText.length + suffix.length;
+    
+    return {
+        value: newText,
+        selectionStart: newCursorPos,
+        selectionEnd: newCursorPos
+    };
+};
+
 // Modal Component for Submission
 const SubmissionModal = ({ assignment, onClose, onSubmitted }) => {
     const token = localStorage.getItem('token');
+    const textareaRef = useRef(null);
     const [submissionText, setSubmissionText] = useState(assignment.userSubmission?.submission || '');
     const [submissionFiles, setSubmissionFiles] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [justSubmitted, setJustSubmitted] = useState(false);
     const [error, setError] = useState('');
+    const [isPreview, setIsPreview] = useState(false);
 
     const isEditing = !!assignment.userSubmission;
 
@@ -60,10 +88,31 @@ const SubmissionModal = ({ assignment, onClose, onSubmitted }) => {
         getDataTransferItems: fromEvent
     });
 
+    const handleFormatClick = (prefix, suffix = '') => {
+        if (!textareaRef.current) return;
+        
+        const result = formatText(prefix, suffix, textareaRef.current);
+        if (result) {
+            setSubmissionText(result.value);
+            // Update cursor position after state update
+            setTimeout(() => {
+                if (textareaRef.current) {
+                    textareaRef.current.selectionStart = result.selectionStart;
+                    textareaRef.current.selectionEnd = result.selectionEnd;
+                    textareaRef.current.focus();
+                }
+            }, 0);
+        }
+    };
+
     const handleFolderChange = (e) => {
         if (e.target.files) {
             setSubmissionFiles(prevFiles => [...prevFiles, ...Array.from(e.target.files)]);
         }
+    };
+    
+    const removeFile = (index) => {
+        setSubmissionFiles(prev => prev.filter((_, i) => i !== index));
     };
 
     const handleSubmit = async (e) => {
@@ -130,80 +179,199 @@ const SubmissionModal = ({ assignment, onClose, onSubmitted }) => {
         padding: '20px',
         textAlign: 'center',
         cursor: 'pointer',
-        marginBottom: '1rem',
-        backgroundColor: isDragActive ? '#f0f0f0' : '#fafafa'
+        margin: '0.5rem 0',
+        backgroundColor: isDragActive ? '#f0f8ff' : '#f8f9fa',
+        transition: 'background-color 0.2s, border-color 0.2s',
+        borderColor: isDragActive ? '#4dabf7' : '#ccc'
     };
 
+    const formatButtons = [
+        { icon: <FaBold />, action: () => handleFormatClick('**', '**'), title: 'Bold (Ctrl+B)' },
+        { icon: <FaItalic />, action: () => handleFormatClick('*', '*'), title: 'Italic (Ctrl+I)' },
+        { icon: <FaUnderline />, action: () => handleFormatClick('~~', '~~'), title: 'Strikethrough' },
+        { icon: <FaLink />, action: () => {
+            const url = prompt('Enter URL:');
+            if (url) {
+                const text = prompt('Enter link text (optional):', url);
+                handleFormatClick(`[${text || url}](`, ')');
+            }
+        }, title: 'Insert Link' },
+        { icon: <FaListUl />, action: () => handleFormatClick('- ', ''), title: 'Bulleted List' },
+        { icon: <FaListOl />, action: () => handleFormatClick('1. ', ''), title: 'Numbered List' },
+        { icon: <FaQuoteLeft />, action: () => handleFormatClick('> ', ''), title: 'Quote' },
+        { icon: <MdTitle />, action: () => handleFormatClick('# ', ''), title: 'Heading 1' },
+        { icon: <MdOutlineTitle />, action: () => handleFormatClick('## ', ''), title: 'Heading 2' },
+        { icon: <BiCodeBlock />, action: () => handleFormatClick('```\n', '\n```'), title: 'Code Block' }
+    ];
+
     return (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
-            <div style={{ background: 'white', padding: '2rem', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', width: '100%', maxWidth: '500px' }}>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>
-                    {isEditing ? 'Edit Submission' : 'Submit'}: {assignment.assignmentName}
-                </h2>
+        <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
+            <div className="submission-modal">
+                <div className="modal-header">
+                    <h2>{isEditing ? 'Edit Submission' : 'Submit'}: {assignment.assignmentName}</h2>
+                    <button className="close-button" onClick={onClose}>&times;</button>
+                </div>
+                
                 {justSubmitted ? (
-                    <div>
-                        <p style={{ color: 'green', fontWeight: 'bold', textAlign: 'center', marginBottom: '1rem' }}>{isEditing ? 'Updated!' : 'Submitted!'}</p>
-                        <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
-                            <button onClick={() => setJustSubmitted(false)} style={{ padding: '0.5rem 1rem', backgroundColor: '#4F46E5', color: 'white', borderRadius: '0.375rem', border: 'none', cursor: 'pointer' }}>
+                    <div className="success-message">
+                        <div className="success-icon">✓</div>
+                        <h3>{isEditing ? 'Updated Successfully!' : 'Submitted Successfully!'}</h3>
+                        <p>Your submission has been {isEditing ? 'updated' : 'received'}.</p>
+                        <div className="modal-actions">
+                            <button className="btn btn-secondary" onClick={() => setJustSubmitted(false)}>
                                 Edit Again
                             </button>
-                            <button onClick={onClose} style={{ padding: '0.5rem 1rem', backgroundColor: '#E5E7EB', borderRadius: '0.375rem', border: 'none', cursor: 'pointer' }}>
+                            <button className="btn btn-primary" onClick={onClose}>
                                 Close
                             </button>
                         </div>
                     </div>
                 ) : (
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} className="submission-form">
                         {(assignment.submitType === 'text' || assignment.submitType === 'both') && (
-                            <div style={{ marginBottom: '1rem' }}>
-                                <label htmlFor="submissionText" style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#374151' }}>Your Submission</label>
-                                <textarea
-                                    id="submissionText"
-                                    value={submissionText}
-                                    onChange={(e) => setSubmissionText(e.target.value)}
-                                    rows="5"
-                                    style={{ marginTop: '0.25rem', width: '100%', borderRadius: '0.375rem', border: '1px solid #D1D5DB', padding: '0.5rem' }}
-                                    placeholder="Type your response here..."
-                                />
+                            <div className="form-section">
+                                <div className="form-header">
+                                    <label>Your Submission</label>
+                                    <div className="format-tabs">
+                                        <button 
+                                            type="button" 
+                                            className={`tab-button ${!isPreview ? 'active' : ''}`}
+                                            onClick={() => setIsPreview(false)}
+                                        >
+                                            Write
+                                        </button>
+                                        <button 
+                                            type="button" 
+                                            className={`tab-button ${isPreview ? 'active' : ''}`}
+                                            onClick={() => setIsPreview(true)}
+                                        >
+                                            Preview
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                {!isPreview ? (
+                                    <div className="editor-container">
+                                        <div className="toolbar">
+                                            {formatButtons.map((btn, i) => (
+                                                <button
+                                                    key={i}
+                                                    type="button"
+                                                    className="format-button"
+                                                    onClick={btn.action}
+                                                    title={btn.title}
+                                                >
+                                                    {btn.icon}
+                                                </button>
+                                            ))}
+                                        </div>
+                                        <textarea
+                                            ref={textareaRef}
+                                            id="submissionText"
+                                            value={submissionText}
+                                            onChange={(e) => setSubmissionText(e.target.value)}
+                                            className="submission-textarea"
+                                            placeholder="Type your response here... (supports Markdown formatting)"
+                                            rows={10}
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className="preview-container">
+                                        <ReactMarkdown>{submissionText || '*No content to preview*'}</ReactMarkdown>
+                                    </div>
+                                )}
+                                
+                                <div className="format-hint">
+                                    <small>Format with: **bold**, *italic*, ~~strikethrough~~, `code`, ```code block```, &gt; quote, # heading</small>
+                                </div>
                             </div>
                         )}
+
                         {(assignment.submitType === 'file' || assignment.submitType === 'both') && (
-                            <div style={{ marginBottom: '1rem' }}>
-                                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#374151' }}>Upload Files</label>
-                                <div {...getRootProps({ style: dropzoneStyle })}>
+                            <div className="form-section">
+                                <label className="section-label">Upload Files</label>
+                                
+                                <div {...getRootProps({ className: 'dropzone', style: dropzoneStyle })}>
                                     <input {...getInputProps()} />
-                                    {isDragActive ?
-                                        <p>Drop the files here...</p> :
-                                        <p>Drag 'n' drop files here, or click to select files</p>
-                                    }
+                                    <div className="dropzone-content">
+                                        <FaPaperclip size={24} className="upload-icon" />
+                                        <p className="dropzone-text">Drag & drop files here, or click to browse</p>
+                                        <p className="dropzone-hint">Supports PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, TXT, JPG, PNG, GIF (max 20MB)</p>
+                                    </div>
                                 </div>
 
-                                <label htmlFor="folderUpload" style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#374151', marginTop: '1rem' }}>Upload Folder</label>
-                                <input
-                                    type="file"
-                                    id="folderUpload"
-                                    onChange={handleFolderChange}
-                                    style={{ marginTop: '0.25rem', width: '100%' }}
-                                    webkitdirectory=""
-                                    directory=""
-                                />
+                                <div className="folder-upload">
+                                    <label className="file-input-label">
+                                        <span>Or upload a folder:</span>
+                                        <input
+                                            type="file"
+                                            id="folderUpload"
+                                            onChange={handleFolderChange}
+                                            webkitdirectory=""
+                                            directory=""
+                                        />
+                                    </label>
+                                </div>
                                 
                                 {submissionFiles.length > 0 && (
-                                    <div style={{marginTop: '1rem'}}>
-                                        <strong>Selected files:</strong>
-                                        <ul style={{listStyle: 'none', padding: 0, maxHeight: '100px', overflowY: 'auto'}}>
-                                            {submissionFiles.map((file, i) => <li key={i}>{file.name}</li>)}
+                                    <div className="file-list">
+                                        <div className="file-list-header">
+                                            <span>Selected Files ({submissionFiles.length})</span>
+                                        </div>
+                                        <ul>
+                                            {submissionFiles.map((file, i) => (
+                                                <li key={i} className="file-item">
+                                                    <span className="file-name">{file.name}</span>
+                                                    <span className="file-size">{(file.size / 1024).toFixed(1)} KB</span>
+                                                    <button 
+                                                        type="button" 
+                                                        className="remove-file"
+                                                        onClick={() => removeFile(i)}
+                                                        title="Remove file"
+                                                    >
+                                                        ×
+                                                    </button>
+                                                </li>
+                                            ))}
                                         </ul>
                                     </div>
                                 )}
-                                {isEditing && <p style={{fontSize: '0.75rem', color: '#6B7280', marginTop: '0.25rem'}}>Leave blank to keep existing file(s).</p>}
+                                
+                                {isEditing && (
+                                    <p className="file-note">
+                                        <i className="fas fa-info-circle"></i> Leave blank to keep existing files
+                                    </p>
+                                )}
                             </div>
                         )}
-                        {error && <p style={{ color: '#EF4444', fontSize: '0.875rem', marginBottom: '1rem' }}>{error}</p>}
-                        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
-                            <button type="button" onClick={onClose} style={{ padding: '0.5rem 1rem', backgroundColor: '#E5E7EB', borderRadius: '0.375rem', border: 'none', cursor: 'pointer' }}>Cancel</button>
-                            <button type="submit" disabled={isSubmitting} style={{ padding: '0.5rem 1rem', backgroundColor: '#4F46E5', color: 'white', borderRadius: '0.375rem', border: 'none', cursor: 'pointer', opacity: isSubmitting ? 0.5 : 1 }}>
-                                {isSubmitting ? 'Submitting...' : (isEditing ? 'Update' : 'Submit')}
+
+                        {error && (
+                            <div className="error-message">
+                                <i className="fas fa-exclamation-circle"></i>
+                                <span>{error}</span>
+                            </div>
+                        )}
+
+                        <div className="modal-actions">
+                            <button 
+                                type="button" 
+                                className="btn btn-secondary"
+                                onClick={onClose}
+                                disabled={isSubmitting}
+                            >
+                                Cancel
+                            </button>
+                            <button 
+                                type="submit" 
+                                className="btn btn-primary"
+                                disabled={isSubmitting || (!submissionText && submissionFiles.length === 0)}
+                            >
+                                {isSubmitting ? (
+                                    <span className="submit-loading">
+                                        <span className="spinner"></span>
+                                        {isEditing ? 'Updating...' : 'Submitting...'}
+                                    </span>
+                                ) : isEditing ? 'Update Submission' : 'Submit Assignment'}
                             </button>
                         </div>
                     </form>
@@ -331,7 +499,7 @@ const AssignmentPage = () => {
     };
 
     return (
-        <div className={`assignment-page-container ${theme}`}>
+        <div className={`assignment-page-container ${theme}`} style={{ backgroundColor: theme === 'dark' ? '#1a1a1a' : '#fff' }}>
             <DashMobileNav theme={theme} />
             <Header theme={theme} />
 
@@ -387,11 +555,11 @@ const AssignmentPage = () => {
                         {assignments.map(assignment => {
                             const hasSubmitted = !!assignment.userSubmission;
                             return (
-                                <div key={assignment._id} className="assignment-card">
+                                <div key={assignment._id} className={theme === 'dark' ? 'assignment-card dark' : 'assignment-card light'}>
                                     <div>
-                                        <h3 style={{ fontSize: '1.25rem', fontWeight: '600', margin: 0 }}>{assignment.assignmentName}</h3>
-                                        <p style={{ color: '#4B5563', margin: '0.25rem 0 0 0' }}>Course: {assignment.targetBatch.title}</p>
-                                        <p style={{ fontSize: '0.875rem', color: '#6B7280', margin: '0.25rem 0 0 0' }}>Due: {new Date(assignment.expiringDate).toLocaleString()}</p>
+                                        <h3 style={{ fontSize: '1.5rem', fontWeight: '600', margin: 0, color: `${theme === 'dark' ? '#fff' : '#000'}` }}>{assignment.assignmentName}</h3>
+                                        <p style={{ color: `${theme === 'dark' ? '#fff' : '#000'}`, margin: '0.25rem 0 0 0', fontSize: '1.5rem' }}>Course: {assignment.targetBatch.title}</p>
+                                        <p style={{ fontSize: '1.5rem', color: `${theme === 'dark' ? '#fff' : '#000'}`, margin: '0.25rem 0 0 0' }}>Due: {new Date(assignment.expiringDate).toLocaleString()}</p>
                                     </div>
                                     <button
                                         onClick={() => handleOpenModal(assignment)}

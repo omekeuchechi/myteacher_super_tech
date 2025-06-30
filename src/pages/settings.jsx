@@ -23,6 +23,7 @@ import myteacherUsa from '../assets/illustrations/myteacher_usa.png';
 import myteacherUnitedKingdom from '../assets/illustrations/myteacher_united-kingdom.png';
 import myteacherCanada from '../assets/illustrations/myteacher_canada.png';
 import myteacherIndia from '../assets/illustrations/myteacher_india.png';
+import Header from '../components/userDashCom/header';
 
 const statesByCountry = {
   Nigeria: {
@@ -1021,6 +1022,7 @@ const Settings = () => {
   return (
     <div className={`dashboard-container ${theme}`}>
     <DashMobileNav theme={theme} />
+    <Header theme={theme} />
     <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
     <div className={`sidebar${isExpanded ? '' : ' collapsed'}`}>
     <button onClick={toggleSidebar} className="toggle-button">
@@ -1034,6 +1036,7 @@ const Settings = () => {
     <NavItem icon="chalkboard-teacher" label="Online Class" move="/online-class" isExpanded={isExpanded} />
     <NavItem icon="briefcase" label="Assets" move="/assets" isExpanded={isExpanded} />
     <NavItem icon="book" label="Assignment" move="/assignment" isExpanded={isExpanded} />
+    <NavItem icon="certificate" label="Certificates" move="/certificates" isExpanded={isExpanded} />
     <NavItem icon="cog" label="Settings" move="/settings" isExpanded={isExpanded} />
     <NavItem icon="question-circle" label="Help" move="/help" isExpanded={isExpanded} />
     <NavItem icon="right-from-bracket" label="Log Out" move="" isExpanded={isExpanded} onClick={logout} />

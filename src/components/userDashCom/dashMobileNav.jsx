@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import FullscreenIcon from "../../components/userDashCom/fullscreenIcon";
+import { AuthContext } from "../../../context/Authcontext";
 
-const DashMobileNav = ({ theme = "light" }) => {
+const DashMobileNav = ({ theme = "light", }) => {
   const [isOpen, setIsOpen] = useState(false);
   const isDark = theme === "dark";
+  const { logout } = useContext(AuthContext);
 
   return (
     <>
@@ -30,7 +32,7 @@ const DashMobileNav = ({ theme = "light" }) => {
           <NavItem icon="briefcase" label="Assets" isExpanded={true} move="/assets" />
           <NavItem icon="cog" label="Settings" move="/settings" isExpanded={true} />
           <NavItem icon="question-circle" label="Help" isExpanded={true} />
-          <NavItem icon="right-from-bracket" label="Log Out" isExpanded={true} />
+          <NavItem icon="right-from-bracket" label="Log Out" isExpanded={true} onClick={logout} />
         </div>
       )}
 
@@ -117,9 +119,9 @@ const DashMobileNav = ({ theme = "light" }) => {
   );
 };
 
-function NavItem({ icon, label, isExpanded, move }) {
+function NavItem({ icon, label, isExpanded, move, onClick }) {
   return (
-    <Link className="nav-item-mobile" to={move || "#"}>
+    <Link className="nav-item-mobile" to={move || "#"} onClick={onClick}>
       <i className={`fas fa-${icon}`} style={{ fontSize: "20px", marginRight: isExpanded ? "10px" : "0" }}></i>
       {isExpanded && <span>{label}</span>}
     </Link>

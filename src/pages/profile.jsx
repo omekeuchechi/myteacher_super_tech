@@ -190,6 +190,7 @@ const Profile = () => {
           <NavItem icon="chalkboard-teacher" move="/online-class" label="Online Class" isExpanded={isExpanded} />
           <NavItem icon="briefcase" label="Assets" move="/assets" isExpanded={isExpanded} />
           <NavItem icon="book" label="Assignment" move="/assignment" isExpanded={isExpanded} />
+          <NavItem icon="certificate" label="Certificates" move="/certificates" isExpanded={isExpanded} />
           <NavItem icon="cog" label="Settings" move="/settings" isExpanded={isExpanded} />
           <NavItem icon="question-circle" label="Help" isExpanded={isExpanded} />
           <NavItem icon="right-from-bracket" label="Log Out" isExpanded={isExpanded} onClick={logout} />

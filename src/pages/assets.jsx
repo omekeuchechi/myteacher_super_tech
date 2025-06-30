@@ -149,6 +149,7 @@ function Assets() {
           <NavItem icon="chalkboard-teacher" label="Online Class" move="/online-class" isExpanded={isExpanded} />
           <NavItem icon="briefcase" label="Assets" move="/assets" isExpanded={isExpanded} />
           <NavItem icon="book" label="Assignment" move="/assignment" isExpanded={isExpanded} />
+          <NavItem icon="certificate" label="Certificates" move="/certificates" isExpanded={isExpanded} />
           <NavItem icon="cog" label="Settings" move="/settings" isExpanded={isExpanded} />
           <NavItem icon="question-circle" label="Help" move="/help" isExpanded={isExpanded} />
           <NavItem icon="right-from-bracket" label="Log Out" move="/logout" isExpanded={isExpanded} onClick={logout} />

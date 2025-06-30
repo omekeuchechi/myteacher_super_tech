@@ -20,6 +20,8 @@ import Settings from './pages/settings';
 import Profile from './pages/profile';
 import GeneralProfile from './pages/generalProfile';
 import Assignment from './pages/assignment';
+import Certificates from './pages/certificates';
+// Certificates
 
 // courses pages
 import CopyRight from './pages/coursesPages/copyRight';
@@ -176,6 +178,11 @@ function AppRoutes() {
       <Route path="/profile-search/:userId" element={
         <ProtectedRoute userOnly>
           <GeneralProfile />
+        </ProtectedRoute>
+      } />
+      <Route path="/certificates" element={
+        <ProtectedRoute userOnly>
+          <Certificates />
         </ProtectedRoute>
       } />
       <Route path="/profile" element={
