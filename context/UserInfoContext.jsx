@@ -99,7 +99,8 @@ export const UserInfoProvider = ({ children }) => {
         // Cleanup on unmount
         return () => {
             channel.unbind_all();
-            channel.unsubscribe();
+            pusher.unsubscribe('user-info');
+            pusher.disconnect();
         };
     }, [user?._id]); // Re-run if the user ID changes
 

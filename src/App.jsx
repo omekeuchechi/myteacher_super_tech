@@ -56,6 +56,8 @@ import SuperAdminList from './pages/admin/superAdminList';
 import Mailer from './pages/admin/mailer';
 import CreateAssignment from './pages/admin/createAssignment';
 import AssignmentCorrections from './pages/admin/assignmentCorrections';
+import MediaVideo from './pages/admin/mediaVideo';
+import VideoPage from './pages/videoPage';
 
 // Helper component for protected routes
 function ProtectedRoute({ children, adminOnly, userOnly, verificationOnly }) {
@@ -195,6 +197,11 @@ function AppRoutes() {
           <Assignment />
         </ProtectedRoute>
       } />
+      <Route path="/video" element={
+        <ProtectedRoute userOnly>
+          <VideoPage />
+        </ProtectedRoute>
+      } />
 
       <Route path="/courses" element={<Courses />} />
 
@@ -302,6 +309,11 @@ function AppRoutes() {
       <Route path="/admin/assignment-corrections" element={
         <ProtectedRoute adminOnly>
           <AssignmentCorrections />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin/media-video" element={
+        <ProtectedRoute adminOnly>
+          <MediaVideo />
         </ProtectedRoute>
       } />
     </Routes>

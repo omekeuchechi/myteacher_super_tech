@@ -19,6 +19,8 @@
     "dotenv": "^16.5.0",
     "file-selector": "^2.1.2",
     "gsap": "^3.13.0",
+    "marked": "^16.0.0",
+    "multer": "^2.0.1",
     "pusher": "^5.2.0",
     "pusher-js": "^8.4.0",
     "react": "^19.1.0",
@@ -28,7 +30,8 @@
     "react-image": "^4.1.0",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.6.0",
-    "react-toastify": "^11.0.5"
+    "react-toastify": "^11.0.5",
+    "rehype-raw": "^7.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

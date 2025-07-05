@@ -13,6 +13,7 @@ const navLinks = [
   { to: "/admin/ui-settings", label: "UI Settings" },
   { to: "/admin/take-lecture", label: "Take Lecture" },
   { to: "/admin/profile", label: "Profile" },
+  { to: "/admin/media-video", label: "Media Video" },
   // { to: "/admin/users", label: "Users" },
   // { to: "/admin/transactions", label: "Transactions" },
   { to: "/admin/enrollments", label: "Enrollment" },

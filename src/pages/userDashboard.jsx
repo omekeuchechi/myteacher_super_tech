@@ -88,6 +88,7 @@ function UserDashboard() {
           <NavItem icon="user" label="Profile" move="/profile" isExpanded={isExpanded} />
           <NavItem icon="chalkboard-teacher" move="/online-class" label="Online Class" isExpanded={isExpanded} />
           <NavItem icon="briefcase" label="Assets" move="/assets" isExpanded={isExpanded} />
+          <NavItem icon="video" label="Video" move="/video" isExpanded={isExpanded} target="_blank" />
           <NavItem icon="book" label="Assignment" move="/assignment" isExpanded={isExpanded} />
           <NavItem
             icon="certificate"
@@ -95,8 +96,8 @@ function UserDashboard() {
             move="/certificates"
             isExpanded={isExpanded}
           />
-          <NavItem icon="cog" label="Settings" move="/settings" isExpanded={isExpanded} />
-          <NavItem icon="question-circle" label="Help" isExpanded={isExpanded} />
+          <NavItem icon="cog" label="Settings" move="/settings" isExpanded={isExpanded} target="_blank"/>
+          <NavItem icon="question-circle" label="Help" isExpanded={isExpanded} target="_blank"/>
           <NavItem icon="right-from-bracket" label="Log Out" isExpanded={isExpanded} onClick={logout} />
         </nav>
       </div>
@@ -120,9 +121,9 @@ function UserDashboard() {
 }
 
 // Helper component for navigation items
-function NavItem({ icon, label, isExpanded, move, onClick }) {
+function NavItem({ icon, label, isExpanded, move, onClick, target }) {
   return (
-    <Link className="nav-item" to={move} onClick={onClick}>
+    <Link className="nav-item" to={move} onClick={onClick} target={target}>
       <i
         className={`fas fa-${icon}`}
         style={{
