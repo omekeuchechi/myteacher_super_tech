@@ -1,12 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/Authcontext";
-import ReactMarkdown from 'react-markdown';
-import rehypeRaw from 'rehype-raw';
-import { FaBold, FaItalic, FaListUl, FaListOl, FaLink, FaPaperPlane, FaQuoteLeft, FaImage, FaAlignLeft, FaAlignCenter, FaAlignRight, FaPalette, FaMinus, FaUndo, FaRedo } from 'react-icons/fa';
-import { MdTitle } from 'react-icons/md';
-import { BiCodeBlock } from 'react-icons/bi';
-import { marked } from 'marked';
+import { Editor } from '@tinymce/tinymce-react';
+
 import Pusher from 'pusher-js';
 import "../../assets/styles/admin/mediaVideo.css";
 import AdminNav from '../../components/adminCom/navSection';
@@ -67,74 +63,6 @@ function MediaVideo() {
         alignItems: 'center',
         justifyContent: 'center',
     };
-
-    // Markdown insert handler
-    const handleMarkdownInsert = (type) => {
-        const textarea = descriptionRef.current;
-        if (!textarea) return;
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        let value = form.description;
-        let insert = '';
-        let selectDelta = 0;
-
-        switch (type) {
-            case 'bold':
-                insert = '**bold text**';
-                selectDelta = 2;
-                break;
-            case 'italic':
-                insert = '*italic text*';
-                selectDelta = 1;
-                break;
-            case 'heading':
-                insert = '\n# Heading\n';
-                selectDelta = 3;
-                break;
-            case 'link':
-                insert = '[link text](url)';
-                selectDelta = 1;
-                break;
-            case 'image':
-                insert = '![](image-url)';
-                selectDelta = 4;
-                break;
-            case 'quote':
-                insert = '\n> quoted text\n';
-                selectDelta = 4;
-                break;
-            case 'codeblock':
-                insert = '\n```js\ncode here\n```\n';
-                selectDelta = 8;
-                break;
-            case 'ul':
-                insert = '\n- List item\n';
-                selectDelta = 3;
-                break;
-            case 'ol':
-                insert = '\n1. List item\n';
-                selectDelta = 4;
-                break;
-            case 'hr':
-                insert = '\n---\n';
-                selectDelta = 1;
-                break;
-            default:
-                insert = '';
-        }
-        // Insert at cursor
-        const before = value.substring(0, start);
-        const after = value.substring(end);
-        const newValue = before + insert + after;
-        setForm({ ...form, description: newValue });
-        setTimeout(() => {
-            textarea.focus();
-            textarea.setSelectionRange(start + selectDelta, start + selectDelta);
-        }, 0);
-    };
-
-
-
 
     // Fetch all videos
     const fetchVideos = async () => {
@@ -412,40 +340,39 @@ function MediaVideo() {
                     onChange={handleChange}
                     required
                 />
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                    {/* Markdown Toolbar */}
-                    <div className="media-video-markdown-toolbar">
-                        <button type="button" title="Bold" onClick={() => handleMarkdownInsert('bold')} className="media-video-markdown-btn"><FaBold /></button>
-                        <button type="button" title="Italic" onClick={() => handleMarkdownInsert('italic')} className="media-video-markdown-btn"><FaItalic /></button>
-                        <button type="button" title="Heading" onClick={() => handleMarkdownInsert('heading')} className="media-video-markdown-btn"><MdTitle /></button>
-                        <button type="button" title="Link" onClick={() => handleMarkdownInsert('link')} className="media-video-markdown-btn"><FaLink /></button>
-                        <button type="button" title="Image" onClick={() => handleMarkdownInsert('image')} className="media-video-markdown-btn"><FaImage /></button>
-                        <button type="button" title="Quote" onClick={() => handleMarkdownInsert('quote')} className="media-video-markdown-btn"><FaQuoteLeft /></button>
-                        <button type="button" title="Code Block" onClick={() => handleMarkdownInsert('codeblock')} className="media-video-markdown-btn"><BiCodeBlock /></button>
-                        <button type="button" title="Unordered List" onClick={() => handleMarkdownInsert('ul')} className="media-video-markdown-btn"><FaListUl /></button>
-                        <button type="button" title="Ordered List" onClick={() => handleMarkdownInsert('ol')} className="media-video-markdown-btn"><FaListOl /></button>
-                        <button type="button" title="Align Left" disabled className="media-video-markdown-btn"><FaAlignLeft /></button>
-                        <button type="button" title="Align Center" disabled className="media-video-markdown-btn"><FaAlignCenter /></button>
-                        <button type="button" title="Align Right" disabled className="media-video-markdown-btn"><FaAlignRight /></button>
-                        <button type="button" title="Palette" disabled className="media-video-markdown-btn"><FaPalette /></button>
-                        <button type="button" title="Horizontal Rule" onClick={() => handleMarkdownInsert('hr')} className="media-video-markdown-btn"><FaMinus /></button>
-                        <button type="button" title="Undo" disabled className="media-video-markdown-btn"><FaUndo /></button>
-                        <button type="button" title="Redo" disabled className="media-video-markdown-btn"><FaRedo /></button>
-                    </div>
-                    <textarea
-                        style={{ fontFamily: 'inherit', fontSize: '1.5rem', minHeight: 80 }}
-                        ref={descriptionRef}
-                        name="description"
-                        placeholder="Description (Markdown supported)"
+                <div style={{ marginBottom: '16px' }}>
+                    <Editor
+                        apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
                         value={form.description}
-                        onChange={handleChange}
-                        rows={5}
-                        required
+                        init={{
+                            height: 400,
+                            menubar: true,
+                            plugins: [
+                                'advlist autolink lists link image charmap print preview anchor',
+                                'searchreplace visualblocks code fullscreen',
+                                'insertdatetime media table paste code help wordcount'
+                            ],
+                            toolbar: 'undo redo | formatselect | ' +
+                                'bold italic backcolor | alignleft aligncenter ' +
+                                'alignright alignjustify | bullist numlist outdent indent | ' +
+                                'removeformat | help',
+                            content_style: 'body { font-family: Arial, sans-serif; font-size: 14px; }',
+                            branding: false,
+                            // Enable TinyMCE cloud channel (optional, but recommended)
+                            // This ensures you get the latest stable version
+                            // Remove or modify this if you want a specific version
+                            // cloud_channel: '6',
+                            // Optional: Configure image upload
+                            // images_upload_url: 'your_image_upload_endpoint',
+                            // images_upload_credentials: true
+                        }}
+                        onEditorChange={(content) => {
+                            setForm(prev => ({
+                                ...prev,
+                                description: content
+                            }));
+                        }}
                     />
-                    <div style={{ background: "#f9f9f9", border: "1px solid #eee", borderRadius: 5, padding: 10, marginTop: 4, overflow: 'auto', maxHeight: 350, wordBreak: 'break-word', whiteSpace: 'pre-wrap', fontSize: '1.5rem' }}>
-                        <div style={{ fontWeight: 600, color: "#666", marginBottom: 4, fontSize: '1.1rem' }}>Preview:</div>
-                        <ReactMarkdown rehypePlugins={[rehypeRaw]}>{form.description || '*Nothing to preview*'}</ReactMarkdown>
-                    </div>
                 </div>
                 <div style={{ display: "flex", gap: 16 }}>
                     <button type="submit" disabled={loading}>
@@ -474,7 +401,14 @@ function MediaVideo() {
                                         ? video.lecture.title || video.lecture.name || video.lecture._id || "Untitled Lecture"
                                         : video.lecture || "Untitled Lecture"}
                                 </div>
-                                <div className="media-video-desc">{video.description}</div>
+                                <div 
+                                    className="media-video-desc" 
+                                    dangerouslySetInnerHTML={{ 
+                                        __html: video.description && video.description.length > 150 
+                                            ? `${video.description.substring(0, 150)}...` 
+                                            : video.description || ''
+                                    }} 
+                                />
                                 <div className="media-video-link">
                                     <a
                                         href={video.videoLink}

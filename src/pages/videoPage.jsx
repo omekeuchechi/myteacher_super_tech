@@ -78,6 +78,7 @@ function VideoPage() {
     const [selectedVideo, setSelectedVideo] = useState(null);
     const [commentsToShow, setCommentsToShow] = useState({});
     const [replyingTo, setReplyingTo] = useState(null); // Track which comment is being replied to
+    const [showEditPopup, setShowEditPopup] = useState(null); // Track edit popup state
     
     // Dark mode state and toggle function
     const { isDarkMode, toggleDarkMode } = useDarkMode();
@@ -208,13 +209,13 @@ function VideoPage() {
                 });
                 const data = await res.json();
                 if (data.success) {
-                    // Sort comments in ascending order by createdAt date (oldest first)
+                    // Sort comments in descending order by createdAt date (newest first)
                     const sortedVideos = (data.videos || []).map(video => ({
                         ...video,
                         comment: Array.isArray(video.comment) 
-                            ? [...video.comment].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+                            ? [...video.comment].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                             : []
-                    }));
+                    })).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // Sort videos by date (newest first)
                     setVideos(sortedVideos);
                 } else {
                     setError(data.message || "Failed to fetch videos");
@@ -521,6 +522,19 @@ function VideoPage() {
         }
     };
 
+    // Handle comment double click
+    const handleCommentDoubleClick = (videoId, comment) => {
+        // Only allow editing own comments that haven't been edited
+        const userId = localStorage.getItem('userId');
+        if (comment.user.toString() === userId && !comment.edited) {
+            setShowEditPopup({
+                videoId,
+                commentId: comment._id,
+                text: comment.text
+            });
+        }
+    };
+
     // Edit comment
     const handleEditComment = (videoId, comment) => {
         setEditingComment({ videoId, commentId: comment._id, text: comment.text });
@@ -644,11 +658,14 @@ function VideoPage() {
                                 {getLectureName(video.lecture)}
                             </div>
                             <div className="video-description">
-                                <ReactMarkdown rehypePlugins={[rehypeRaw]}>
-                                    {video.description.length > 150
-                                        ? `${video.description.substring(0, 150)}...`
-                                        : video.description}
-                                </ReactMarkdown>
+                                <div 
+                                    className="video-description" 
+                                    dangerouslySetInnerHTML={{ 
+                                        __html: video.description && video.description.length > 150
+                                            ? `${video.description.substring(0, 150)}...`
+                                            : video.description || ''
+                                    }} 
+                                />
                             </div>
                             <div className="video-preview">
                                 <VideoViewer
@@ -668,18 +685,26 @@ function VideoPage() {
                                     const user = users[userId] || {};
                                     const displayName = user.name || user.email || userId || 'User';
                                     return (
-                                        <div key={comment._id} className="comment">
+                                        <div 
+                                            key={comment._id} 
+                                            className="comment"
+                                            onDoubleClick={() => handleCommentDoubleClick(video._id, comment)}
+                                            style={{ 
+                                                cursor: comment.user && comment.user.toString && localStorage.getItem('userId') === comment.user.toString() && !comment.edited ? 'pointer' : 'default'
+                                            }}
+                                        >
                                             <div className="comment-header">
                                                 {displayName}
                                             </div>
                                             {editingComment && editingComment.commentId === comment._id ? (
                                                 <div className="comment-form">
-                                                    <input
+                                                    <textarea
                                                         ref={el => commentRefs.current[comment._id] = el}
-                                                        type="text"
                                                         value={editingComment.text}
                                                         onChange={e => setEditingComment(ec => ({ ...ec, text: e.target.value }))}
                                                         className="comment-input"
+                                                        rows="3"
+                                                        style={{ width: '100%', minHeight: '80px', resize: 'vertical' }}
                                                     />
                                                     <button onClick={handleSaveEditComment} className="btn btn-primary">Save</button>
                                                     <button onClick={() => setEditingComment(null)} className="btn btn-outline">Cancel</button>
@@ -695,16 +720,21 @@ function VideoPage() {
                                                     {comment.user && comment.user.toString && getToken() && (!comment.edited) && (localStorage.getItem('userId') === comment.user.toString()) && !editingComment && (
                                                         <button
                                                             onClick={() => handleEditComment(video._id, comment)}
-                                                            className="btn btn-outline btn-sm"
+                                                            className="btn btn-link btn-sm"
+                                                            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}
+                                                            title="Edit comment"
                                                         >
-                                                            Edit
+                                                            <i className="fas fa-edit"></i>
+                                                            <span>Edit</span>
                                                         </button>
                                                     )}
                                                     <button 
                                                         className="btn btn-link btn-sm"
                                                         onClick={() => setReplyingTo(replyingTo === comment._id ? null : comment._id)}
+                                                        style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}
                                                     >
-                                                        <i className="fas fa-reply"></i> Reply
+                                                        <i className="fas fa-reply"></i>
+                                                        <span>Reply</span>
                                                     </button>
                                                     {!isOnline && (
                                                         <span className="online-status offline" title="You're offline. Replies will be sent when you're back online.">
@@ -718,13 +748,24 @@ function VideoPage() {
                                                     )}
                                                 </div>
                                                 {replyingTo === comment._id && (
-                                                    <div className="reply-input-container">
-                                                        <input
-                                                            type="text"
+                                                    <div className="reply-input-container" style={{ display: 'flex', flexDirection: 'column', width: '100%', padding: '0.5rem' }}>
+                                                        <textarea
                                                             placeholder="Write a reply..."
                                                             className="comment-input"
+                                                            style={{ 
+                                                                width: '100%', 
+                                                                padding: '1rem', 
+                                                                border: '1px solid #d1d5db', 
+                                                                borderRadius: '0.375rem', 
+                                                                fontSize: '1.5rem', 
+                                                                transition: 'border-color 0.2s ease, box-shadow 0.2s ease', 
+                                                                outline: 'none',
+                                                                minHeight: '80px',
+                                                                resize: 'vertical'
+                                                            }}
                                                             value={replyInputs[comment._id] || ''}
                                                             onChange={e => handleReplyInput(comment._id, e.target.value)}
+                                                            rows="3"
                                                         />
                                                         <button
                                                             className="btn btn-primary btn-sm"
@@ -774,13 +815,14 @@ function VideoPage() {
                                                                     <div key={reply._id} className="reply">
                                                                         <div className="comment-header">{replyDisplayName}</div>
                                                                         {editingReply && editingReply.replyId === reply._id ? (
-                                                                            <div className="comment-form">
-                                                                                <input
+                                                                            <div className="comment-form" style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                                                                                <textarea
                                                                                     ref={el => replyRefs.current[reply._id] = el}
-                                                                                    type="text"
                                                                                     value={editingReply.text}
                                                                                     onChange={e => setEditingReply(er => ({ ...er, text: e.target.value }))}
                                                                                     className="comment-input"
+                                                                                    rows="3"
+                                                                                    style={{ width: '100%', minHeight: '80px', resize: 'vertical' }}
                                                                                 />
                                                                                 <button onClick={handleSaveEditReply} className="btn btn-primary">Save</button>
                                                                                 <button onClick={() => setEditingReply(null)} className="btn btn-outline">Cancel</button>
@@ -794,9 +836,12 @@ function VideoPage() {
                                                                         {reply.user && reply.user.toString && getToken() && (!reply.edited) && (localStorage.getItem('userId') === reply.user.toString()) && !editingReply && (
                                                                             <button
                                                                                 onClick={() => handleEditReply(video._id, reply)}
-                                                                                className="btn btn-outline btn-sm"
+                                                                                className="btn btn-link btn-sm"
+                                                                                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}
+                                                                                title="Edit reply"
                                                                             >
-                                                                                Edit
+                                                                                <i className="fas fa-edit"></i>
+                                                                                <span>Edit</span>
                                                                             </button>
                                                                         )}
                                                                     </div>
@@ -823,12 +868,13 @@ function VideoPage() {
                                 </button>
                             )}
                             <div className="comment-form">
-                                <input
-                                    type="text"
+                                <textarea
                                     className="comment-input"
                                     placeholder="Add a comment..."
                                     value={commentInputs[video._id] || ''}
                                     onChange={e => handleCommentInput(video._id, e.target.value)}
+                                    rows="3"
+                                    style={{ width: '100%', minHeight: '80px', resize: 'vertical' }}
                                 />
                                 <button
                                     className="btn btn-primary"
@@ -840,6 +886,36 @@ function VideoPage() {
                         </div>
                     </div>
                 ))
+            )}
+            
+            {/* Edit Confirmation Popup */}
+            {showEditPopup && (
+                <div className="edit-popup-overlay" onClick={() => setShowEditPopup(null)}>
+                    <div className="edit-popup" onClick={e => e.stopPropagation()}>
+                        <h3>Edit Comment</h3>
+                        <p>Do you want to edit this comment?</p>
+                        <div className="popup-buttons">
+                            <button 
+                                onClick={() => {
+                                    handleEditComment(showEditPopup.videoId, {
+                                        _id: showEditPopup.commentId,
+                                        text: showEditPopup.text
+                                    });
+                                    setShowEditPopup(null);
+                                }} 
+                                className="btn btn-primary"
+                            >
+                                Yes, Edit
+                            </button>
+                            <button 
+                                onClick={() => setShowEditPopup(null)} 
+                                className="btn btn-outline"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
         </div>

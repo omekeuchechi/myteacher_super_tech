@@ -11,6 +11,7 @@ import About from './pages/about';
 import Register from './pages/auth';
 import Login from './pages/login';
 import Courses from './pages/courses';
+import TechBlog from './pages/Techblog';
 
 // user dashboard pages
 import UserDashboard from './pages/userDashboard';
@@ -58,6 +59,7 @@ import CreateAssignment from './pages/admin/createAssignment';
 import AssignmentCorrections from './pages/admin/assignmentCorrections';
 import MediaVideo from './pages/admin/mediaVideo';
 import VideoPage from './pages/videoPage';
+import CustomerSupport from './pages/customerSupport';
 
 // Helper component for protected routes
 function ProtectedRoute({ children, adminOnly, userOnly, verificationOnly }) {
@@ -204,12 +206,15 @@ function AppRoutes() {
       } />
 
       <Route path="/courses" element={<Courses />} />
+      <Route path="/techblog" element={<TechBlog />} />
+      <Route path='/customer-support' element={<CustomerSupport />} />
 
       {/* Course description pages */}
       <Route path="/copy-right" element={<CopyRight />} />
       <Route path='/basic-computing' element={<BasicComputing />} />
       <Route path='/virtual-assistant' element={<VirtualAssistant />} />
       <Route path='/data-entry' element={<DataEntry />} />
+
 
       <Route
         path="/google-success"

@@ -103,16 +103,40 @@ const VideoViewer = ({ video, onVideoUpdate }) => {
                 <h4>Comments ({video.comments?.length || 0})</h4>
                 
                 <form onSubmit={editingComment ? handleUpdateComment : handleAddComment} className="comment-form">
-                    <input
-                        type="text"
+                    <textarea
                         value={commentInput}
                         onChange={(e) => setCommentInput(e.target.value)}
                         placeholder={editingComment ? "Edit comment..." : "Add a comment..."}
                         disabled={isLoading}
+                        rows="3"
+                        style={{
+                            width: '100%',
+                            padding: '0.75rem',
+                            borderRadius: '4px',
+                            border: '1px solid #d1d5db',
+                            fontFamily: 'inherit',
+                            fontSize: '0.95rem',
+                            resize: 'vertical',
+                            minHeight: '80px',
+                            marginBottom: '0.5rem'
+                        }}
                     />
-                    <button type="submit" disabled={!commentInput.trim() || isLoading}>
-                        {isLoading ? '...' : (editingComment ? 'Update' : 'Post')}
-                    </button>
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <button 
+                            type="submit" 
+                            disabled={!commentInput.trim() || isLoading}
+                            style={{
+                                padding: '0.5rem 1rem',
+                                backgroundColor: '#3b82f6',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                                opacity: (!commentInput.trim() || isLoading) ? 0.6 : 1
+                            }}
+                        >
+                            {isLoading ? '...' : (editingComment ? 'Update' : 'Post')}
+                        </button>
                     {editingComment && (
                         <button 
                             type="button" 
@@ -122,6 +146,7 @@ const VideoViewer = ({ video, onVideoUpdate }) => {
                             Cancel
                         </button>
                     )}
+                    </div>
                 </form>
 
                 {video.comments?.length > 0 ? (

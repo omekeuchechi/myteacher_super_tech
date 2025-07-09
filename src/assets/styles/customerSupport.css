@@ -1,0 +1,57 @@
+.chatAi-header{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 20px;
+    z-index: 10;
+    gap: 20px;
+}
+
+.chatAi-header > .logo{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.chatAi-header > .logo > h1{
+    font-size: 2rem;
+    color: #000;
+}
+
+.chatAi-header > .logo > img{
+    width: 50px;
+    height: 50px;
+}
+
+.chatAi-header > .chat-icon-header{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.chatAi-header > .chat-icon-header > h1{
+    font-size: 2rem;
+}
+
+.chatAi-header > .chat-icon-header > i{
+    font-size: 2rem;
+    color: #fff;
+    border: 1px solid #086ccabb;
+    padding: 5px;
+    background-color: #086ccabb;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.customer-support-image-background{
+    width: 100%;
+    min-height: 100vh;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
