@@ -21,17 +21,17 @@ const Profile = () => {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [showCoverPhotoModal, setShowCoverPhotoModal] = useState(false);
   const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
-  
+
   const openImageModal = () => setIsImageModalOpen(true);
   const closeImageModal = () => setIsImageModalOpen(false);
-  
+
   // Close modal when clicking outside the image
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
       closeImageModal();
     }
   };
-  
+
   // Close modal on Escape key press
   useEffect(() => {
     const handleEscape = (e) => {
@@ -39,12 +39,12 @@ const Profile = () => {
         closeImageModal();
       }
     };
-    
+
     if (isImageModalOpen) {
       document.addEventListener('keydown', handleEscape);
       document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
     }
-    
+
     return () => {
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'unset';
@@ -85,15 +85,15 @@ const Profile = () => {
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-    
+
     if (debounceTimer) {
       clearTimeout(debounceTimer);
     }
-    
+
     const timer = setTimeout(() => {
       handleSearch(query);
     }, 500);
-    
+
     setDebounceTimer(timer);
   };
 
@@ -104,7 +104,7 @@ const Profile = () => {
       }
     };
   }, [debounceTimer]);
-  
+
   // User state and context
   const { user, logout } = useContext(AuthContext);
   const { userInfo, loading: userInfoLoading, error: userInfoError } = useContext(UserInfoContext);
@@ -196,11 +196,11 @@ const Profile = () => {
           <NavItem icon="right-from-bracket" label="Log Out" isExpanded={isExpanded} onClick={logout} />
         </nav>
       </div>
-      
+
       <main className={`main-content ${isExpanded ? '' : 'collapsed'}`}>
         {/* {console.log(coverPhotoUrl)} */}
-        <div 
-          className="profile-header" 
+        <div
+          className="profile-header"
           style={{
             '--cover-photo-url': coverPhotoUrl ? `url(${coverPhotoUrl})` : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             backgroundSize: 'cover',
@@ -229,18 +229,18 @@ const Profile = () => {
             borderRadius: '8px'
           }} />
           <div className="profile-avatar-section">
-            <img 
+            <img
               src={user.avatar || 'https://via.placeholder.com/168'}
-              alt={`${user.name}'s avatar`} 
+              alt={`${user.name}'s avatar`}
               className="profile-avatar"
               onClick={openImageModal}
               style={{ cursor: 'pointer' }}
             />
-            
+
             {/* Image Modal */}
             {isImageModalOpen && (
-              <div 
-                className="image-modal-backdrop" 
+              <div
+                className="image-modal-backdrop"
                 onClick={handleBackdropClick}
                 style={{
                   position: 'fixed',
@@ -257,7 +257,7 @@ const Profile = () => {
                 }}
               >
                 <div className="image-modal-content" style={{ maxWidth: '90%', maxHeight: '90%' }}>
-                  <button 
+                  <button
                     onClick={closeImageModal}
                     style={{
                       position: 'absolute',
@@ -280,9 +280,9 @@ const Profile = () => {
                   >
                     &times;
                   </button>
-                  <img 
+                  <img
                     src={user.avatar || 'https://via.placeholder.com/168'}
-                    alt={`${user.name}'s avatar`} 
+                    alt={`${user.name}'s avatar`}
                     style={{
                       maxWidth: '100%',
                       maxHeight: '90vh',
@@ -294,47 +294,28 @@ const Profile = () => {
               </div>
             )}
             <div className="profile-name">
-              <h1 style={{color: `${isLightMode ? '#f1f1f1' : '#0f0f0'}`}}>{user.name}</h1>
-              <p style={{color: `${isLightMode ? '#000' : '#fff'}`}}>{user.role || 'Student'}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="profile-body">
-          <div className="profile-left-column">
-            <div className="profile-card" style={{ backgroundColor: isLightMode ? '#fff' : '#333' }}>
-              <h3>Intro</h3>
-              <ul>
-                {user.email && <li><i className="fas fa-envelope"></i> {user.email}</li>}
-                {userInfo.marritaStatus && <li><i className="fas fa-heart"></i> {userInfo.marritaStatus}</li>}
-                {userInfo.address && <li><i className="fas fa-map-marker-alt"></i> From {userInfo.address}</li>}
-                {userInfo.hobbies && <li><i className="fas fa-paint-brush"></i> Hobbies: {userInfo.hobbies}</li>}
-                {user.createdAt && <li><i className="fas fa-user-clock"></i> Joined on {new Date(user.createdAt).toLocaleDateString()}</li>}
-              </ul>
-            </div>
-          </div>
-          <div className="profile-right-column">
-            <div className="profile-card" style={{ backgroundColor: isLightMode ? '#fff' : '#333' }}>
-              <h3>About Me</h3>
-              <p>{userInfo.aboutYourSelf || 'No biography available. You can add one by editing your profile.'}</p>
+              <h1 style={{ color: `${isLightMode ? '#f1f1f1' : '#0f0f0'}` }}>{user.name}</h1>
+              <p style={{ color: `${isLightMode ? '#000' : '#fff'}` }}>{user.role || 'Student'}</p>
             </div>
           </div>
         </div>
 
         <div className="social-reflection-section">
-          <div className="search-user-query">
-            <input 
-              type="text" 
-              placeholder="Search for Techies..." 
-              value={searchQuery}
-              onChange={handleSearchChange}
-            />
-            {isSearching && <div className="search-loading">Searching...</div>}
-          </div>
+
+        <div className="search-user-query">
+          <input
+            type="text"
+            placeholder="Search for Techies..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+          {isSearching && <div className="search-loading">Searching...</div>}
+        </div>
+
 
           <div className="search-results">
             {searchResults.map((searchUser) => (
-              <Link 
+              <Link
                 key={searchUser._id}
                 to={{
                   pathname: `/profile-search/${searchUser._id}`,
@@ -346,9 +327,9 @@ const Profile = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="user-card">
-                  <img 
-                    src={searchUser.userInfo?.storyImage || '/default-avatar.png'} 
-                    alt={searchUser.name} 
+                  <img
+                    src={searchUser.userInfo?.storyImage || '/default-avatar.png'}
+                    alt={searchUser.name}
                     className="user-avatar"
                   />
                   <div className="user-info">
@@ -378,11 +359,34 @@ const Profile = () => {
             ))}
           </div>
         </div>
+
+        <div className="profile-body">
+          <div className="profile-left-column">
+            <div className="profile-card" style={{ backgroundColor: isLightMode ? '#fff' : '#333' }}>
+              <h3>Intro</h3>
+              <ul>
+                {user.email && <li><i className="fas fa-envelope"></i> {user.email}</li>}
+                {userInfo.marritaStatus && <li><i className="fas fa-heart"></i> {userInfo.marritaStatus}</li>}
+                {userInfo.address && <li><i className="fas fa-map-marker-alt"></i> From {userInfo.address}</li>}
+                {userInfo.hobbies && <li><i className="fas fa-paint-brush"></i> Hobbies: {userInfo.hobbies}</li>}
+                {user.createdAt && <li><i className="fas fa-user-clock"></i> Joined on {new Date(user.createdAt).toLocaleDateString()}</li>}
+              </ul>
+            </div>
+          </div>
+          <div className="profile-right-column">
+            <div className="profile-card" style={{ backgroundColor: isLightMode ? '#fff' : '#333' }}>
+              <h3>About Me</h3>
+              <p>{userInfo.aboutYourSelf || 'No biography available. You can add one by editing your profile.'}</p>
+            </div>
+          </div>
+        </div>
+
+        
       </main>
-      
+
       {/* Cover Photo Modal */}
       {showCoverPhotoModal && coverPhotoUrl && (
-        <div 
+        <div
           style={{
             position: 'fixed',
             top: 0,
@@ -398,7 +402,7 @@ const Profile = () => {
           }}
           onClick={() => setShowCoverPhotoModal(false)}
         >
-          <div 
+          <div
             style={{
               maxWidth: '90%',
               maxHeight: '90vh',
@@ -407,9 +411,9 @@ const Profile = () => {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <img 
-              src={coverPhotoUrl} 
-              alt="Cover" 
+            <img
+              src={coverPhotoUrl}
+              alt="Cover"
               style={{
                 maxWidth: '100%',
                 maxHeight: '90vh',

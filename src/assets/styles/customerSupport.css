@@ -1,57 +1,222 @@
-.chatAi-header{
+/* Base Styles (Mobile First) */
+.customer-support-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.chatAi-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    gap: 1rem;
+}
+
+.logo {
     display: flex;
     align-items: center;
-    justify-content: start;
-    padding: 20px;
-    z-index: 10;
-    gap: 20px;
+    text-decoration: none;
+    gap: 0.5rem;
 }
 
-.chatAi-header > .logo{
-    display: inline-flex;
+.logo-img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover .logo-img {
+    transform: scale(1.1);
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    color: #086ccabb;
+    margin: 0;
+    font-weight: 700;
+}
+
+.chat-icon-header {
+    display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
+    gap: 0.5rem;
+    background-color: #f8f9fa;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.chatAi-header > .logo > h1{
-    font-size: 2rem;
-    color: #000;
+.chat-icon-header:hover {
+    background-color: #e9ecef;
+    transform: translateY(-2px);
 }
 
-.chatAi-header > .logo > img{
-    width: 50px;
-    height: 50px;
-}
-
-.chatAi-header > .chat-icon-header{
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.chatAi-header > .chat-icon-header > h1{
-    font-size: 2rem;
-}
-
-.chatAi-header > .chat-icon-header > i{
-    font-size: 2rem;
+.chat-icon {
+    font-size: 1.5rem;
     color: #fff;
-    border: 1px solid #086ccabb;
-    padding: 5px;
     background-color: #086ccabb;
     border-radius: 50%;
-    cursor: pointer;
-    padding: 10px;
+    padding: 0.5rem;
+    transition: all 0.3s ease;
 }
 
-.customer-support-image-background{
+.chat-text {
+    font-size: 1.1rem;
+    color: #333;
+    margin: 0;
+    font-weight: 500;
+}
+
+.support-hero {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    overflow: hidden;
+}
+
+.customer-support-image {
     width: 100%;
-    min-height: 100vh;
+    height: 100%;
     object-fit: cover;
     position: absolute;
     top: 0;
     left: 0;
     z-index: -1;
+    opacity: 0.9;
+}
+
+.support-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.support-content h2 {
+    color: #086ccabb;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+.support-content p {
+    color: #555;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Tablet (768px and up) */
+@media (min-width: 768px) {
+    .chatAi-header {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+    }
+
+    .logo {
+        gap: 0.75rem;
+    }
+
+    .logo-img {
+        width: 45px;
+        height: 45px;
+    }
+
+    .logo-text {
+        font-size: 1.75rem;
+    }
+
+    .chat-icon {
+        font-size: 1.75rem;
+        padding: 0.6rem;
+    }
+
+    .chat-text {
+        font-size: 1.25rem;
+    }
+
+    .support-content {
+        padding: 2.5rem;
+    }
+
+    .support-content h2 {
+        font-size: 2.2rem;
+    }
+
+    .support-content p {
+        font-size: 1.25rem;
+    }
+}
+
+/* Desktop (992px and up) */
+@media (min-width: 992px) {
+    .chatAi-header {
+        padding: 1rem 3rem;
+    }
+
+    .logo-img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .logo-text {
+        font-size: 2rem;
+    }
+
+    .chat-icon-header {
+        padding: 0.75rem 1.5rem;
+    }
+
+    .support-content {
+        padding: 3rem;
+    }
+
+    .support-content h2 {
+        font-size: 2.5rem;
+    }
+
+    .support-content p {
+        font-size: 1.4rem;
+    }
+}
+
+/* Large Desktop (1200px and up) */
+@media (min-width: 1200px) {
+    .support-content {
+        max-width: 1000px;
+    }
+}
+
+/* Extra Small Devices (below 400px) */
+@media (max-width: 400px) {
+    .logo-text {
+        font-size: 1.3rem;
+    }
+
+    .chat-text {
+        font-size: 1rem;
+    }
+
+    .support-content {
+        padding: 1.5rem;
+    }
+
+    .support-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .support-content p {
+        font-size: 1rem;
+    }
 }

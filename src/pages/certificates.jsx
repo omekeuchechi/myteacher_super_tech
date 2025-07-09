@@ -48,6 +48,8 @@ const Certificates = () => {
     const [activeTab, setActiveTab] = useState('all');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isExpanded, setIsExpanded] = useState(true);
+    const [hasLectureExpired, setHasLectureExpired] = useState(false);
+    const [lectureExpiryDate, setLectureExpiryDate] = useState(null);
     const [theme, setTheme] = useState(() => {
         const storedTheme = localStorage.getItem('theme');
         return storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : 'dark';
@@ -167,8 +169,8 @@ const Certificates = () => {
             if (error.message === 'User not found') {
                 toast.error('Your session has expired. Please log in again.');
                 // Optionally clear local storage and redirect to login
-                localStorage.removeItem('token');
-                localStorage.removeItem('user');
+                // localStorage.removeItem('token');
+                // localStorage.removeItem('user');
                 // navigate('/login');
             } else {
                 toast.error(error.message || 'Failed to download certificate. Please try again later.');
@@ -280,6 +282,30 @@ const Certificates = () => {
         }
     };
 
+    // Function to check if lecture has expired
+    const checkLectureExpiry = (lectures) => {
+        if (!lectures || !Array.isArray(lectures)) return false;
+        
+        const now = new Date();
+        let hasAnyExpired = false;
+        let earliestExpiryDate = null;
+        
+        lectures.forEach(lecture => {
+            if (lecture.expiringDate) {
+                const expiryDate = new Date(lecture.expiringDate);
+                if (!earliestExpiryDate || expiryDate < earliestExpiryDate) {
+                    earliestExpiryDate = expiryDate;
+                }
+                if (expiryDate <= now) {
+                    hasAnyExpired = true;
+                }
+            }
+        });
+        
+        setLectureExpiryDate(earliestExpiryDate);
+        return hasAnyExpired;
+    };
+
     useEffect(() => {
         let isMounted = true;
         
@@ -287,6 +313,20 @@ const Certificates = () => {
             if (user?._id) {
                 try {
                     await fetchCertificates();
+                    
+                    // Fetch user's lectures to check expiration
+                    const token = localStorage.getItem('token');
+                    const response = await fetch(`${API_BASE}/lectures/user/${user._id}`, {
+                        headers: { Authorization: `Bearer ${token}` },
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.success && data.lectures) {
+                            const expired = checkLectureExpiry(data.lectures);
+                            setHasLectureExpired(expired);
+                        }
+                    }
                 } catch (error) {
                     if (isMounted) {
                         setError('Failed to load certificates. Please try again.');
@@ -546,15 +586,37 @@ const Certificates = () => {
                                     <i className="fas fa-check-circle"></i> Downloaded
                                 </button>
                             </div>
-                            <div className="certificates-actions">
-                                <button 
-                                    className="btn btn-primary"
-                                    onClick={downloadTotalCertificate}
-                                    style={{padding: '20px 20px', fontSize: '16px', width: '50%'}}
-                                >
-                                    <i className="fas fa-download"></i> Download Total Certificate
-                                </button>
-                            </div>
+                            {hasLectureExpired ? (
+                                <div className="certificates-actions">
+                                    <button 
+                                        className="btn btn-primary"
+                                        onClick={downloadTotalCertificate}
+                                        style={{padding: '20px 20px', fontSize: '16px', width: '50%'}}
+                                    >
+                                        <i className="fas fa-download"></i> Download Total Certificate
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="certificate-expiry-notice" style={{
+                                    backgroundColor: '#fff3cd',
+                                    color: '#856404',
+                                    padding: '15px',
+                                    borderRadius: '4px',
+                                    margin: '15px 0',
+                                    borderLeft: '4px solid #ffeeba',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '10px'
+                                }}>
+                                    <i className="fas fa-info-circle" style={{fontSize: '20px'}}></i>
+                                    <div>
+                                        <strong>Notice:</strong> The total certificate will be available for download after your lecture period ends.
+                                        {lectureExpiryDate && (
+                                            <div>Your lecture ends on: {new Date(lectureExpiryDate).toLocaleDateString()}</div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         {filteredCertificates.length === 0 ? (

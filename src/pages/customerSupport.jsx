@@ -47,22 +47,38 @@ const CustomerSupport = () => {
     }, []);
 
     return (
-        <>
-        <div className="chatAi-header">
-            <Link className="logo">
-            <img src={MyteacherLogo} alt="myteacher Logo" />
-            <h1>Myteacher</h1>
-            </Link>
-            <div className="chat-icon-header">
-                <i className='fas fa-comments'></i>
-            <h1>Chat with us</h1>
+        <div className="customer-support-container">
+            <header className="chatAi-header">
+                <Link to="/" className="logo" aria-label="Myteacher Home">
+                    <img 
+                        src={MyteacherLogo} 
+                        alt="Myteacher Logo" 
+                        width="50"
+                        height="50"
+                        className="logo-img"
+                    />
+                    <h1 className="logo-text">Myteacher</h1>
+                </Link>
+                <div className="chat-icon-header">
+                    <i className='fas fa-comments chat-icon'></i>
+                    <h2 className="chat-text">Chat with us</h2>
+                </div>
+            </header>
+            
+            <div className="support-hero">
+                <div className="support-content">
+                    <h2>How can we help you today?</h2>
+                    <p>Our support team is available 24/7 to assist with any questions</p>
+                    <p>Just click on the chat icon below to start a conversation</p>
+                </div>
+                <img 
+                    src={CustomerSupportImage} 
+                    alt="Friendly customer support team" 
+                    className="customer-support-image"
+                />
+                {/* Chat widget will be injected here by Chatbase */}
             </div>
         </div>
-        <div style={{ minHeight: '80vh', }}>
-            <img src={CustomerSupportImage} alt="myteacher customer support" className='customer-support-image-background' />
-            {/* The chat widget will be injected here by the Chatbase script */}
-        </div>
-        </>
     );
 };
 

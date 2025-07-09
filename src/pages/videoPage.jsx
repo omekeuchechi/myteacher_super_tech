@@ -693,8 +693,40 @@ function VideoPage() {
                                                 cursor: comment.user && comment.user.toString && localStorage.getItem('userId') === comment.user.toString() && !comment.edited ? 'pointer' : 'default'
                                             }}
                                         >
-                                            <div className="comment-header">
-                                                {displayName}
+                                            <div className="comment-header" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                {user.avatar ? (
+                                                    <img 
+                                                        src={user.avatar} 
+                                                        alt={displayName} 
+                                                        style={{ 
+                                                            width: '32px', 
+                                                            height: '32px', 
+                                                            borderRadius: '50%',
+                                                            objectFit: 'cover'
+                                                        }} 
+                                                    />
+                                                ) : (
+                                                    <div style={{
+                                                        width: '32px',
+                                                        height: '32px',
+                                                        borderRadius: '50%',
+                                                        backgroundColor: '#e0e0e0',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        color: '#666',
+                                                        fontWeight: 'bold',
+                                                        fontSize: '14px'
+                                                    }}>
+                                                        {displayName.charAt(0).toUpperCase()}
+                                                    </div>
+                                                )}
+                                                <div className="user-info" style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.2' }}>
+                                                    <span style={{ fontWeight: '600' }}>{user.name || displayName}</span>
+                                                    {user.name && user.name !== displayName && (
+                                                        <span style={{ fontSize: '0.8em', color: '#666' }}>@{displayName}</span>
+                                                    )}
+                                                </div>
                                             </div>
                                             {editingComment && editingComment.commentId === comment._id ? (
                                                 <div className="comment-form">
@@ -813,7 +845,41 @@ function VideoPage() {
                                                                 const replyDisplayName = replyUser.name || replyUser.email || replyUserId || 'User';
                                                                 return (
                                                                     <div key={reply._id} className="reply">
-                                                                        <div className="comment-header">{replyDisplayName}</div>
+                                                                        <div className="comment-header" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                                            {replyUser.avatar ? (
+                                                                                <img 
+                                                                                    src={replyUser.avatar} 
+                                                                                    alt={replyDisplayName} 
+                                                                                    style={{ 
+                                                                                        width: '28px', 
+                                                                                        height: '28px', 
+                                                                                        borderRadius: '50%',
+                                                                                        objectFit: 'cover'
+                                                                                    }} 
+                                                                                />
+                                                                            ) : (
+                                                                                <div style={{
+                                                                                    width: '28px',
+                                                                                    height: '28px',
+                                                                                    borderRadius: '50%',
+                                                                                    backgroundColor: '#e0e0e0',
+                                                                                    display: 'flex',
+                                                                                    alignItems: 'center',
+                                                                                    justifyContent: 'center',
+                                                                                    color: '#666',
+                                                                                    fontWeight: 'bold',
+                                                                                    fontSize: '12px'
+                                                                                }}>
+                                                                                    {replyDisplayName.charAt(0).toUpperCase()}
+                                                                                </div>
+                                                                            )}
+                                                                            <div className="user-info" style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.2' }}>
+                                                                                <span style={{ fontWeight: '600' }}>{replyUser.name || replyDisplayName}</span>
+                                                                                {replyUser.name && replyUser.name !== replyDisplayName && (
+                                                                                    <span style={{ fontSize: '0.75em', color: '#666' }}>@{replyDisplayName}</span>
+                                                                                )}
+                                                                            </div>
+                                                                        </div>
                                                                         {editingReply && editingReply.replyId === reply._id ? (
                                                                             <div className="comment-form" style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                                                                                 <textarea
