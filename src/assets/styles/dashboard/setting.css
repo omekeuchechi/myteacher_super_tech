@@ -5,7 +5,7 @@
   min-height: 100vh;
   transition: all 0.3s ease;
   /* margin-left: 250px; */
-  margin: 0 auto;
+  margin: 50px auto;
   color: var(--text-color);
 }
 

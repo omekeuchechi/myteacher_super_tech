@@ -30,6 +30,9 @@ const DashMobileNav = ({ theme = "light", }) => {
           <NavItem icon="user" label="Profile" move="/profile" isExpanded={true} />
           <NavItem icon="chalkboard-teacher" label="Classroom" isExpanded={true} move="/online-class" />
           <NavItem icon="briefcase" label="Assets" isExpanded={true} move="/assets" />
+          <NavItem icon="book" label="Assignment" isExpanded={true} move="/assignment" />
+          <NavItem icon="certificate" label="Certificates" isExpanded={true} move="/certificates" />
+          <NavItem icon="video" label="Video Page" isExpanded={true} move="/video" />
           <NavItem icon="cog" label="Settings" move="/settings" isExpanded={true} />
           <NavItem icon="question-circle" label="Help" isExpanded={true} />
           <NavItem icon="right-from-bracket" label="Log Out" isExpanded={true} onClick={logout} />

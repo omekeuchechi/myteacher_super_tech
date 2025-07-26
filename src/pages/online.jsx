@@ -28,6 +28,21 @@ const OnlineClass = () => {
   const [fetching, setFetching] = useState(true);
   const [timeOffset, setTimeOffset] = useState(0); // To store the difference between server time and client time
 
+  // Helper function to format time remaining
+  const formatTimeRemaining = (ms) => {
+    const seconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    
+    if (hours > 0) {
+      return `${hours}h ${minutes % 60}m`;
+    } else if (minutes > 0) {
+      return `${minutes}m ${seconds % 60}s`;
+    } else {
+      return `${seconds}s`;
+    }
+  };
+
   // Fetch user-specific lectures from backend
   useEffect(() => {
     const fetchLectures = async () => {
@@ -58,11 +73,13 @@ const OnlineClass = () => {
           setClasses([]);
         }
       } catch (err) {
+        console.error('Error fetching lectures:', err);
         setClasses([]);
       }
       setFetching(false);
     };
     fetchLectures();
+    handleCurrectTime(); // Sync time on component mount
   }, []);
 
   useEffect(() => {
@@ -306,41 +323,57 @@ const OnlineClass = () => {
                   <p>Starts in: {cls.startTime.toLocaleTimeString()}</p>
                   {(() => {
                     const timeDifference = cls.startTime.getTime() - now.getTime();
-
-                    const isTimeReached = timeDifference <= 0;
-
+                    const oneHourInMs = 60 * 60 * 1000;
+                    const isTimeReached = timeDifference <= oneHourInMs; // 1 hour before
                     const buttonText = 'Join Class';
-                    const twoHoursInMs = 2 * 60 * 60 * 1000;
-                    const isWithinTwoHours = timeDifference <= twoHoursInMs;
-                    const isButtonDisabled = !isTimeReached || (loading && selectedClass?.id === cls.id);
+                    const isButtonDisabled = (timeDifference > oneHourInMs) || (loading && selectedClass?.id === cls.id);
+                    
+                    // Debug information (you can remove this later)
+                    console.log('Class:', cls.title);
+                    console.log('Start time:', new Date(cls.startTime));
+                    console.log('Current time:', new Date(now));
+                    console.log('Time difference (ms):', timeDifference);
+                    console.log('Is time reached (1 hour before):', isTimeReached);
 
                     return (
-                      <>
-                        {isWithinTwoHours && (
-                          <button
-                            className="join-class-btn"
-                            onClick={() => handleJoinClick(cls)}
-                            disabled={isButtonDisabled}
-                            style={{ position: 'relative' }}
-                          >
-                            {loading && selectedClass?.id === cls.id ? (
-                              <div className="spinner" style={{
-                                position: 'absolute',
-                                left: '10px',
-                                top: '50%',
-                                transform: 'translateY(-50%)',
-                                width: '16px',
-                                height: '16px',
-                                border: '2px solid #ccc',
-                                borderTop: '2px solid #333',
-                                borderRadius: '50%',
-                                animation: 'spin 1s linear infinite',
-                              }}></div>
-                            ) : null}
-                            <i className="fas fa-sign-in-alt"></i> {buttonText}
-                          </button>
+                      <button
+                        className={`join-class-btn ${isButtonDisabled ? 'disabled' : ''}`}
+                        onClick={() => !isButtonDisabled && handleJoinClick(cls)}
+                        disabled={isButtonDisabled}
+                        style={{ 
+                          position: 'relative',
+                          opacity: isButtonDisabled ? 0.7 : 1,
+                          cursor: isButtonDisabled ? 'not-allowed' : 'pointer',
+                          marginTop: '10px',
+                          padding: '8px 16px',
+                          borderRadius: '4px',
+                          border: 'none',
+                          backgroundColor: isButtonDisabled ? '#ccc' : '#4CAF50',
+                          color: 'white',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px'
+                        }}
+                      >
+                        {loading && selectedClass?.id === cls.id ? (
+                          <div className="spinner" style={{
+                            width: '16px',
+                            height: '16px',
+                            border: '2px solid #f3f3f3',
+                            borderTop: '2px solid #3498db',
+                            borderRadius: '50%',
+                            animation: 'spin 1s linear infinite',
+                          }}></div>
+                        ) : (
+                          <i className="fas fa-sign-in-alt"></i>
                         )}
-                      </>
+                        {buttonText}
+                        {!isTimeReached && timeDifference > 0 && (
+                          <span style={{ marginLeft: '8px', fontSize: '0.9em', opacity: 0.9 }}>
+                            (available in {formatTimeRemaining(timeDifference - oneHourInMs)})
+                          </span>
+                        )}
+                      </button>
                     );
                   })()}
                 </div>
@@ -497,6 +530,16 @@ const OnlineClass = () => {
           width: 40px;
           height: 40px;
           animation: spin 1s linear infinite;
+        }
+        
+        .join-class-btn.disabled {
+          background-color: #ccc !important;
+          cursor: not-allowed !important;
+        }
+        
+        .join-class-btn:not(.disabled):hover {
+          opacity: 0.9;
+          transform: translateY(-1px);
         }
         .modal-content > h3{
           font-size: 25px;
