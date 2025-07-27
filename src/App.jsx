@@ -330,7 +330,7 @@ function App() {
     <CourseProvider>
       <AuthProvider>
         <UserInfoProvider>
-        <Router basename="/">
+        <Router>
           <AppRoutes />
         </Router>
         </UserInfoProvider>
