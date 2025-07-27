@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../assets/styles/techblog.css';
 import Pusher from 'pusher-js';
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
 const TechBlog = () => {
   const [posts, setPosts] = useState([]);

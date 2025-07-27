@@ -8,7 +8,7 @@ import '../assets/styles/dashboard/certificates.css';
 import Header from '../components/userDashCom/header';
 import DashMobileNav from '../components/userDashCom/dashMobileNav';
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
 // Fullscreen icon component
 const FullscreenIcon = () => (

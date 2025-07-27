@@ -12,7 +12,7 @@ import { AuthContext } from '../../context/Authcontext';
 import Header from '../components/userDashCom/header';
 
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 function UserDashboard() {
   const [isExpanded, setIsExpanded] = useState(true);
 

@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/Authcontext";
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
 const coursesDataValues = [
   "Front-End Development", "Backend Programming", "Power BI", "Content Creation & Social Media Marketing",

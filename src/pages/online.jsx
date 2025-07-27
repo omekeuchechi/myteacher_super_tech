@@ -14,7 +14,7 @@ import Header from '../components/userDashCom/header';
 // zoom image 
 import zoomImage from '../assets/illustrations/myteacher-intitute-zoom.jpg';
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
 const OnlineClass = () => {
   const { user, logout } = useContext(AuthContext);

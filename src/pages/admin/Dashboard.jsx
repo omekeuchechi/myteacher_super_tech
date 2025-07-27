@@ -6,7 +6,7 @@ import Pusher from "pusher-js";
 import "../../assets/styles/admin/dashboard.css";
 import AdminNav from "../../components/adminCom/navSection";
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
 const navLinks = [
   { to: "/", label: "Home" },

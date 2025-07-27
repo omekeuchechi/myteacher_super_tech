@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../assets/styles/authstyles/register.css';
 import googleImage from '../assets/images/google.png';
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
 const coursesDataValues = [
   {id: 1, courseName: "Front-End Development", color: "orange", textcl: "#fff"},

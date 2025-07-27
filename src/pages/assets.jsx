@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import Header from '../components/userDashCom/header';
 import myteacherLogo from '../img/Untitled-1.png';
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
 function Assets() {
   const { user, logout } = useContext(AuthContext);

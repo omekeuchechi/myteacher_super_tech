@@ -101,7 +101,7 @@ const statesByCountry = {
   }
 };
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 const PUSHER_KEY = import.meta.env.VITE_PUSHER_KEY || process.env.VITE_PUSHER_KEY || '';
 const PUSHER_CLUSTER = import.meta.env.VITE_PUSHER_CLUSTER || process.env.VITE_PUSHER_CLUSTER || '';
 

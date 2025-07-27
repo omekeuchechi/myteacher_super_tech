@@ -20,7 +20,7 @@ const Profile = () => {
   const [debounceTimer, setDebounceTimer] = useState(null);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [showCoverPhotoModal, setShowCoverPhotoModal] = useState(false);
-  const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+  const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
   const openImageModal = () => setIsImageModalOpen(true);
   const closeImageModal = () => setIsImageModalOpen(false);

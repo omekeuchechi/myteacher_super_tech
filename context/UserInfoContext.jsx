@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 import Pusher from 'pusher-js';
 import { AuthContext } from './Authcontext'; // Make sure this path is correct
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
 export const UserInfoContext = createContext();
 

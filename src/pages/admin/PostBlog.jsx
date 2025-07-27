@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Editor } from '@tinymce/tinymce-react';
 import '../../assets/styles/admin/postblog.css';
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
 const PostBlog = () => {
   const { user } = useContext(AuthContext);

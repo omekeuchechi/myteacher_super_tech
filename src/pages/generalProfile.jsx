@@ -12,7 +12,7 @@ const GeneralProfile = () => {
   const [isLoading, setIsLoading] = useState(!location.state?.userData);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isFollowLoading, setIsFollowLoading] = useState(false);
-  const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+  const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
   // Check if current user is following this profile
   const checkFollowStatus = useCallback(async () => {

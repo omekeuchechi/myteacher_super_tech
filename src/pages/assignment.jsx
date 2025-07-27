@@ -14,7 +14,7 @@ import FullscreenIcon from '../components/userDashCom/fullscreenIcon';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/Authcontext';
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
 // Helper to decode JWT
 const decodeToken = (token) => {

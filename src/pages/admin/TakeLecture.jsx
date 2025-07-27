@@ -7,7 +7,7 @@ import AdminNav from "../../components/adminCom/navSection";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
 const TakeLecture = () => {
   const { user } = useContext(AuthContext) || {};

@@ -53,7 +53,7 @@ const useDarkMode = () => {
     return { isDarkMode, toggleDarkMode };
 };
 
-const API_BASE = import.meta.env.VITE_BASEURL || 'http://localhost:5000/api/v1';
+const API_BASE = import.meta.env.VITE_BASEURL || 'http://localhost:5000';
 
 // Initialize Pusher
 const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {

@@ -12,7 +12,7 @@ export const CourseProvider = ({ children }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/api/v1/admin/courses", {
+      const res = await fetch("http://localhost:5000/admin/courses", {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
       if (res.ok) {

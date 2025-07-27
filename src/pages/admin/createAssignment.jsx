@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import '../../assets/styles/admin/createAssignment.css';
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
 const CreateAssignment = () => {
     const [lectures, setLectures] = useState([]);

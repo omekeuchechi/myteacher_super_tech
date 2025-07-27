@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../../context/Authcontext";
 import { CourseContext } from "../../context/CourseContext";
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000/api/v1";
+const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
 const Apply = () => {
   const { user } = useContext(AuthContext) || {};
