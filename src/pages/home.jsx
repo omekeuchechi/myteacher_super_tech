@@ -55,7 +55,7 @@ useEffect(() => {
             <Nav />
             {/* <HeroSection /> */}
             <HeroBox />
-            <Main /> 
+            {/* <Main />  */}
             {/* <DigitalSkills /> */}
             <PopularCourses />
             {/* <AboutCom /> */}

@@ -5,7 +5,7 @@ import gsap from "gsap";
 
 // illustrations image import
 import itSolutionImage from '../assets/illustrations/cop.jpg';
-import gadjectImage from '../assets/illustrations/tech_gadject.jpg';
+import ExpertImage from '../assets/illustrations/MyteachercustomerSupprt.jpg';
 import corporate from '../assets/illustrations/copera.jpg';
 import basicImage from '../assets/illustrations/basicla.jpg';
 
@@ -98,16 +98,16 @@ const Services = () => {
                         <div className="service-card">
                             <div className="service-image">
                                 <img
-                                    src={gadjectImage}
+                                    src={ExpertImage}
                                     alt="Portfolio Review"
                                     className="service-icon-img"
                                 />
                             </div>
                             <div className="service-content">
                                 <div className="service-accent">03</div>
-                                <h3 className="service-title">IT solutions Consultancy & Tech Gadgets</h3>
+                                <h3 className="service-title">IT Solutions Consultancy</h3>
                                 <p className="service-description">
-                                    We provide a range of reliable and affordable tech gadgets—from work tools to learning devices. Every product is selected to enhance productivity, learning, and everyday tech experiences.
+                                    Expert IT consulting services to streamline your technology infrastructure, optimize digital workflows, and implement cutting-edge solutions that drive business growth and operational efficiency.
                                 </p>
                                 {/* <a href="#" className="service-cta">Learn More</a> */}
                             </div>

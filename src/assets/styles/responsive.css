@@ -504,7 +504,11 @@
     }
 
     .service-card {
-        max-width: 48%;
+        width: 50;
+    }
+
+    .service-description{
+        margin: 0;
     }
 
     .ai-reg-content {

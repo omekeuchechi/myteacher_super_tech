@@ -69,11 +69,21 @@
         margin-bottom: -30px;
     }
     .hero-box-header{
-        width: 90%;
+        width: 100%;
         margin-top: 20px;
+        z-index: 9000;
     }
     .hero-box-header > h1{
+        width: 80%;
         font-size: 2rem;
+        margin-top: 30px;
+        margin-bottom: 10px;
+    }
+    .hero-box-header > .btn-box {
+        font-size: 1.6rem;
+        padding: 18px 27px;
+        margin-bottom: 70px;
+        border-radius: 40px;
     }
 }
 
@@ -96,6 +106,6 @@
         margin-bottom: 10px;
     }
     .hero-box-header{
-        width: 80%;
+        width: 100%;
     }
 }
