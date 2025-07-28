@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useCallback } from "react";
 
-
+const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 export const CourseContext = createContext();
 
 export const CourseProvider = ({ children }) => {
@@ -12,7 +12,7 @@ export const CourseProvider = ({ children }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/admin/courses", {
+      const res = await fetch(`${API_BASE}/admin/courses`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
       if (res.ok) {
