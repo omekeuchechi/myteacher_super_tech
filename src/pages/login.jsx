@@ -4,7 +4,7 @@ import '../assets/styles/authstyles/register.css';
 import googleImage from '../assets/images/google.png';
 import { AuthContext } from '../../context/Authcontext';
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_BASEURL;
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);

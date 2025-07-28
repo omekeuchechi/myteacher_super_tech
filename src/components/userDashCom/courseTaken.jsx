@@ -5,7 +5,7 @@ import ProgressBar from './progressBar';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { AuthContext } from '../../../context/Authcontext';
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_BASEURL;
 
 const CourseTaken = ({ theme }) => {
   const { user } = useContext(AuthContext);

@@ -6,7 +6,7 @@ import { AuthContext } from "../../../context/Authcontext";
 import '../../assets/styles/admin/adminList.css'; // Import the CSS file
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_BASEURL;
 
 const AdminList = () => {
   const { logout } = useContext(AuthContext);

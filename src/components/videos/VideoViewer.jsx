@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import './VideoViewer.css';
 
-const API_BASE = import.meta.env.VITE_BASEURL || 'http://localhost:5000';
+const API_BASE = import.meta.env.VITE_BASEURL;
 
 const VideoViewer = ({ video, onVideoUpdate }) => {
     const [commentInput, setCommentInput] = useState("");

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_BASEURL;
 
 const ContactUs = () => {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });

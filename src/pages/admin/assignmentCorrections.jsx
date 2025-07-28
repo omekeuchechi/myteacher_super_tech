@@ -5,7 +5,7 @@ import AdminNav from "../../components/adminCom/navSection";
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from "../../../context/Authcontext";
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_BASEURL;
 
 const navLinks = [
     { to: "/", label: "Home" },
