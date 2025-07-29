@@ -1,0 +1,124 @@
+.main-two {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 50px;
+    padding: 50px;
+}
+
+.main-two > img {
+    width: 500px;
+    height: auto;
+}
+
+.main-two > .main-two-content {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.main-two-content > h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--primary-color);
+}
+
+.main-two-content > p {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #000;
+}
+
+.main-two-content > .main-two-content-btn {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-color-light);
+    background-color: var(--primary-color);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.main-two-content-btn:hover {
+    background-color: var(--secondary-color);
+    color: var(--text-color-light);
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.main-two-content > .main-two-content-p {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #000;
+}
+
+.hide-p{
+    display: none;
+}
+
+.show-p{
+    display: block;
+}
+
+@media (orientation: portrait) {
+    .main-two {
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+    }   
+    .main-two > img {
+        width: 310px;
+        height: auto;
+    }
+    .main-two > .main-two-content {
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .main-two-content > h1 {
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: var(--primary-color);
+    }
+    .main-two-content > p{
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px){
+    .main-two {
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+    }
+    .main-two > img {
+        width: 100%;
+        height: auto;
+    }   
+}
+
+@media (max-width: 1060px){
+    .main-two {
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+    }
+    .main-two > img {
+        width: 100%;
+        height: 700px;
+    }   
+}

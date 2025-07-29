@@ -21,6 +21,7 @@ import ContactUs from "../components/contactUs";
 import Testimonial from "../components/testimonial";
 import WhatsAppIconOnly from "../components/whatIconLink";
 import HeroBox from './../components/herobox';
+import MainTwo from "../components/mainTwo";
 // WhatAppIconLink
 
 function Home() {
@@ -55,6 +56,7 @@ useEffect(() => {
             <Nav />
             {/* <HeroSection /> */}
             <HeroBox />
+            <MainTwo />
             {/* <Main />  */}
             {/* <DigitalSkills /> */}
             <PopularCourses />
