@@ -241,7 +241,8 @@
   color: var(--text-color);
   font-size: 0.9375rem;
   transition: all 0.2s ease;
-  -webkit-appearance: none;
+  /* -webkit-appearance: none; */
+  appearance: none;
 }
 
 .input-box-auth textarea{
@@ -564,6 +565,7 @@
 @media (max-width: 480px) {
   .settings-content {
     padding: 1rem 0.75rem 4rem;
+    margin-left: auto;
   }
   
   .settings-content h1 {
@@ -574,6 +576,20 @@
   .profile-img-container {
     width: 120px;
     height: 120px;
+  }
+}
+
+@media (max-width: 1060px){
+  .settings-content {
+    padding: 1rem 0.75rem 4rem;
+    margin-left: 300px;
+  }
+}
+
+@media (max-width: 760px){
+  .settings-content {
+    padding: 1rem 0.75rem 4rem;
+    margin: 20px auto;
   }
 }
 

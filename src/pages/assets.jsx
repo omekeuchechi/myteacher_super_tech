@@ -25,6 +25,7 @@ function Assets() {
   const [fetchingLectures, setFetchingLectures] = useState(false);
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Fetch assets from backend
   useEffect(() => {
@@ -38,6 +39,8 @@ function Assets() {
         setAssets(data);
       } catch (err) {
         // handle error
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchAssets();
@@ -186,7 +189,11 @@ function Assets() {
               
               {/* Table Body */}
               <div className={`assets-table-body ${theme}`}>
-                {filteredAssets.length === 0 ? (
+                {isLoading ? (
+                  <div className="loading-spinner-container">
+                    <div className="loading-spinner"></div>
+                  </div>
+                ) : filteredAssets.length === 0 ? (
                   <div className={`assets-table-row no-results ${theme}`}>
                     <div className={`assets-table-cell ${theme}`} style={{ gridColumn: '1 / -1' }}>
                       No assets found.
@@ -363,7 +370,30 @@ function Assets() {
         .light .modal-content {
           --bg-color: #ffffff;
           --text-color: #333333;
-        }`}
+        }
+          .loading-spinner-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            min-height: 100px;
+          }
+
+          .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: #3498db;
+            animation: spin 1s ease-in-out infinite;
+          }
+
+          @keyframes spin {
+            to {
+              transform: rotate(360deg);
+            }
+          }`}
       </style>
     </div>
   );

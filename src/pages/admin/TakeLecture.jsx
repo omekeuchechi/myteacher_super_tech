@@ -56,7 +56,7 @@ const TakeLecture = () => {
     const fetchAdmins = async () => {
       setAdminsLoading(true);
       try {
-        const res = await fetch(`${API_BASE}/lecture/admins`, {
+        const res = await fetch(`${API_BASE}/lectures/admins`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -75,7 +75,7 @@ const TakeLecture = () => {
   const fetchLectures = async () => {
     setLecturesLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/lecture/lectures`, {
+      const res = await fetch(`${API_BASE}/lectures/lectures`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -145,7 +145,7 @@ const TakeLecture = () => {
     setUpdateErr("");
     if (!lectureId) return;
     try {
-      const res = await fetch(`${API_BASE}/lecture/lectures/${lectureId}`, {
+      const res = await fetch(`${API_BASE}/lectures/lectures/${lectureId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -185,7 +185,7 @@ const TakeLecture = () => {
       return;
     }
     try {
-      const res = await fetch(`${API_BASE}/lecture/create-lecture-batch`, {
+      const res = await fetch(`${API_BASE}/lectures/create-lecture-batch`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -232,7 +232,7 @@ const TakeLecture = () => {
       return;
     }
     try {
-      const res = await fetch(`${API_BASE}/lecture/update-lecture/${updateId}`, {
+      const res = await fetch(`${API_BASE}/lectures/update-lecture/${updateId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

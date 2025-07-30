@@ -29,6 +29,9 @@ import CopyRight from './pages/coursesPages/copyRight';
 import BasicComputing from './pages/coursesPages/basicComputing';
 import VirtualAssistant from './pages/coursesPages/virtualAssistant';
 import DataEntry from './pages/coursesPages/dataEntry';
+import ContentCreation from './pages/coursesPages/contentCreation';
+import PowerBi from './pages/coursesPages/powerBi';
+import Backend from './pages/coursesPages/backend';
 
 // email verification pages
 import VerifyEmailInfo from './pages/verifyEmailInfo';
@@ -214,6 +217,9 @@ function AppRoutes() {
       <Route path='/basic-computing' element={<BasicComputing />} />
       <Route path='/virtual-assistant' element={<VirtualAssistant />} />
       <Route path='/data-entry' element={<DataEntry />} />
+      <Route path='/content-creation' element={<ContentCreation />} />
+      <Route path='/power-bi' element={<PowerBi />} />
+      <Route path='/backend-programming' element={<Backend />} />
 
 
       <Route

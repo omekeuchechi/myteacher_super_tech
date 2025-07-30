@@ -23,8 +23,8 @@ const BasicComputing = () => {
                     <div className="box"><span><i className="fas fa-money-bill-wave"></i> Remote</span><span>₦25,000</span></div>
                     <div className="box"><span><i className="fas fa-bookmark"></i> Remote</span><span>Learn on Site</span></div>
                     <div className="box"><span><i className="fas fa-bookmark"></i> Locally</span><span>Learn on Real Location</span></div>
-                    <div className="box"><span><i className="fas fa-clock"></i> Duration</span><span>8 Weeks</span></div>
-                    <div className="box"><span><i className="fas fa-copy"></i> Lessons</span><span>8</span></div>
+                    <div className="box"><span><i className="fas fa-clock"></i> Duration</span><span>4.5 Weeks</span></div>
+                    <div className="box"><span><i className="fas fa-copy"></i> Lessons</span><span>13</span></div>
                     <button className="btn local">📱Contact to Request</button>
                     <button className="btn remote">🍵 Buy Now</button>
                 </div>
@@ -41,7 +41,7 @@ const BasicComputing = () => {
 
                     <div className="section highlight">
                         <p>
-                            Learn Basic Computing in Port Harcourt, Lagos, Abuja, and worldwide, online and onsite. Contact <Link to="/">Myteacher Institute</Link> today.
+                            Learn Basic Computing in Port Harcourt, Lagos, Abuja, and worldwide, online and onsite. Contact <Link to="/customer-support">Myteacher Institute</Link> today.
                         </p>
                     </div>
 

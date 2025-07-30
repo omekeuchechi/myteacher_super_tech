@@ -23,8 +23,8 @@ const VirtualAssistant = () => {
                     <div className="box"><span><i className="fas fa-money-bill-wave"></i> Remote</span><span>₦20,000</span></div>
                     <div className="box"><span><i className="fas fa-bookmark"></i> Remote</span><span>Learn on Site</span></div>
                     <div className="box"><span><i className="fas fa-bookmark"></i> Locally</span><span>Learn on Real Location</span></div>
-                    <div className="box"><span><i className="fas fa-clock"></i> Duration</span><span>6 Weeks</span></div>
-                    <div className="box"><span><i className="fas fa-copy"></i> Lessons</span><span>6</span></div>
+                    <div className="box"><span><i className="fas fa-clock"></i> Duration</span><span>4 Weeks</span></div>
+                    <div className="box"><span><i className="fas fa-copy"></i> Lessons</span><span>12</span></div>
                     <button className="btn local">📱Contact to Request</button>
                     <button className="btn remote">🍵 Buy Now</button>
                 </div>
@@ -41,7 +41,7 @@ const VirtualAssistant = () => {
 
                     <div className="section highlight">
                         <p>
-                            Learn Virtual Assistant in Port Harcourt, Lagos, Abuja, and worldwide, online and onsite. Contact <Link to="/">Myteacher Institute</Link> today.
+                            Learn Virtual Assistant in Port Harcourt, Lagos, Abuja, and worldwide, online and onsite. Contact <Link to="/customer-support">Myteacher Institute</Link> today.
                         </p>
                     </div>
 

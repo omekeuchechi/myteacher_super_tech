@@ -39,7 +39,7 @@ const courseDataInfo = [
         description: "Copywriting is crafting persuasive text that drives actions like clicking or buying, essential for marketing success.",
         remotePrice: '30,000,00',
         locally: '90,000,00',
-        myTeacherAdmin: 'Bright Owen',
+        myTeacherAdmin: 'MyteacherAdmin',
         link: "/copy-right",
         courseImage: copyWritingImage,
     },
@@ -53,7 +53,7 @@ const courseDataInfo = [
         description: "Learn the basics of computers, internet, and productivity tools for everyday use.",
         remotePrice: '25,000,00',
         locally: '70,000,00',
-        myTeacherAdmin: 'Jane Smith',
+        myTeacherAdmin: 'MyteacherAdmin',
         link: "/basic-computing",
         courseImage: basicComputingImage,
     },
@@ -67,7 +67,7 @@ const courseDataInfo = [
         description: "Become a professional virtual assistant and work for clients worldwide.",
         remotePrice: '20,000,00',
         locally: '60,000,00',
-        myTeacherAdmin: 'John Doe',
+        myTeacherAdmin: 'MyteacherAdmin',
         link: "/virtual-assistant",
         courseImage: visualAssitantImage,
     },
@@ -81,7 +81,7 @@ const courseDataInfo = [
         description: "Master data entry skills for office and remote jobs.",
         remotePrice: '15,000,00',
         locally: '50,000,00',
-        myTeacherAdmin: 'Mary Johnson',
+        myTeacherAdmin: 'MyteacherAdmin',
         link: "/data-entry",
         courseImage: dataEntryImage,
     },
@@ -95,7 +95,8 @@ const courseDataInfo = [
         description: "Learn to create engaging content and market on social media platforms.",
         remotePrice: '35,000,00',
         locally: '100,000,00',
-        myTeacherAdmin: 'Bright Owen',
+        myTeacherAdmin: 'MyteacherAdmin',
+        link: "/content-creation",
         courseImage: contentCreationImage,
     },
     {
@@ -108,7 +109,8 @@ const courseDataInfo = [
         description: "Analyze and visualize data using Microsoft Power BI.",
         remotePrice: '40,000,00',
         locally: '110,000,00',
-        myTeacherAdmin: 'Jane Smith',
+        myTeacherAdmin: 'MyteacherAdmin',
+        link: "/power-bi",
         courseImage: powerBiImage,
     },
     {
@@ -121,7 +123,8 @@ const courseDataInfo = [
         description: "Learn backend development with Node.js, Python, and databases.",
         remotePrice: '50,000,00',
         locally: '150,000,00',
-        myTeacherAdmin: 'John Doe',
+        myTeacherAdmin: 'MyteacherAdmin',
+        link: "/backend-programming",
         courseImage: backEndImage,
     },
     {
@@ -134,7 +137,7 @@ const courseDataInfo = [
         description: "Master HTML, CSS, JavaScript, and React for front-end web development.",
         remotePrice: '50,000,00',
         locally: '150,000,00',
-        myTeacherAdmin: 'Mary Johnson',
+        myTeacherAdmin: 'MyteacherAdmin',
         courseImage: frontEndImage,
     },
     {
@@ -147,7 +150,7 @@ const courseDataInfo = [
         description: "Build mobile apps for Android and iOS using Flutter and React Native.",
         remotePrice: '60,000,00',
         locally: '180,000,00',
-        myTeacherAdmin: 'Jane Smith',
+        myTeacherAdmin: 'MyteacherAdmin',
         courseImage: mobileAppImage,
     },
     {
@@ -160,7 +163,7 @@ const courseDataInfo = [
         description: "Explore generative AI models and their applications.",
         remotePrice: '70,000,00',
         locally: '200,000,00',
-        myTeacherAdmin: 'Bright Owen',
+        myTeacherAdmin: 'MyteacherAdmin',
         courseImage: generativeAiIMAGE,
     },
     {
@@ -173,7 +176,7 @@ const courseDataInfo = [
         description: "Learn project management methodologies and tools.",
         remotePrice: '45,000,00',
         locally: '120,000,00',
-        myTeacherAdmin: 'John Doe',
+        myTeacherAdmin: 'MyteacherAdmin',
         courseImage: projectManagementImage,
     },
     {
@@ -186,7 +189,7 @@ const courseDataInfo = [
         description: "Master Adobe Photoshop, Illustrator, and design principles.",
         remotePrice: '30,000,00',
         locally: '90,000,00',
-        myTeacherAdmin: 'Mary Johnson',
+        myTeacherAdmin: 'MyteacherAdmin',
         courseImage: graphicsImage,
     },
     {
@@ -199,7 +202,7 @@ const courseDataInfo = [
         description: "Learn user interface and user experience design for web and mobile.",
         remotePrice: '35,000,00',
         locally: '100,000,00',
-        myTeacherAdmin: 'Jane Smith',
+        myTeacherAdmin: 'MyteacherAdmin',
         courseImage: uiUxImage,
     },
     {
@@ -212,7 +215,7 @@ const courseDataInfo = [
         description: "Become a full stack developer with front-end and back-end skills.",
         remotePrice: '80,000,00',
         locally: '250,000,00',
-        myTeacherAdmin: 'Bright Owen',
+        myTeacherAdmin: 'MyteacherAdmin',
         courseImage: fullStackImage,
     },
     {
@@ -225,7 +228,7 @@ const courseDataInfo = [
         description: "Learn to protect systems and networks from cyber threats.",
         remotePrice: '60,000,00',
         locally: '180,000,00',
-        myTeacherAdmin: 'John Doe',
+        myTeacherAdmin: 'MyteacherAdmin',
         courseImage: cyberSecurityImage,
     },
     {
@@ -238,7 +241,7 @@ const courseDataInfo = [
         description: "Analyze data and gain insights using modern tools.",
         remotePrice: '50,000,00',
         locally: '150,000,00',
-        myTeacherAdmin: 'Mary Johnson',
+        myTeacherAdmin: 'MyteacherAdmin',
         courseImage: dataAnalysicImage,
     },
     {
@@ -251,7 +254,7 @@ const courseDataInfo = [
         description: "Learn SQL for managing and querying databases.",
         remotePrice: '30,000,00',
         locally: '90,000,00',
-        myTeacherAdmin: 'Jane Smith',
+        myTeacherAdmin: 'MyteacherAdmin',
         courseImage: sqlDataBaseImage,
     },
     {
@@ -264,7 +267,7 @@ const courseDataInfo = [
         description: "Use Python for data analysis and visualization.",
         remotePrice: '55,000,00',
         locally: '160,000,00',
-        myTeacherAdmin: 'Bright Owen',
+        myTeacherAdmin: 'MyteacherAdmin',
         courseImage: pyDataImage,
     },
     {
@@ -277,7 +280,7 @@ const courseDataInfo = [
         description: "Analyze data using Microsoft Excel.",
         remotePrice: '25,000,00',
         locally: '70,000,00',
-        myTeacherAdmin: 'Mary Johnson',
+        myTeacherAdmin: 'MyteacherAdmin',
         courseImage: excelDataImage,
     },
     {
@@ -290,7 +293,7 @@ const courseDataInfo = [
         description: "Master digital marketing strategies and tools.",
         remotePrice: '40,000,00',
         locally: '120,000,00',
-        myTeacherAdmin: 'Jane Smith',
+        myTeacherAdmin: 'MyteacherAdmin',
         courseImage: digitalMarketingImage,
     }
 ];

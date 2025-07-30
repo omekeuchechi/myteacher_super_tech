@@ -5,7 +5,7 @@ import AdminNav from "../../components/adminCom/navSection";
 import { AuthContext } from '../../../context/Authcontext';
 import '../../assets/styles/admin/users.css';
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_BASEURL;
 
 const Users = () => {
   const { logout } = useContext(AuthContext);

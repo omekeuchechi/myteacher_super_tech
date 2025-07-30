@@ -609,7 +609,7 @@ const Certificates = () => {
                                     gap: '10px'
                                 }}>
                                     <i className="fas fa-info-circle" style={{fontSize: '20px'}}></i>
-                                    <div>
+                                    <div style={{display: 'flex', flexDirection: 'column', gap: '10px', width: '100%'}}>
                                         <strong>Notice:</strong> The total certificate will be available for download after your lecture period ends.
                                         {lectureExpiryDate && (
                                             <div>Your lecture ends on: {new Date(lectureExpiryDate).toLocaleDateString()}</div>
