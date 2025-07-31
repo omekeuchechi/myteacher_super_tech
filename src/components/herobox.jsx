@@ -31,7 +31,7 @@ const HeroBox = () => {
     return(
         <div className="hero-box-section fade-in">
             <div className="hero-box-header">
-                <h1>Get Profitable Digital Skills, Tech Solutions and IT Gadgets</h1>
+                <h1 style={{ fontFamily: 'verdana', fontWeight: 900 }}>Join the online Class. Register and start learning a digital skill that earns. Get Certified</h1>
                 { user ? (
                     <>
                     {user.isAdmin ? (

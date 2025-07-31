@@ -1,0 +1,46 @@
+.authentication-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background: #f7f7f7; */
+    background-image: url('../illustrations/dashboard/myteacher-graphic-designer.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    z-index: -2;
+    padding: 24px 8px;
+}
+  
+.overlay-bg{
+    padding: 10px;
+    background: #000000a1;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    z-index: 1;
+}
+
+.verify-info{
+    max-width: 400px;
+    margin: 60px auto;
+    background: #f7f7fa;
+    border-radius: 12;
+    z-index: 200;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    padding: 40px 24px;
+    text-align: center;
+}
+
+.verify-info h2 {
+    color: #1976d2;
+    margin-bottom: 16px;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.2;
+}

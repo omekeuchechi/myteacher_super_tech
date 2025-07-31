@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "../assets/styles/verify.css";
 const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
 const ResendVerification = () => {
@@ -30,6 +31,8 @@ const ResendVerification = () => {
   };
 
   return (
+    <div className="authentication-container">
+    <div className="overlay-bg"></div>
     <div
       className="resend-verification-page"
       style={{
@@ -39,6 +42,7 @@ const ResendVerification = () => {
         borderRadius: 12,
         boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
         padding: "40px 24px",
+        zIndex: 200,
         textAlign: "center"
       }}
     >
@@ -70,6 +74,7 @@ const ResendVerification = () => {
             padding: "10px 24px",
             borderRadius: 6,
             border: "none",
+            zIndex: 200,
             fontWeight: 500,
             cursor: "pointer"
           }}
@@ -85,6 +90,7 @@ const ResendVerification = () => {
       <p style={{ marginTop: 18, color: "#555", fontSize: 15 }}>
         Already verified? <Link to="/login" style={{ color: "#1976d2", textDecoration: "underline" }}>Go to Login</Link>
       </p>
+    </div>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
+import "../assets/styles/verify.css";
 const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 const VerifyEmail = () => {
   const [searchParams] = useSearchParams();
@@ -31,6 +32,8 @@ const VerifyEmail = () => {
   }, [searchParams]);
 
   return (
+    <div className="authentication-container">
+    <div className="overlay-bg"></div>
     <div
       className="verify-email-page"
       style={{
@@ -41,6 +44,7 @@ const VerifyEmail = () => {
         alignItems: "center",
         background: "#f7f7fa",
         borderRadius: 12,
+        zIndex: 200,
         boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
         padding: "40px 24px",
         maxWidth: 400,
@@ -89,6 +93,7 @@ const VerifyEmail = () => {
           </Link>
         </>
       )}
+    </div>
     </div>
   );
 };

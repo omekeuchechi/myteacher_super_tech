@@ -230,11 +230,7 @@ function AppRoutes() {
       />
 
       {/* Email verification pages */}
-      <Route path="/verify-email-info" element={
-        <ProtectedRoute verificationOnly>
-          <VerifyEmailInfo />
-        </ProtectedRoute>
-      } />
+      <Route path="/verify-email-info" element={<VerifyEmailInfo />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/resend-verification" element={<ResendVerification />} />
 
