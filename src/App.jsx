@@ -229,22 +229,14 @@ function AppRoutes() {
         }
       />
 
-      {/* Email verification pages (only if not verified) */}
+      {/* Email verification pages */}
       <Route path="/verify-email-info" element={
         <ProtectedRoute verificationOnly>
           <VerifyEmailInfo />
         </ProtectedRoute>
       } />
-      <Route path="/verify-email" element={
-        <ProtectedRoute verificationOnly>
-          <VerifyEmail />
-        </ProtectedRoute>
-      } />
-      <Route path="/resend-verification" element={
-        <ProtectedRoute verificationOnly>
-          <ResendVerification />
-        </ProtectedRoute>
-      } />
+      <Route path="/verify-email" element={<VerifyEmail />} />
+      <Route path="/resend-verification" element={<ResendVerification />} />
 
       {/* Admin dashboard pages (adminOnly) */}
       <Route path="/admin/dashboard" element={
