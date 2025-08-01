@@ -63,6 +63,8 @@ import AssignmentCorrections from './pages/admin/assignmentCorrections';
 import MediaVideo from './pages/admin/mediaVideo';
 import VideoPage from './pages/videoPage';
 import CustomerSupport from './pages/customerSupport';
+import UpcomingLectureBatchCreation from './pages/admin/upcomingLectureBatchCreation';
+
 
 // Helper component for protected routes
 function ProtectedRoute({ children, adminOnly, userOnly, verificationOnly }) {
@@ -313,6 +315,11 @@ function AppRoutes() {
       <Route path="/admin/media-video" element={
         <ProtectedRoute adminOnly>
           <MediaVideo />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin/upcoming-lecture-batch-creation" element={
+        <ProtectedRoute adminOnly>
+          <UpcomingLectureBatchCreation />
         </ProtectedRoute>
       } />
     </Routes>

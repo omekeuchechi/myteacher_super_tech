@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../assets/styles/verify.css";
-import myteacherImage from "../img/untitled-1.png";
+import myteacherImage from "../img/Untitled-1.png";
 
 const VerifyEmailInfo = () => (
   <div className="authentication-container">

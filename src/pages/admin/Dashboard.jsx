@@ -288,6 +288,10 @@ const Dashboard = () => {
                 <i className="fas fa-envelope"></i>
                 <span>Mailer</span>
               </Link>
+              <Link to="/admin/upcoming-lecture-batch-creation" className="quick-link">
+                <i className="fas fa-calendar-plus"></i>
+                <span>Creating of Upcoming Lecture Batch</span>
+              </Link>
             </div>
           </div>
         </div>
@@ -347,7 +351,7 @@ function AddCourseForm({ onSuccess }) {
       return;
     }
     try {
-      const res = await fetch("http://localhost:5000/api/v1/admin/courses", {
+      const res = await fetch(`${API_BASE}/admin/courses`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
