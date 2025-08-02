@@ -110,7 +110,7 @@ function UserDashboard() {
 
         <div className={`apply-for-course-section ${theme}`}>
           <h2 className={`${theme}`}>Apply for Live streaming Lectures by clicking the Button.</h2>
-          <Link to="/apply-course" className='apply'><i className='fas fa-plus'></i> Apply</Link>
+          <Link to="/apply" className='apply'><i className='fas fa-plus'></i> Apply</Link>
         </div>
 
         {/* <ActiveActivity /> */}

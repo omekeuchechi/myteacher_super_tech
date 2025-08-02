@@ -8,7 +8,7 @@ import '../assets/styles/dashboard/certificates.css';
 import Header from '../components/userDashCom/header';
 import DashMobileNav from '../components/userDashCom/dashMobileNav';
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_BASEURL;
 
 // Fullscreen icon component
 const FullscreenIcon = () => (
@@ -254,8 +254,8 @@ const Certificates = () => {
                 issuedAt: cert.issuedAt || new Date().toISOString(),
                 certificateIssued: cert.certificateIssued !== undefined ? cert.certificateIssued : true,
                 _id: cert._id || `cert-${Date.now()}-${index}`,
-                uniqueId: cert._id || `cert-${Date.now()}-${index}`,
-                downloadUrl: `${API_BASE}/certificates/download/${cert._id || `cert-${Date.now()}-${index}`}`,
+                uniqueId: cert.scoreId || `cert-${Date.now()}-${index}`,
+                downloadUrl: `${API_BASE}/certificates/download/${cert.scoreId || `cert-${Date.now()}-${index}`}`,
                 feedback: cert.feedback || ''
             }));
 
@@ -351,8 +351,13 @@ const Certificates = () => {
     }, [user]);
 
     const handleDownload = async (certificate) => {
-        if (!certificate._id) {
-            toast.info('This certificate is not available for download');
+        // Prioritize using the pre-constructed downloadUrl if available.
+        // Fallback to constructing it with uniqueId.
+        const downloadUrl = certificate.downloadUrl || (certificate.uniqueId ? `${API_BASE}/certificates/download/${certificate.uniqueId}` : null);
+
+        if (!downloadUrl) {
+            toast.error('Certificate download link is not available.');
+            console.error('Download aborted: No valid URL or ID found.', certificate);
             return;
         }
 
@@ -365,7 +370,6 @@ const Certificates = () => {
             toast.info('Preparing your download...', { autoClose: 2000 });
             
             // Construct the download URL with the score ID
-            const downloadUrl = `${API_BASE}/certificates/download/${certificate._id}`;
             console.log('Downloading certificate from:', downloadUrl);
             
             const response = await fetch(downloadUrl, {
@@ -672,7 +676,7 @@ const Certificates = () => {
                                             </button>
                                             {cert.certificateIssued && (
                                                 <a 
-                                                    href={`${API_BASE}/certificates/download/${cert.lecture?._id}`}
+                                                    href={`${API_BASE}/certificates/download/${cert.scoreId || `cert-${Date.now()}-${cert._id}`}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="view-btn"

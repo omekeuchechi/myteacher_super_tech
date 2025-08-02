@@ -4,6 +4,7 @@ import { AuthProvider, AuthContext } from "../context/Authcontext";
 import { CourseProvider } from "../context/CourseContext";
 import { UserInfoProvider } from "../context/UserInfoContext";
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import useDocumentTitle from './hooks/useDocumentTitle';
 
 // first pages
 import Home from './pages/home';
@@ -178,11 +179,7 @@ function AppRoutes() {
           <Settings />
         </ProtectedRoute>
       } />
-      <Route path="/apply-course" element={
-        <ProtectedRoute userOnly>
-          <Apply />
-        </ProtectedRoute>
-      } />
+      <Route path="/apply" element={<Apply />} />
       {/* Specific route must come before the general one */}
       <Route path="/profile-search/:userId" element={
         <ProtectedRoute userOnly>
@@ -326,17 +323,25 @@ function AppRoutes() {
   );
 }
 
+function AppWithTitle() {
+  useDocumentTitle();
+  
+  return (
+    <AppRoutes />
+  );
+}
+
 function App() {
   return (
-    <CourseProvider>
-      <AuthProvider>
-        <UserInfoProvider>
-        <Router>
-          <AppRoutes />
-        </Router>
-        </UserInfoProvider>
-      </AuthProvider>
-    </CourseProvider>
+    <Router>
+      <CourseProvider>
+        <AuthProvider>
+          <UserInfoProvider>
+            <AppWithTitle />
+          </UserInfoProvider>
+        </AuthProvider>
+      </CourseProvider>
+    </Router>
   );
 }
 
