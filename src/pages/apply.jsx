@@ -151,9 +151,43 @@ const ApplicationForm = ({ user, course, onCancel }) => {
   const handlePaystack = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // Your existing Paystack logic here...
-    console.log('Proceeding to Paystack with:', form);
-    setLoading(false);
+    setErrorMsg('');
+    setSuccessMsg('');
+
+    try {
+      // Get auth token from localStorage
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Please log in to continue');
+      }
+
+      // Call your backend to initialize Paystack payment
+      const response = await axios.post(
+        `${API_BASE}/transaction/pay/paystack`,
+        {
+          userId: user._id,
+          courseId: form.courseId
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      // Redirect to Paystack payment page
+      if (response.data.authorization_url) {
+        window.location.href = response.data.authorization_url;
+      } else {
+        throw new Error('Payment initialization failed');
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      setErrorMsg(error.response?.data?.message || error.message || 'Failed to initialize payment');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
