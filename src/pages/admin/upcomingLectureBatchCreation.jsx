@@ -185,23 +185,34 @@ const UpcomingLectureBatchCreation = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this batch?')) {
       try {
-        await axios.delete(`${API_BASE}/upcomingLectureBatch/${id}`, {
+        setLoading(true);
+        const response = await axios.delete(`${API_BASE}/upcomingLectureBatch/${id}`, {
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
           }
         });
-        toast.success('Batch deleted successfully!', {
-          position: 'top-right',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-        fetchBatches();
+        
+        if (response.status === 200) {
+          toast.success('Batch deleted successfully!', {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+          await fetchBatches();
+        } else {
+          throw new Error(response.data?.message || 'Failed to delete batch');
+        }
       } catch (error) {
         console.error('Error deleting batch:', error);
-        toast.error('Failed to delete batch. Please try again.', {
+        const errorMessage = error.response?.data?.message || 
+                           error.message || 
+                           'Failed to delete batch. Please try again.';
+        
+        toast.error(errorMessage, {
           position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
@@ -209,6 +220,8 @@ const UpcomingLectureBatchCreation = () => {
           pauseOnHover: true,
           draggable: true,
         });
+      } finally {
+        setLoading(false);
       }
     }
   };
