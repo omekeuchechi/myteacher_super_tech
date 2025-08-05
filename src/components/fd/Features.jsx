@@ -2,7 +2,7 @@ import React from 'react';
 import registerIcon from '../../assets/svg/registration.png';
 import liveIcon from '../../assets/svg/onlineClass.png';
 import libraryIcon from '../../assets/svg/Resource.png';
-import certificationIcon from '../../assets/svg/certification.png';
+import certificationIcon from '../../assets/svg/Certification.png';
 
 import { Link, useNavigate } from 'react-router-dom';
 
