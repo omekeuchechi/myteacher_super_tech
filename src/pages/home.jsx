@@ -21,9 +21,13 @@ import ContactUs from "../components/contactUs";
 import Testimonial from "../components/testimonial";
 import WhatsAppIconOnly from "../components/whatIconLink";
 import HeroBox from './../components/herobox';
-import MainTwo from "../components/mainTwo";
+// import MainTwo from "../components/mainTwo";
 // WhatAppIconLink
-
+import Features from "../components/fd/Features";
+import OnsiteTraining from "../components/fd/OnsiteTraining";
+import Enroll from "../components/fd/Enroll";
+import WhyChoose from "../components/fd/WhyChoose";
+import FooterFd from "../components/fd/Footer";
 function Home() {
     const { user, logout } = useContext(AuthContext);
 
@@ -51,30 +55,35 @@ useEffect(() => {
 }, []);
 
     return(
-        <>
+        <div className="homepage">
             {/* <HeroVideo /> */}
             <Nav />
             {/* <HeroSection /> */}
             <HeroBox />
-            <MainTwo />
+            <Features />
+            <OnsiteTraining />
+            <Enroll />
+            <WhyChoose />
+            <FooterFd />
+            {/* <MainTwo /> */}
             {/* <Main />  */}
             {/* <DigitalSkills /> */}
-            <PopularCourses />
+            {/* <PopularCourses /> */}
             {/* <AboutCom /> */}
-            <Services />
+            {/* <Services /> */}
             {/* <Faq />  */}
-            <TechRoadMap />
-            <FunTech />
+            {/* <TechRoadMap /> */}
+            {/* <FunTech /> */}
             {/* <Flyers /> */}
             {/* <AiSection /> */}
-            <Gallary />
-            <Testimony />
+            {/* <Gallary /> */}
+            {/* <Testimony /> */}
             {/* <WhatAppInfo /> */}
             <WhatsAppIconOnly />
-            <Testimonial />
-            <ContactUs />
-            <Footer />
-        </>
+            {/* <Testimonial /> */}
+            {/* <ContactUs /> */}
+            {/* <Footer /> */}
+        </div>
     )
 }
 

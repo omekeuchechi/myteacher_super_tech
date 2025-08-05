@@ -1,11 +1,52 @@
-@import './main.css';
+/* @import './main.css'; */
 @import './nav.css';
-@import './faq.css';
-@import './content.css';
-@import './footer.css';
-@import './funTech.css';
-@import './contactUs.css';
-@import './about.css';
-@import './tesVideo.css';
+/* @import './faq.css'; */
+/* @import './content.css'; */
+/* @import './footer.css'; */
+/* @import './funTech.css'; */
+/* @import './contactUs.css'; */
+/* @import './about.css'; */
+/* @import './tesVideo.css'; */
 @import './animation.css';
-@import './responsive.css';
+/* @import './responsive.css'; */
+@import './fdStyles/Homepage.css';
+@import './fdStyles/res.css';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    list-style: none;
+}
+
+:root {
+    /* Fixed invalid comments and formatting */
+    /* --primary-color: #3498db; */
+    /* --primary-color: #0583f8d2; */
+    /* --primary-color: #086ccabb; */
+    --primary-color: #2148b4;
+    --primary-color-2: #3498db85;
+    /* --secondary-color: #086ccad7; */
+    /* --secondary-color: #086cca; */
+    --secondary-color: #1e3a8a;
+    --text-color: #000;
+    --text-color-gray: #4b4545;
+    --text-color-light: #fff;
+    --background-color: #fff;
+    /* #1e3a8a */
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 90%;
+    scroll-snap-type: proximity;
+    scrollbar-color: var(--primary-color) var(--background-color);
+}
+
+body {
+    background-color: var(--background-color);
+    width: 100vw;
+    overflow-x: hidden;
+}

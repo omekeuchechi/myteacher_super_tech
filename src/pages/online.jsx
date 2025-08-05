@@ -14,7 +14,7 @@ import Header from '../components/userDashCom/header';
 // zoom image 
 import zoomImage from '../assets/illustrations/myteacher-intitute-zoom.jpg';
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_BASEURL;
 
 const OnlineClass = () => {
   const { user, logout } = useContext(AuthContext);
@@ -48,7 +48,7 @@ const OnlineClass = () => {
     const fetchLectures = async () => {
       setFetching(true);
       try {
-        const res = await fetch(`${API_BASE}/lecture/userSpecificLecture`, {
+        const res = await fetch(`${API_BASE}/lectures/userSpecificLecture`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -301,10 +301,11 @@ const OnlineClass = () => {
             <div>No upcoming classes found.</div>
           ) : (
             classes.map((cls) => {
-              const timeLeft = Math.max(0, Math.floor((new Date(cls.startTime) - now) / 1000));
-              const hours = Math.floor(timeLeft / 3600);
-              const minutes = Math.floor((timeLeft % 3600) / 60);
-              const seconds = timeLeft % 60;
+              const timeDifference = cls.startTime.getTime() - now.getTime();
+              const oneHourInMs = 60 * 60 * 1000;
+              const isTimeReached = timeDifference <= oneHourInMs; // 1 hour before
+              const buttonText = 'Join Class';
+              const isButtonDisabled = (timeDifference > oneHourInMs) || (loading && selectedClass?.id === cls.id);
 
               return (
                 <div
@@ -321,61 +322,44 @@ const OnlineClass = () => {
                   <h3>{cls.title}</h3>
                   <p>Platform: <strong>{cls.platform}</strong></p>
                   <p>Starts in: {cls.startTime.toLocaleTimeString()}</p>
-                  {(() => {
-                    const timeDifference = cls.startTime.getTime() - now.getTime();
-                    const oneHourInMs = 60 * 60 * 1000;
-                    const isTimeReached = timeDifference <= oneHourInMs; // 1 hour before
-                    const buttonText = 'Join Class';
-                    const isButtonDisabled = (timeDifference > oneHourInMs) || (loading && selectedClass?.id === cls.id);
-                    
-                    // Debug information (you can remove this later)
-                    console.log('Class:', cls.title);
-                    console.log('Start time:', new Date(cls.startTime));
-                    console.log('Current time:', new Date(now));
-                    console.log('Time difference (ms):', timeDifference);
-                    console.log('Is time reached (1 hour before):', isTimeReached);
-
-                    return (
-                      <button
-                        className={`join-class-btn ${isButtonDisabled ? 'disabled' : ''}`}
-                        onClick={() => !isButtonDisabled && handleJoinClick(cls)}
-                        disabled={isButtonDisabled}
-                        style={{ 
-                          position: 'relative',
-                          opacity: isButtonDisabled ? 0.7 : 1,
-                          cursor: isButtonDisabled ? 'not-allowed' : 'pointer',
-                          marginTop: '10px',
-                          padding: '8px 16px',
-                          borderRadius: '4px',
-                          border: 'none',
-                          backgroundColor: isButtonDisabled ? '#ccc' : '#4CAF50',
-                          color: 'white',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px'
-                        }}
-                      >
-                        {loading && selectedClass?.id === cls.id ? (
-                          <div className="spinner" style={{
-                            width: '16px',
-                            height: '16px',
-                            border: '2px solid #f3f3f3',
-                            borderTop: '2px solid #3498db',
-                            borderRadius: '50%',
-                            animation: 'spin 1s linear infinite',
-                          }}></div>
-                        ) : (
-                          <i className="fas fa-sign-in-alt"></i>
-                        )}
-                        {buttonText}
-                        {!isTimeReached && timeDifference > 0 && (
-                          <span style={{ marginLeft: '8px', fontSize: '0.9em', opacity: 0.9 }}>
-                            (available in {formatTimeRemaining(timeDifference - oneHourInMs)})
-                          </span>
-                        )}
-                      </button>
-                    );
-                  })()}
+                  <button
+                    className={`join-class-btn ${isButtonDisabled ? 'disabled' : ''}`}
+                    onClick={() => !isButtonDisabled && handleJoinClick(cls)}
+                    disabled={isButtonDisabled}
+                    style={{ 
+                      position: 'relative',
+                      opacity: isButtonDisabled ? 0.7 : 1,
+                      cursor: isButtonDisabled ? 'not-allowed' : 'pointer',
+                      marginTop: '10px',
+                      padding: '8px 16px',
+                      borderRadius: '4px',
+                      border: 'none',
+                      backgroundColor: isButtonDisabled ? '#ccc' : '#4CAF50',
+                      color: 'white',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px'
+                    }}
+                  >
+                    {loading && selectedClass?.id === cls.id ? (
+                      <div className="spinner" style={{
+                        width: '16px',
+                        height: '16px',
+                        border: '2px solid #f3f3f3',
+                        borderTop: '2px solid #3498db',
+                        borderRadius: '50%',
+                        animation: 'spin 1s linear infinite',
+                      }}></div>
+                    ) : (
+                      <i className="fas fa-sign-in-alt"></i>
+                    )}
+                    {buttonText}
+                    {!isTimeReached && timeDifference > 0 && (
+                      <span style={{ marginLeft: '8px', fontSize: '0.9em', opacity: 0.9 }}>
+                        (available in {formatTimeRemaining(timeDifference - oneHourInMs)})
+                      </span>
+                    )}
+                  </button>
                 </div>
               );
             })
@@ -504,7 +488,7 @@ const OnlineClass = () => {
         </div>
       )}
 
-      <style jsx>{`
+      <style>{`
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }

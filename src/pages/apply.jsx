@@ -5,6 +5,8 @@ import { AuthContext } from '../../context/Authcontext';
 import { CourseContext } from '../../context/CourseContext';
 import { useNavigate } from 'react-router-dom';
 import Nav from '../components/nav';
+import FooterFd from '../components/fd/Footer';
+import '../assets/styles/styles.css';
 const API_BASE = import.meta.env.VITE_BASEURL;
 
 // Main component for the Apply Page
@@ -64,6 +66,7 @@ const Apply = () => {
         )}
       </div>
     </div>
+    <FooterFd />
     </>
   );
 };

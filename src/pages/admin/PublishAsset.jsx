@@ -4,7 +4,7 @@ import { fromEvent } from 'file-selector';
 import AdminNav from "../../components/adminCom/navSection";
 import { AuthContext } from "../../../context/Authcontext";
 
-const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_BASEURL;
 
 // Helper: fetch with auth
 const fetchWithAuth = (url, options = {}) => {
@@ -76,7 +76,7 @@ const PublishAsset = () => {
   useEffect(() => {
     const fetchLectures = async () => {
       try {
-        const res = await fetchWithAuth(`${API_BASE}/lecture/lectures`);
+        const res = await fetchWithAuth(`${API_BASE}/lectures/lectures`);
         const data = await res.json();
         if (res.ok && Array.isArray(data.lectures)) {
           setLectures(data.lectures);

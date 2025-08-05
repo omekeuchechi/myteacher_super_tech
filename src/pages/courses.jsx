@@ -4,6 +4,7 @@ import Footer from './../components/footer';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import '../assets/styles/courses.css';
 import { useNavigate } from 'react-router-dom';
+import '../assets/styles/styles.css'
 
 // image place
 import copyWritingImage from '../assets/crimage/learn-copy-writing-in-Port-Harcourt-at-myteacher-intitute.png';
@@ -27,6 +28,7 @@ import pyDataImage from '../assets/crimage/python-for-data-analysis-course-at-my
 import excelDataImage from '../assets/crimage/Data-Analysis-Using-Excel-at-myteacher-intitute.jpg';
 import digitalMarketingImage from '../assets/crimage/learn-digital-marjeting-in-port-harcourt-at-myteacher-intitute.jpg';
 import { Link } from "react-router-dom";
+import FooterFd from "../components/fd/Footer";
 
 const courseDataInfo = [
     {
@@ -389,7 +391,7 @@ const Courses = () => {
           ))}
         </div>
       </div>
-      <Footer />
+      <FooterFd />
     </div>
   );
 };

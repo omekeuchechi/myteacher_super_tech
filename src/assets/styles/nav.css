@@ -15,7 +15,7 @@
 }
 
 .navbar .logo {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: var(--text-color-light);
     font-weight: bold;
     display: inline-flex;
@@ -33,7 +33,7 @@
 .navbar .menu-icon {
     color: var(--text-color-light);
     display: none;
-    font-size: 2.2rem;
+    font-size: 2rem;
     cursor: pointer;
     margin-left: 1rem;
     transition: color 0.2s;
@@ -49,11 +49,10 @@
 }
 
 .navbar > ul > li > a {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     color: var(--text-color-light);
     cursor: pointer;
     font-weight: 800;
-    font-size: 2rem;
     transition: color 0.3s, transform 0.3s;
     padding: 0.5rem 0.8rem;
     border-radius: 4px;

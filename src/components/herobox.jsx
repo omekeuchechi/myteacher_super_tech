@@ -30,8 +30,8 @@ const HeroBox = () => {
     }, []);
     return(
         <div className="hero-box-section fade-in">
-            <div className="hero-box-header">
-                <h1 style={{ fontFamily: 'verdana', fontWeight: 900 }}>Join the online Class. Register and start learning a digital skill that earns. Get Certified</h1>
+            <div className="hero-box-header" style={{ zIndex: 1 }}>
+                <h1 style={{ fontFamily: 'verdana', fontWeight: 900 }}>Welcome to your dashboard. Do you want an online Live class/Training. Simply Apply here to get started</h1>
                 { user ? (
                     <>
                     {user.isAdmin ? (

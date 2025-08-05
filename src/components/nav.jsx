@@ -77,15 +77,14 @@ const Nav = () => {
 
   return (
     <nav className="navbar">
-      <div className="logo">
+      <Link to="/" className="logo">
         <img src={NavLogo} alt="Myteacher Logo" />
         <h1>Myteacher</h1>
-      </div>
+      </Link>
       <div className="menu-icon" id="menu-icon">
         <i className="fas fa-bars"></i>
       </div>
       <ul className="nav-ul">
-        <li onClick={handleHomeClick}><Link to="/">Home</Link></li>
         <li onClick={handleCoursesClick}><Link to="/courses">Courses</Link></li>
         <li><Link to="/techblog">Tech Blog</Link></li>
         <li><Link to="/customer-support">Chat us</Link></li>
@@ -125,8 +124,8 @@ const Nav = () => {
       <div className="auth">
         {!user?.isVerified ? (
           <>
-            <Link to="/login" className="login active">Login</Link>
-            <Link to="/auth" className="signup">Register for a programme</Link>
+            <Link to="/login" className="login active" style={{fontSize: 20}}>Login</Link>
+            <Link to="/auth" className="signup" style={{fontSize: 20}}>Register for a programme</Link>
           </>
         ) : (
           <div className="user-dropdown" ref={dropdownRef} style={{ position: "relative", display: "inline-block" }}>

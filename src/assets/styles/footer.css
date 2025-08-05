@@ -186,19 +186,19 @@
 }
 
 .footer > .footer-credits{
-    font-size: 1.4rem;
+    font-size: 16px;
     color: var(--text-color-light);
     margin-top: 10px;
 }
 .footer > .footer-credits > p > a{
     color: var(--text-color-gray);
     font-weight: 900;
-    font-size: 1.4rem;
+    font-size: 16px;
     text-decoration: none;
 }
 
 .footer > .footer-privacy{
-    font-size: 1.4rem;
+    font-size: 16px;
     display: inline-flex;
     margin-top: 10px;
     gap: 5px;
@@ -207,7 +207,7 @@
 .footer > .footer-privacy > a{
     color: var(--text-color-light);
     font-weight: 900;
-    font-size: 1.7rem;
+    font-size: 16px;
     text-decoration: none;
 }
 
@@ -226,43 +226,44 @@
 }
 
 .address-info-footer > h2{
-    font-size: 3rem;
+    font-size: 18px;
+    color: #fff;
 }
 
 .address-info-footer > address{
-    font-size: 2.5rem;
+    font-size: 18px;
 }
 
 .footer-bottom{
     text-align: left;
-    font-size: 3rem;
+    font-size: 18px;
     margin-left: 10px;
 }
 
 /* Responsive for iPads */
 @media (max-width: 768px) {
     .footer-content > h2 {
-        font-size: 2rem;
+        font-size:  2rem;
     }
 
     .footer-content > p {
-        font-size: 1.6rem;
+        font-size: 16px;
     }
 
     .socials > a {
-        font-size: 1.8rem;
+        font-size: 16px;
     }
 
     .footer-links > h3 {
-        font-size: 1.8rem;
+        font-size: 16px;
     }
 
     .footer-links > ul > li > a {
-        font-size: 1.4rem;
+        font-size: 16px;
     }
 
     .footer-bottom {
-        font-size: 1.4rem;
+        font-size: 16px;
     }
     .address-info-footer{
         width: 90%;
@@ -271,7 +272,7 @@
         font-size: 2rem;
     }
     .address-info-footer > address{
-        font-size: 1.5rem;
+        font-size: 18px;
     }
 }
 
@@ -282,11 +283,11 @@
         border-top-left-radius: 0%;
     }
     .footer-content > h2 {
-        font-size: 1.8rem;
+        font-size: 16px;
     }
 
     .footer-content > p {
-        font-size: 1.4rem;
+        font-size: 16px;
     }
 
     .socials {
@@ -294,11 +295,11 @@
     }
 
     .socials > a {
-        font-size: 1.6rem;
+        font-size: 16px;
     }
 
     .footer-links > h3 {
-        font-size: 1.6rem;
+        font-size: 16px;
     }
 
     .footer-links > ul {
@@ -307,17 +308,17 @@
     }
 
     .footer-links > ul > li > a {
-        font-size: 1.2rem;
+        font-size: 16px;
     }
 
     .footer-bottom {
-        font-size: 1.2rem;
+        font-size: 16px;
     }
 
     .footer > .footer-credits > p > a{
     color: var(--text-color-gray);
     font-weight: 900;
-    font-size: 1.4rem;
+    font-size: 16px;
     text-decoration: none;
 }
 
@@ -328,6 +329,6 @@
 
 .footer > .footer-privacy > a{
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 16px;
 }
 }

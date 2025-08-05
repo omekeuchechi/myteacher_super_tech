@@ -1,5 +1,5 @@
 .hero-box-section{
-    margin-top: 80px;
+    margin-top: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -11,7 +11,7 @@
     align-items: center;
     justify-content: center;
     position: absolute;
-    z-index: 200;
+    /* z-index: 200; */
     flex-direction: column;
 }
 .hero-box-header > h1{
@@ -65,24 +65,29 @@
 }
 
 @media (orientation: portrait){
-    .hero-box-section > video{
-        margin-bottom: -30px;
+    .hero-box-section > video {
+        width: 150px;
+        height: 120px;
+        aspect-ratio: 16/10;
+        margin: 0 auto 10px;
+        border-radius: 12px;
+        object-fit: cover;
     }
     .hero-box-header{
-        width: 100%;
+        width: 300px;
         margin-top: 20px;
-        z-index: 9000;
+        margin-bottom: 20px;
     }
     .hero-box-header > h1{
-        width: 80%;
-        font-size: 2rem;
-        margin-top: 30px;
-        margin-bottom: 10px;
+        width: 300px;
+        font-size: 1.2rem;
+        margin-top: 50px;
+        margin-bottom: 20px;
     }
     .hero-box-header > .btn-box {
         font-size: 1.6rem;
         padding: 18px 27px;
-        margin-bottom: 70px;
+        margin-bottom: 50px;
         border-radius: 40px;
     }
 }
@@ -106,6 +111,6 @@
         margin-bottom: 10px;
     }
     .hero-box-header{
-        width: 100%;
+        width: 200px;
     }
 }

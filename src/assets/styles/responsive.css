@@ -132,7 +132,7 @@
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         padding: 0 2rem;
-        /* top: -23px; */
+        top: -23px;
     }
 
     .hero-video > video {
