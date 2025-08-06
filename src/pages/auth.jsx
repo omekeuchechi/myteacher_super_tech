@@ -5,31 +5,8 @@ import googleImage from '../assets/images/google.png';
 
 const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
-const coursesDataValues = [
-  {id: 1, courseName: "Front-End Development", color: "orange", textcl: "#fff"},
-  {id: 2, courseName: "Backend Programming", color: "blue", textcl: "#fff"},
-  {id: 3, courseName: "Power BI", color: "gold", textcl: "#fff"},
-  {id: 4, courseName: "Content Creation & Social Media Marketing", color: "green", textcl: "#fff"},
-  {id: 5, courseName: "Data Entry", color: "black", textcl: "#fff"},
-  {id: 6, courseName: "Virtual Assistant", color: "#1a73e8", textcl: "#fff",},
-  {id: 7, courseName: "Basic Computing", color: "blue", textcl: "#fff"},
-  {id: 8, courseName: "Copy Writing", color: "green", textcl: "#fff"},
-  {id: 9, courseName: "Mobile App Development", color: "blue", textcl: "#fff"},
-  {id: 10, courseName: "Generative AI", color: "red", textcl: "#fff"},
-  {id: 11, courseName: "Project Management", color: "violet", textcl: "#fff"},
-  {id: 12, courseName: "Graphics Design", color: "green", textcl: "#fff"},
-  {id: 13, courseName: "UI/UX Design", color: "orange", textcl: "#fff"},
-  {id: 14, courseName: "Full Stack Development", color: "red", textcl: "#fff"},
-  {id: 15, courseName: "Cyber Security", color: "blue", textcl: "#fff"},
-  {id: 16, courseName: "Data Analytics", color: "gold", textcl: "#fff"},
-  {id: 17, courseName: "SQL Database", color: "blue", textcl: "#fff"},
-  {id: 18, courseName: "Python for Data Analysis", color: "gold", textcl: "#fff"},
-  {id: 19, courseName: "Excel for Data Analysis", color: "green", textcl: "#fff"},
-  {id: 20, courseName: "Digital Marketing", color: "red", textcl: "#fff"},
-];
 
 const Register = () => {
-  const [course, setCourse] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [message, setMessage] = useState('');
@@ -54,7 +31,7 @@ const Register = () => {
       const res = await fetch(`${API_BASE}/user/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, userCourse: course }),
+        body: JSON.stringify({ ...form }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -120,10 +97,10 @@ const Register = () => {
               </span>
             </div>
 
-            <input type="hidden" value={course} />
-            <label htmlFor="course">choose course by clicking</label>
+            {/* <input type="hidden" value={course} />
+            <label htmlFor="course">choose course by clicking</label> */}
 
-            <div className="courses-section">
+            {/* <div className="courses-section">
               {coursesDataValues.map((data) => (
                 <span className="cr-value"
                   onClick={() => setCourse(data.courseName)}
@@ -136,7 +113,7 @@ const Register = () => {
                   {course === data.courseName ? `✅ ${data.courseName}` : data.courseName}
                 </span>
               ))}
-            </div>
+            </div> */}
 
             <Link className='aha' to="/login">Already have an account?</Link>
 

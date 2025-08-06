@@ -28,6 +28,7 @@ import OnsiteTraining from "../components/fd/OnsiteTraining";
 import Enroll from "../components/fd/Enroll";
 import WhyChoose from "../components/fd/WhyChoose";
 import FooterFd from "../components/fd/Footer";
+import HeroFd from "../components/fd/hero";
 function Home() {
     const { user, logout } = useContext(AuthContext);
 
@@ -59,7 +60,8 @@ useEffect(() => {
             {/* <HeroVideo /> */}
             <Nav />
             {/* <HeroSection /> */}
-            <HeroBox />
+            {/* <HeroBox /> */}
+            <HeroFd />
             <Features />
             <OnsiteTraining />
             <Enroll />

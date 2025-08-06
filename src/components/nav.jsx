@@ -85,14 +85,14 @@ const Nav = () => {
         <i className="fas fa-bars"></i>
       </div>
       <ul className="nav-ul">
-        <li onClick={handleCoursesClick}><Link to="/courses">Courses</Link></li>
-        <li><Link to="/techblog">Tech Blog</Link></li>
-        <li><Link to="/customer-support">Chat us</Link></li>
-        <li><Link to="/apply">Apply for a programme</Link></li>
+        <li onClick={handleCoursesClick}><Link to="/courses" style={{fontSize: 20}}>Courses</Link></li>
+        <li><Link to="/techblog" style={{fontSize: 20}}>Tech Blog</Link></li>
+        <li><Link to="/customer-support" style={{fontSize: 20}}>Chat us</Link></li>
+        <li><Link to="/apply" style={{fontSize: 20}}>Apply for a programme</Link></li>
         {!user?.isVerified ? (
           <>
-            <li className="nav-link-hide" onClick={handleLoginClick}><Link to="/login">Login</Link></li>
-            <li className="nav-link-hide" onClick={handleRegisterClick}><Link to="/auth">Register for a programme</Link></li>
+            <li className="nav-link-hide" onClick={handleLoginClick}><Link to="/login" style={{fontSize: 20}}>Login</Link></li>
+            <li className="nav-link-hide" onClick={handleRegisterClick}><Link to="/auth" style={{fontSize: 20}}>Register for a programme</Link></li>
           </>
         ) : (
           <>
@@ -105,7 +105,7 @@ const Nav = () => {
                 }
               }}
             >
-              <Link to={user.isAdmin ? "/admin/dashboard" : "/dashboard"}>Dashboard</Link>
+              <Link to={user.isAdmin ? "/admin/dashboard" : "/dashboard"} style={{fontSize: 20}}>Dashboard</Link>
             </li>
             <li className="nav-link-hide"
               onClick={() => {

@@ -33,8 +33,8 @@ const FooterFd = () => {
           </div>
           <div className='footer-contact'>
             <h4>Contact</h4>
-            <p><i className='fa-solid fa-location-dot'></i> Rumuagholu, Port Harcourt</p>
-            <p><i className='fa-solid fa-phone'></i> +234 XXX XXX XXXX</p>
+            <p><i className='fa-solid fa-location-dot'></i> Myteacher Institute Tessy School junction Rumuagholu off Rumuokoro flyover Port Harcourt</p>
+            <p><i className='fa-solid fa-phone'></i> +234 903 005 7489</p>
             <p><i className='fa-solid fa-envelope'></i> info@myteacher.com</p>
           </div>
           <div className='footer-follow-us'>
@@ -44,7 +44,7 @@ const FooterFd = () => {
             </div>
           </div>
         </div>
-        <div className="footer-copy">&copy; 2024 Myteacher Institute. All rights reserved.</div>
+        <div className="footer-copy">&copy; 2025 Myteacher Institute. All rights reserved.</div>
         {showScrollToTop && (
         <div className="scroll-to-top" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
             <i className="fas fa-chevron-up"></i>

@@ -65,10 +65,11 @@ import MediaVideo from './pages/admin/mediaVideo';
 import VideoPage from './pages/videoPage';
 import CustomerSupport from './pages/customerSupport';
 import UpcomingLectureBatchCreation from './pages/admin/upcomingLectureBatchCreation';
+import OnSite from './pages/onSite';
 
 
 // Helper component for protected routes
-function ProtectedRoute({ children, adminOnly, userOnly, verificationOnly }) {
+function ProtectedRoute({ children, adminOnly, userOnly, verificationOnly, requireOnSite }) {
   const { user, authLoading } = useContext(AuthContext);
 
   // Wait for auth to load before making a decision
@@ -99,6 +100,12 @@ function ProtectedRoute({ children, adminOnly, userOnly, verificationOnly }) {
     if (user.isAdmin || !user.isVerified) {
       return <Navigate to="/" replace />;
     }
+
+    // Check if the route requires on-site access and if user is not on-site
+    if (requireOnSite && !user.onSite === true) {
+      return <Navigate to="/" replace />;
+    }
+
     // Allow access to any userOnly page, do not force redirect to dashboard
     return children;
   }
@@ -206,6 +213,14 @@ function AppRoutes() {
           <VideoPage />
         </ProtectedRoute>
       } />
+      <Route 
+        path="/on-site" 
+        element={
+          <ProtectedRoute userOnly requireOnSite>
+            <OnSite />
+          </ProtectedRoute>
+        } 
+      />
 
       <Route path="/courses" element={<Courses />} />
       <Route path="/techblog" element={<TechBlog />} />

@@ -96,7 +96,7 @@ form label {
   display: block;
   margin-bottom: 6px;
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: #333;
 }
 
@@ -109,7 +109,7 @@ form input[type="password"] {
   margin-bottom: 16px;
   border: 1px solid #000;
   border-radius: 5px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   background: #fafafa;
   line-height: 1.5;
   box-sizing: border-box;
@@ -129,20 +129,19 @@ form .eyes{
   right: 10px;
   transform: translateY(-70%);
   padding: 10px;
-  /* margin-left: 320px; */
   z-index: 100;
   cursor: pointer;
 }
 
 form > .eyes > i.fa-eye{
-  font-size: 2.5rem;
+  font-size: 2rem;
 }
 
 .aha {
   display: block;
   margin-bottom: 16px;
   color: #000;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   text-decoration: underline;
   text-align: right;
 }

@@ -1,0 +1,49 @@
+.quick-links-dash{
+    padding: 2rem;
+    width: 100%;
+}
+
+.quick-links-dash.dark{
+    background-color: #333;
+}
+
+.quick-links-dash.light{
+    background-color: #fff;
+}
+
+.quick-links-dash > h1{
+    margin-bottom: 20px;
+}
+
+.links-gr{
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.quick-links-dash > .links-gr > .link{
+    padding: 1rem 1rem;
+    align-items: center;
+    display: flex;
+    gap: 0.8rem;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.quick-links-dash > .links-gr > .link.light{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.301);
+    transition: all 0.3s ease-in-out;
+}
+
+.quick-links-dash > .links-gr > .link.light:hover{
+    transform: scale(1.05);
+}
+
+.quick-links-dash > .links-gr > .link.dark{
+    box-shadow: 0 0 10px #ffffff44;
+    transition: all 0.3s ease-in-out;
+}
+
+.quick-links-dash > .links-gr > .link.dark:hover{
+    transform: scale(1.05);
+}

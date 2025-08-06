@@ -94,7 +94,7 @@ const UpcomingLecturesList = ({ lectures, onBuyCourse, user }) => {
 
   return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '30px' }}>
-      <h2 style={{ color: '#1976d2' }}>Upcoming Lectures</h2>
+      <h2 style={{ margin: '20px auto', display: 'flex', alignItems: 'center', gap: '10px' }}><i className='fa-solid fa-book'></i> Upcoming Lectures</h2>
       {lectures.length > 0 ? lectures.map(lecture => {
         const isLectureActive = new Date(lecture.startTime) > new Date();
         const isBooked = user && user._id && lecture.booked && Array.isArray(lecture.booked) && lecture.booked.includes(user._id);

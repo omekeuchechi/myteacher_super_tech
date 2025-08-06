@@ -10,6 +10,7 @@ import DashMobileNav from '../components/userDashCom/dashMobileNav';
 import { Link } from "react-router-dom";
 import { AuthContext } from '../../context/Authcontext';
 import Header from '../components/userDashCom/header';
+import QuickLinks from '../components/userDashCom/quickLinks';
 
 
 const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
@@ -88,14 +89,7 @@ function UserDashboard() {
           <NavItem icon="user" label="Profile" move="/profile" isExpanded={isExpanded} />
           <NavItem icon="chalkboard-teacher" move="/online-class" label="Online Class" isExpanded={isExpanded} />
           <NavItem icon="briefcase" label="Assets" move="/assets" isExpanded={isExpanded} />
-          <NavItem icon="video" label="Video" move="/video" isExpanded={isExpanded} target="_blank" />
-          <NavItem icon="book" label="Assignment" move="/assignment" isExpanded={isExpanded} />
-          <NavItem
-            icon="certificate"
-            label="Certificates"
-            move="/certificates"
-            isExpanded={isExpanded}
-          />
+          <NavItem icon="school" move="/on-site" label="On Site" isExpanded={isExpanded} />
           <NavItem icon="cog" label="Settings" move="/settings" isExpanded={isExpanded} target="_blank"/>
           <NavItem icon="question-circle" label="Help" isExpanded={isExpanded} target="_blank"/>
           <NavItem icon="right-from-bracket" label="Log Out" isExpanded={isExpanded} onClick={logout} />
@@ -108,8 +102,10 @@ function UserDashboard() {
 
         <CourseTaken theme={theme} />
 
+        <QuickLinks theme={theme} />
+
         <div className={`apply-for-course-section ${theme}`}>
-          <h2 className={`${theme}`}>Apply for Live streaming Lectures by clicking the Button.</h2>
+          <h2 className={`${theme}`}>Do you want an online Live class/Training. Simply Apply here to get started.</h2>
           <Link to="/apply" className='apply'><i className='fas fa-plus'></i> Apply</Link>
         </div>
 
