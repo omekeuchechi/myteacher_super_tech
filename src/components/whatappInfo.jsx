@@ -121,7 +121,7 @@ const WhatAppInfo = () => {
             <p style={{ fontSize: "1rem", margin: 0, fontWeight: 400 }}>
                 For more information, reach out to us on WhatsApp at{" "}
                 <a
-                    href="https://wa.me/2349031592480"
+                    href="https://wa.me/2349030057489"
                     style={whatsappLinkStyles}
                     target="_blank"
                     rel="noopener noreferrer"

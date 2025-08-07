@@ -19,7 +19,7 @@ const miniIconWrapper = {
 
 const WhatsAppIconOnly = () => {
   const [minimized, setMinimized] = useState(false);
-  const whatsappUrl = "https://wa.me/2349031592480";
+  const whatsappUrl = "https://wa.me/2349030057489";
 
   const handleRestore = () => {
     setMinimized(false);

@@ -64,6 +64,10 @@
     display: none;
 }
 
+#navLink{
+    font-size: 20px;
+}
+
 .navbar > ul > li:hover > a,
 .navbar > ul > li > a.active {
     color: #f0f1f0;

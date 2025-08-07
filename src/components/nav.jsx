@@ -85,14 +85,14 @@ const Nav = () => {
         <i className="fas fa-bars"></i>
       </div>
       <ul className="nav-ul">
-        <li onClick={handleCoursesClick}><Link to="/courses" style={{fontSize: 20}}>Courses</Link></li>
-        <li><Link to="/techblog" style={{fontSize: 20}}>Tech Blog</Link></li>
-        <li><Link to="/customer-support" style={{fontSize: 20}}>Chat us</Link></li>
-        <li><Link to="/apply" style={{fontSize: 20}}>Apply for a programme</Link></li>
+        <li onClick={handleCoursesClick}><Link to="/courses" id="navLink">Courses</Link></li>
+        <li><Link to="/techblog" id="navLink">Tech Blog</Link></li>
+        <li><Link to="/customer-support" id="navLink">Chat us</Link></li>
+        <li><Link to="/apply" id="navLink">Apply for a programme</Link></li>
         {!user?.isVerified ? (
           <>
-            <li className="nav-link-hide" onClick={handleLoginClick}><Link to="/login" style={{fontSize: 20}}>Login</Link></li>
-            <li className="nav-link-hide" onClick={handleRegisterClick}><Link to="/auth" style={{fontSize: 20}}>Register for a programme</Link></li>
+            <li className="nav-link-hide" onClick={handleLoginClick}><Link to="/login" id="navLink">Login</Link></li>
+            <li className="nav-link-hide" onClick={handleRegisterClick}><Link to="/auth" id="navLink">Register</Link></li>
           </>
         ) : (
           <>
@@ -105,7 +105,7 @@ const Nav = () => {
                 }
               }}
             >
-              <Link to={user.isAdmin ? "/admin/dashboard" : "/dashboard"} style={{fontSize: 20}}>Dashboard</Link>
+              <Link to={user.isAdmin ? "/admin/dashboard" : "/dashboard"} id="navLink">Dashboard</Link>
             </li>
             <li className="nav-link-hide"
               onClick={() => {
@@ -113,7 +113,7 @@ const Nav = () => {
                 navigate("/login");
               }}
             >
-              <span style={{ color: "#d32f2f", fontWeight: "bold", cursor: "pointer", fontSize: 20 }}>
+              <span style={{ color: "#d32f2f", fontWeight: "bold", cursor: "pointer", fontSize: 20 }} id="navLink">
                 <i className="fas fa-sign-out-alt" style={{ marginRight: 8, marginLeft: 10 }}></i>
                 Logout
               </span>
@@ -124,8 +124,8 @@ const Nav = () => {
       <div className="auth">
         {!user?.isVerified ? (
           <>
-            <Link to="/login" className="login active" style={{fontSize: 20}}>Login</Link>
-            <Link to="/auth" className="signup" style={{fontSize: 20}}>Register for a programme</Link>
+            <Link to="/login" className="login active" id="navLink">Login</Link>
+            <Link to="/auth" className="signup" id="navLink">Register</Link>
           </>
         ) : (
           <div className="user-dropdown" ref={dropdownRef} style={{ position: "relative", display: "inline-block" }}>

@@ -39,8 +39,7 @@ const Features = () => {
     <div className="features-section" aria-labelledby="features-heading">
       <h2 id="features-heading" style={{ fontFamily: 'verdana', fontWeight: 900, fontSize: 30 }}>Start Learning Online the Smarter Way</h2>
       <p className="section-subtext" style={{ fontFamily: 'verdana', fontWeight: 900 }}>
-        Whether you're starting your tech journey, upskilling in digital marketing, or diving into data analysis, 
-        our online learning platform is built to deliver results.
+        Whether you are building a business, looking for a job, growing your career or want to start earning online. Then getting a digital skill is important for everyone. You can get these skills from anywhere at your comfort.
       </p>
       
       <div className="features-grid">

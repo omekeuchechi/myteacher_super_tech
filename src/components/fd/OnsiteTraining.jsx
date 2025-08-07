@@ -16,7 +16,7 @@ const OnsiteTraining = () => {
             </ul>
             <div className="onsite-buttons">
               <button className="btn-primary">Visit Our Center</button>
-              <button className="btn-outline" onClick={() => window.location.href = 'https://wa.me/2349031592480'}><i className="fa-brands fa-whatsapp"></i> WhatsApp Us</button>
+              <button className="btn-outline" onClick={() => window.location.href = 'https://wa.me/2349030057489'}><i className="fa-brands fa-whatsapp"></i> WhatsApp Us</button>
             </div>
           </div>
           <div className="onsite-image">

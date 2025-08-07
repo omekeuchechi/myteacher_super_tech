@@ -207,3 +207,9 @@
         display: block;
     }
 }
+
+@media (max-width: 1270px) {
+    #navLink{
+        font-size: 15px;
+    }
+}
