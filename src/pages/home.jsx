@@ -29,6 +29,7 @@ import Enroll from "../components/fd/Enroll";
 import WhyChoose from "../components/fd/WhyChoose";
 import FooterFd from "../components/fd/Footer";
 import HeroFd from "../components/fd/hero";
+import AiChat from "../components/aiChat";
 function Home() {
     const { user, logout } = useContext(AuthContext);
 
@@ -82,6 +83,7 @@ useEffect(() => {
             {/* <Testimony /> */}
             {/* <WhatAppInfo /> */}
             <WhatsAppIconOnly />
+            <AiChat />
             {/* <Testimonial /> */}
             {/* <ContactUs /> */}
             {/* <Footer /> */}

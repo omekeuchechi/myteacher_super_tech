@@ -193,12 +193,12 @@
 .footer > .footer-credits > p > a{
     color: var(--text-color-gray);
     font-weight: 900;
-    font-size: 16px;
+    font-size: 20px;
     text-decoration: none;
 }
 
 .footer > .footer-privacy{
-    font-size: 16px;
+    font-size: 20px;
     display: inline-flex;
     margin-top: 10px;
     gap: 5px;
@@ -207,7 +207,7 @@
 .footer > .footer-privacy > a{
     color: var(--text-color-light);
     font-weight: 900;
-    font-size: 16px;
+    font-size: 20px;
     text-decoration: none;
 }
 
@@ -226,17 +226,17 @@
 }
 
 .address-info-footer > h2{
-    font-size: 18px;
+    font-size: 20px;
     color: #fff;
 }
 
 .address-info-footer > address{
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .footer-bottom{
     text-align: left;
-    font-size: 18px;
+    font-size: 20px;
     margin-left: 10px;
 }
 

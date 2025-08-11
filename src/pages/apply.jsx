@@ -7,14 +7,30 @@ import { useNavigate } from 'react-router-dom';
 import Nav from '../components/nav';
 import FooterFd from '../components/fd/Footer';
 import '../assets/styles/styles.css';
+import welcomeImage from '../img/Untitled-1.png';
+import { Modal, Box, Typography, Button } from '@mui/material';
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+  borderRadius: 2,
+  textAlign: 'center',
+};
+
 const API_BASE = import.meta.env.VITE_BASEURL;
 
-// Main component for the Apply Page
 const Apply = () => {
   const { user } = useContext(AuthContext);
   const [upcomingLectures, setUpcomingLectures] = useState([]);
   const [showApplicationForm, setShowApplicationForm] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const [openWelcomeModal, setOpenWelcomeModal] = useState(true);
 
   useEffect(() => {
     const fetchUpcomingLectures = async () => {
@@ -44,34 +60,61 @@ const Apply = () => {
 
   return (
     <>
-    <Nav />
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px', padding: '40px', maxWidth: '1400px', margin: '0 auto' }}>
-      <UpcomingLecturesList 
-        lectures={upcomingLectures} 
-        onBuyCourse={handleBuyCourseClick} 
-        user={user} 
-      />
-      <div style={{ flex: 1, width: '100%' }}>
-        {showApplicationForm ? (
-          <ApplicationForm 
-            user={user} 
-            course={selectedCourse} 
-            onCancel={handleCancel} 
+      <Nav />
+      <Modal
+        open={openWelcomeModal}
+        onClose={() => setOpenWelcomeModal(false)}
+        aria-labelledby="welcome-modal-title"
+        aria-describedby="welcome-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <img 
+            src={welcomeImage} 
+            alt="Welcome to our courses" 
+            style={{ width: '100%', borderRadius: '8px', marginBottom: '16px' }}
           />
-        ) : (
-          <div style={{ textAlign: 'center', padding: '50px', background: '#f4f6fa', borderRadius: '12px' }}>
-            <h2>Select a Course</h2>
-            <p style={{ color: '#444', marginBottom: 24, fontSize: 16 }}>Please select a course from the upcoming lectures list to proceed with your application.</p>
-          </div>
-        )}
+          <Typography id="welcome-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
+            Welcome to Our Courses!
+          </Typography>
+          <Typography id="welcome-modal-description" sx={{ mb: 3 }}>
+            Join one of the upcoming online Live courses or enroll for an upcoming course.
+          </Typography>
+          <Button 
+            variant="contained" 
+            onClick={() => setOpenWelcomeModal(false)}
+            sx={{ backgroundColor: '#1976d2', '&:hover': { backgroundColor: '#1565c0' } }}
+          >
+            Explore Courses
+          </Button>
+        </Box>
+      </Modal>
+      
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px', padding: '40px', maxWidth: '1400px', margin: '0 auto' }}>
+        <UpcomingLecturesList 
+          lectures={upcomingLectures} 
+          onBuyCourse={handleBuyCourseClick} 
+          user={user} 
+        />
+        <div style={{ flex: 1, width: '100%' }}>
+          {showApplicationForm ? (
+            <ApplicationForm 
+              user={user} 
+              course={selectedCourse} 
+              onCancel={handleCancel} 
+            />
+          ) : (
+            <div style={{ textAlign: 'center', padding: '50px', background: '#f4f6fa', borderRadius: '12px' }}>
+              <h2>Select a Course</h2>
+              <p style={{ color: '#444', marginBottom: 24, fontSize: 16 }}>Please select a course from the upcoming lectures list to proceed with your application.</p>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-    <FooterFd />
+      <FooterFd />
     </>
   );
 };
 
-// Component to display the list of upcoming lectures
 const UpcomingLecturesList = ({ lectures, onBuyCourse, user }) => {
   const navigate = useNavigate();
   const [hoveredButton, setHoveredButton] = useState(null);
@@ -139,7 +182,6 @@ const UpcomingLecturesList = ({ lectures, onBuyCourse, user }) => {
   );
 };
 
-// Component for the application form
 const ApplicationForm = ({ user, course, onCancel }) => {
   const { courses, loading: coursesLoading } = useContext(CourseContext);
   const [form, setForm] = useState({ name: user?.name || '', email: user?.email || '', courseId: course?.id || '', courseName: course?.name || '' });
@@ -158,13 +200,11 @@ const ApplicationForm = ({ user, course, onCancel }) => {
     setSuccessMsg('');
 
     try {
-      // Get auth token from localStorage
       const token = localStorage.getItem('token');
       if (!token) {
         throw new Error('Please log in to continue');
       }
 
-      // Call your backend to initialize Paystack payment
       const response = await axios.post(
         `${API_BASE}/transaction/pay/paystack`,
         {
@@ -179,7 +219,6 @@ const ApplicationForm = ({ user, course, onCancel }) => {
         }
       );
 
-      // Redirect to Paystack payment page
       if (response.data.authorization_url) {
         window.location.href = response.data.authorization_url;
       } else {
@@ -221,7 +260,6 @@ const ApplicationForm = ({ user, course, onCancel }) => {
   );
 };
 
-// Reusable styles
 const formContainerStyle = {
   maxWidth: 500,
   margin: '0 auto',

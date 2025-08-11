@@ -86,9 +86,8 @@ const Nav = () => {
       </div>
       <ul className="nav-ul">
         <li onClick={handleCoursesClick}><Link to="/courses" id="navLink">Courses</Link></li>
-        <li><Link to="/techblog" id="navLink">Tech Blog</Link></li>
-        <li><Link to="/customer-support" id="navLink">Chat us</Link></li>
-        <li><Link to="/apply" id="navLink">Apply for a programme</Link></li>
+        <li><Link to="/techblog" id="navLink">Blog</Link></li>
+        <li><Link to="/apply" id="navLink">Live Online Courses</Link></li>
         {!user?.isVerified ? (
           <>
             <li className="nav-link-hide" onClick={handleLoginClick}><Link to="/login" id="navLink">Login</Link></li>

@@ -63,9 +63,10 @@ import CreateAssignment from './pages/admin/createAssignment';
 import AssignmentCorrections from './pages/admin/assignmentCorrections';
 import MediaVideo from './pages/admin/mediaVideo';
 import VideoPage from './pages/videoPage';
-import CustomerSupport from './pages/customerSupport';
 import UpcomingLectureBatchCreation from './pages/admin/upcomingLectureBatchCreation';
 import OnSite from './pages/onSite';
+import AssignCourse from './pages/admin/AssignCourse';
+
 
 
 // Helper component for protected routes
@@ -224,7 +225,6 @@ function AppRoutes() {
 
       <Route path="/courses" element={<Courses />} />
       <Route path="/techblog" element={<TechBlog />} />
-      <Route path='/customer-support' element={<CustomerSupport />} />
 
       {/* Course description pages */}
       <Route path="/copy-right" element={<CopyRight />} />
@@ -332,6 +332,11 @@ function AppRoutes() {
       <Route path="/admin/upcoming-lecture-batch-creation" element={
         <ProtectedRoute adminOnly>
           <UpcomingLectureBatchCreation />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin/assign-course" element={
+        <ProtectedRoute adminOnly>
+          <AssignCourse />
         </ProtectedRoute>
       } />
     </Routes>

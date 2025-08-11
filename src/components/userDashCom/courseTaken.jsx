@@ -15,6 +15,9 @@ const CourseTaken = ({ theme }) => {
   const [error, setError] = useState(null);
   const containerRef = useRef(null);
 
+  // Avatar image URL - using a placeholder service
+  const avatarUrl = 'https://www.w3schools.com/howto/img_avatar.png';
+
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -47,11 +50,9 @@ const CourseTaken = ({ theme }) => {
           throw new Error(responseData.message || 'Failed to fetch course data');
         }
 
-        // Handle the nested certificates array in the response
         const certificates = responseData.data?.certificates || [];
         
         if (certificates.length > 0) {
-          // Flatten all certScores from all certificates
           const allScores = certificates.flatMap(cert => 
             (cert.certScores || []).map(score => ({
               ...score,
@@ -70,7 +71,7 @@ const CourseTaken = ({ theme }) => {
               instructor: 'MyTeacher',
               progress: score.score || 0,
               color: getRandomColor(),
-              graded: true, // All these are graded since they're from certScores
+              graded: true,
               submittedAt: score.issuedAt 
                 ? new Date(score.issuedAt).toLocaleDateString() 
                 : 'N/A',
@@ -99,7 +100,6 @@ const CourseTaken = ({ theme }) => {
     fetchCourses();
   }, [user]);
 
-  // Helper function to calculate grade based on score
   const calculateGrade = (score) => {
     if (score >= 90) return 'A+ (Distinction)';
     if (score >= 80) return 'A (Excellent)';
@@ -131,9 +131,27 @@ const CourseTaken = ({ theme }) => {
     }
   };
 
-  if (loading) return <div className="loading">Loading courses...</div>;
-  if (error) return <div className="error">{error}</div>;
-  if (courses.length === 0) return <div className="no-courses">No courses found</div>;
+  // Show loading state
+  if (loading) return (
+    <div className={theme === 'dark' ? "dash-course-taken-section dark" : "dash-course-taken-section"}>
+      <div className="loading-state">
+        <img src={avatarUrl} alt="Loading..." className="loading-avatar" />
+        <p>Loading your courses...</p>
+      </div>
+    </div>
+  );
+
+  // Show empty state with avatar and message
+  if (error || courses.length === 0) return (
+    <div className={theme === 'dark' ? "dash-course-taken-section dark empty-state" : "dash-course-taken-section empty-state"}>
+      <div className="empty-content">
+        <img src={avatarUrl} alt="No courses" className="empty-avatar" />
+        <h3>No Courses Found</h3>
+        <p>You haven't enrolled in any courses yet.</p>
+        <p>Your assignments will appear here once you submit them.</p>
+      </div>
+    </div>
+  );
 
   return (
     <div className={theme === 'dark' ? "dash-course-taken-section dark" : "dash-course-taken-section"}>
@@ -169,10 +187,19 @@ const CourseTaken = ({ theme }) => {
               {course.certificateIssued && <span className="certificate-badge">Certificate</span>}
             </div>
             <div className={theme === 'dark' ? "course-content dark" : "course-content"}>
+              {/* Add avatar and grading message */}
+              <div className="grading-status">
+                <img src={avatarUrl} alt="Instructor" className="instructor-avatar" />
+                <div className="grading-message">
+                  <p>Your assignment is being graded</p>
+                  <small>Last updated: {new Date().toLocaleDateString()}</small>
+                </div>
+              </div>
+              
               <p className="course-description">{course.description}</p>
               <div className={theme === 'dark' ? "course-meta dark" : "course-meta"}>
                 <span className="instructor">Instructor: {course.instructor}</span>
-                <span className="submission-date">Completed: {course.submittedAt}</span>
+                <span className="submission-date">Submitted: {course.submittedAt}</span>
               </div>
               <div className={theme === 'dark' ? "progress-section dark" : "progress-section"}>
                 <ProgressBar progress={course.progress} color={course.color} />

@@ -1,5 +1,7 @@
 
 /* General Layout */
+
+
 .homepage {
   font-family: 'Segoe UI', sans-serif;
   color: #333;
@@ -82,9 +84,12 @@ button {
 }
 .hero-fd-content > h1{
   margin-bottom: 3rem;
+  font-size: 3rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .hero-fd-content > p{
   margin-bottom: 3rem;
+  font-size: 1.4rem;
 }
 .hero-fd-content > .hero-content{
   display: flex;
@@ -95,7 +100,7 @@ button {
   margin-bottom: 3rem;
 }
 .hero-fd-content > .hero-content > span{
-  font-size: 1rem;
+  font-size: 1.4rem;
 }
 .hero-fd-content > .hero-content > .btn-box{
   background-color: #fff;
@@ -130,6 +135,7 @@ button {
 .section-subtext {
   color: #555;
   max-width: 600px;
+  font-size: 1.4rem;
   margin: 0 auto 2rem;
 }
 
@@ -173,12 +179,16 @@ button {
   height: 30px;
 }
 
+.features-grid > .feature-card > *{
+  font-size: 1.3rem;
+}
+
 /* Onsite Training */
 .onsite-section {
   background-color: #f9fafb;
 }
 
-.onsite-container {
+.onsite-section > .onsite-container {
   display: flex;
   flex-direction: row;
   gap: 2rem;
@@ -192,8 +202,12 @@ button {
   display: flex;
   align-items: center;
   gap: 1rem;
-  font-size: 1.7rem;
+  font-size: 2rem;
   margin-bottom: 2rem;
+}
+
+.onsite-section > .onsite-container > .onsite-text > p{
+  font-size: 1.3rem;
 }
 
 .onsite-section > .onsite-container > .onsite-text > h3 > img{
@@ -202,7 +216,6 @@ button {
 
 .onsite-text ul {
   list-style: none;
-  padding-left: 1.5rem;
   color: #444;
   margin-top: 1.7rem;
 }
@@ -211,6 +224,7 @@ button {
   display: flex;
   align-items: center;
   gap: 1rem;
+  font-size: 1.3rem;
   margin-top: 1rem;
 }
 
@@ -262,6 +276,7 @@ button {
   background-color: var(--background-color);
   padding: 1.5rem;
   border-radius: 1.5rem;
+  width: 500px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
@@ -275,10 +290,11 @@ button {
   /* margin-top: 0.5rem; */
   /* margin-bottom: 0.5rem; */
   font-weight: 600;
+  font-size: 1.3rem;
 }
 
 .onsite-image > span{
-  font-size: 1rem;
+  font-size: 1.3rem;
   font-weight: 500;
   color: #555;
   text-align: center;
@@ -297,7 +313,7 @@ button {
 
 .enroll-grid {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   gap: 2rem;
   max-width: 1000px;
   margin: auto;
@@ -311,7 +327,7 @@ button {
 
 .enroll-grid > .online > h4 {
   margin-bottom: 0.75rem;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: var(--primary-color);
 }
 
@@ -323,6 +339,7 @@ button {
 .enroll-grid > .online > ol > li {
   display: flex;
   align-items: center;
+  font-size: 1.2rem;
   gap: 1rem;
   margin-top: 10px;
 }
@@ -336,7 +353,7 @@ button {
 
 .enroll-grid > .onsite > h4 {
   margin-bottom: 0.75rem;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: #000;
 }
 
@@ -347,6 +364,7 @@ button {
 .enroll-grid > .onsite > ol > li {
   display: flex;
   align-items: center;
+  font-size: 1.2rem;
   gap: 1rem;
   margin-top: 10px;
 }
@@ -374,10 +392,11 @@ button {
 
 .why-grid > div > h4{
   margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
 .why-grid > div > p{
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 200;
 }
 
@@ -468,11 +487,11 @@ button {
 .scroll-to-top{
   position: fixed;
   bottom: 20px;
-  right: 10px;
+  left: 10px;
   background-color: var(--primary-color);
   color: var(--text-color-light);
   font-size: 2rem;
-  border-radius: 50%;
+  border-radius: 50px;
   padding: 10px;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -481,6 +500,19 @@ button {
 
 /* Responsive Breakpoints */
 @media (max-width: 1024px) {
+
+  .enroll-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .onsite-section > .onsite-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 100%;
+  }
 
   .hero-fd > .intro{
     width: 90%;
@@ -583,7 +615,7 @@ button {
     font-size: 1.5rem;
     padding: 8px;
     bottom: 15px;
-    right: 15px;
+    left: 15px;
   }
 }
 

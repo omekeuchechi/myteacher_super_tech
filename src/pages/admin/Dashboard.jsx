@@ -292,6 +292,10 @@ const Dashboard = () => {
                 <i className="fas fa-calendar-plus"></i>
                 <span>Creating of Upcoming Lecture Batch</span>
               </Link>
+              <Link to="/admin/assign-course" className="quick-link">
+                <i className="fas fa-calendar-plus"></i>
+                <span>Assign Course</span>
+              </Link>
             </div>
           </div>
         </div>

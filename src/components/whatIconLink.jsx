@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const miniIconWrapper = {
   position: "fixed",
-  right: "60px",
+  right: "70px",
   bottom: "32px",
   zIndex: 1000,
   background: "#25D366",

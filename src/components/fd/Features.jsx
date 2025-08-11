@@ -37,7 +37,7 @@ const Features = () => {
 
   return (
     <div className="features-section" aria-labelledby="features-heading">
-      <h2 id="features-heading" style={{ fontFamily: 'verdana', fontWeight: 900, fontSize: 30 }}>Start Learning Online the Smarter Way</h2>
+      <h2 id="features-heading" style={{ fontFamily: 'verdana', fontWeight: 900, fontSize: 34 }}>Start Learning Online the Smarter Way</h2>
       <p className="section-subtext" style={{ fontFamily: 'verdana', fontWeight: 900 }}>
         Whether you are building a business, looking for a job, growing your career or want to start earning online. Then getting a digital skill is important for everyone. You can get these skills from anywhere at your comfort.
       </p>

@@ -106,6 +106,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   background-color: inherit;
+  transition: margin-left 0.3s ease;
 }
 
 .apply-for-course-section {
@@ -181,5 +182,122 @@
     font-size: 20px;
     text-align: left;
     margin-bottom: 20px;
+  }
+}
+
+/* Navigation Tour Styles */
+.tour-highlight {
+  position: relative;
+  z-index: 1300;
+  box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.arrow {
+  position: fixed;
+  z-index: 1400;
+  color: #1976d2;
+  font-size: 24px;
+  animation: bounce 2s infinite;
+}
+
+.arrow-top {
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.arrow-right {
+  top: 50%;
+  right: -30px;
+  transform: translateY(-50%);
+}
+
+.arrow-bottom {
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.arrow-left {
+  top: 50%;
+  left: -30px;
+  transform: translateY(-50%);
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Adjust modal z-index to appear above other elements */
+.MuiModal-root {
+  z-index: 1500 !important;
+}
+
+/* Add some spacing for the quick-links section */
+.quick-links {
+  margin: 2rem 0;
+  position: relative;
+}
+
+/* Responsive adjustments for the tour */
+@media (max-width: 768px) {
+  .arrow {
+    font-size: 18px;
+  }
+  
+  .arrow-right {
+    right: -25px;
+  }
+  
+  .arrow-left {
+    left: -25px;
+  }
+}
+
+/* Dark mode adjustments for the tour */
+.dark .tour-highlight {
+  box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.7);
+}
+
+.dark .arrow {
+  color: #64b5f6;
+}
+
+/* Ensure the modal is visible in dark mode */
+.dark .MuiPaper-root {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Style for the navigation items during tour */
+.nav-item.tour-highlight {
+  background-color: rgba(25, 118, 210, 0.1);
+  border-radius: 4px;
+  padding: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.dark .nav-item.tour-highlight {
+  background-color: rgba(100, 181, 246, 0.2);
+}
+
+/* Add some spacing for the main content when sidebar is expanded */
+.sidebar:not(.collapsed) + .main-content {
+  margin-left: 250px;
+}
+
+@media (max-width: 768px) {
+  .sidebar:not(.collapsed) + .main-content {
+    margin-left: 0;
   }
 }
