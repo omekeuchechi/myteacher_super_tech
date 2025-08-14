@@ -12,14 +12,16 @@ export const CourseProvider = ({ children }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${API_BASE}/admin/courses`, {
+      const response = await fetch(`${API_BASE}/admin/courses`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
-      if (res.ok) {
-        const data = await res.json();
+
+      if (response.ok) {
+        const data = await response.json();
         setCourses(data.courses || []);
       }
     } catch (err) {
+      console.error('Error fetching courses:', err);
       setCourses([]);
     }
     setLoading(false);
@@ -30,7 +32,11 @@ export const CourseProvider = ({ children }) => {
   }, [fetchCourses]);
 
   return (
-    <CourseContext.Provider value={{ courses, loading, fetchCourses }}>
+    <CourseContext.Provider value={{ 
+      courses, 
+      loading, 
+      fetchCourses
+    }}>
       {children}
     </CourseContext.Provider>
   );

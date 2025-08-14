@@ -30,36 +30,69 @@ const UpcomingLectureBatchCreation = () => {
     courseId: '',
     courseName: '',
     courseDescription: '',
-    courseInstructor: user?.name || '',
+    courseIntructor: user?.name || '',
     startTime: '',
     platform: '',
+    linkedLecture: '',
     courseImage: null
   });
   
   const [batches, setBatches] = useState([]);
+  const [lectures, setLectures] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState('');
+  const [fetchingLectures, setFetchingLectures] = useState(false);
   const navigate = useNavigate();
+
+  // Fetch all batches and lectures on component mount
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchBatches();
+      await fetchLectures();
+    };
+    fetchData();
+  }, []);
+
+  // Fetch lectures from API
+  const fetchLectures = async () => {
+    setFetchingLectures(true);
+    try {
+      console.log('Fetching lectures from:', `${API_BASE}/lectures/lectures`);
+      const response = await axios.get(`${API_BASE}/lectures/lectures`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      
+      console.log('Lectures API response:', response.data);
+      console.log('Raw API response:', response);
+console.log('Response data type:', typeof response.data);
+console.log('Response data keys:', Object.keys(response.data));
+      
+      // Extract the lectures array from the response data
+      const lecturesData = response.data?.lectures || [];
+      console.log('Processed lectures data:', lecturesData);
+      
+      setLectures(Array.isArray(lecturesData) ? lecturesData : []);
+      
+    } catch (error) {
+      console.error('Error fetching lectures:', error);
+      if (error.response) {
+        console.error('Error response data:', error.response.data);
+        console.error('Error status:', error.response.status);
+      }
+      toast.error('Failed to load lectures');
+      setLectures([]);
+    } finally {
+      setFetchingLectures(false);
+    }
+  };
 
   // Fetch all batches on component mount
   useEffect(() => {
     fetchBatches();
   }, []);
-
-  // Update form data when a course is selected
-  useEffect(() => {
-    if (formData.courseId && courseMap.has(formData.courseId)) {
-      const selectedCourse = courseMap.get(formData.courseId);
-      if (selectedCourse) {
-        setFormData(prev => ({
-          ...prev,
-          courseName: selectedCourse.title || '',
-          courseDescription: selectedCourse.description || ''
-        }));
-      }
-    }
-  }, [formData.courseId, courseMap]);
 
   const fetchBatches = async () => {
     try {
@@ -73,7 +106,6 @@ const UpcomingLectureBatchCreation = () => {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        progress: undefined,
       });
       console.error('Error fetching batches:', error);
     }
@@ -110,44 +142,48 @@ const UpcomingLectureBatchCreation = () => {
     
     try {
       const formDataToSend = new FormData();
+      
+      // Add all form data to FormData
       Object.keys(formData).forEach(key => {
-        if (formData[key] !== null) {
+        // Skip courseImage as it's handled separately
+        if (key === 'courseImage') return;
+        
+        // Only append if the value is not null or undefined
+        if (formData[key] !== null && formData[key] !== undefined) {
           formDataToSend.append(key, formData[key]);
         }
       });
 
+      // Handle file upload if present
+      if (formData.courseImage instanceof File) {
+        formDataToSend.append('courseImage', formData.courseImage);
+      }
+
+      // Handle linkedLecture specifically to match backend expectations
+      if (!formData.linkedLecture || formData.linkedLecture === '') {
+        formDataToSend.set('linkedLecture', 'null'); // Send as string 'null' for the backend to parse
+      }
+
+      let response;
       if (editingId) {
-        await axios.put(`${API_BASE}/upcomingLectureBatch/${editingId}`, formDataToSend, {
+        response = await axios.put(`${API_BASE}/upcomingLectureBatch/${editingId}`, formDataToSend, {
           headers: {
             'Content-Type': 'multipart/form-data',
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         });
-        toast.success('Batch updated successfully!', {
-          position: 'top-right',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
+        toast.success('Batch updated successfully!');
       } else {
-        await axios.post(`${API_BASE}/upcomingLectureBatch/create`, formDataToSend, {
+        response = await axios.post(`${API_BASE}/upcomingLectureBatch/create`, formDataToSend, {
           headers: {
             'Content-Type': 'multipart/form-data',
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         });
-        toast.success('Batch created successfully!', {
-          position: 'top-right',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
+        toast.success('Batch created successfully!');
       }
       
+      console.log('API Response:', response.data);
       resetForm();
       fetchBatches();
     } catch (error) {
@@ -169,12 +205,12 @@ const UpcomingLectureBatchCreation = () => {
     const selectedCourse = courseMap.get(batch.courseId);
     setFormData({
       courseId: batch.courseId,
-      courseName: selectedCourse?.course || '',
-    //   courseDescription: selectedCourse?.courseDescription || '',
+      courseName: selectedCourse?.title || batch.courseName,
       courseDescription: batch.courseDescription,
-      courseInstructor: batch.courseInstructor,
+      courseIntructor: batch.courseIntructor,
       startTime: new Date(batch.startTime).toISOString().slice(0, 16),
       platform: batch.platform,
+      linkedLecture: batch.linkedLecture || '',
       courseImage: null
     });
     setImagePreview(batch.courseImage || '');
@@ -231,9 +267,10 @@ const UpcomingLectureBatchCreation = () => {
       courseId: '',
       courseName: '',
       courseDescription: '',
-      courseInstructor: user?.name || '',
+      courseIntructor: user?.name || '',
       startTime: '',
       platform: '',
+      linkedLecture: '',
       courseImage: null
     });
     setImagePreview('');
@@ -294,8 +331,8 @@ const UpcomingLectureBatchCreation = () => {
             <label>Instructor *</label>
             <input
               type="text"
-              name="courseInstructor"
-              value={formData.courseInstructor}
+              name="courseIntructor"
+              value={formData.courseIntructor}
               onChange={handleChange}
               required
             />
@@ -339,6 +376,25 @@ const UpcomingLectureBatchCreation = () => {
             //   readOnly
             //   className="readonly-input"
             />
+          </div>
+          
+          <div className="form-group">
+            <label>Linked Lecture (Optional)</label>
+            <select
+              name="linkedLecture"
+              value={formData.linkedLecture}
+              onChange={handleChange}
+              className="form-control"
+              disabled={fetchingLectures}
+            >
+              <option value="">Select a lecture (optional)</option>
+              {Array.isArray(lectures) && lectures.length > 0 &&
+                lectures.map((lecture) => (
+                  <option key={lecture._id} value={lecture._id}>
+                    {lecture.title || `Lecture ${lecture._id}`}
+                  </option>
+                ))}
+            </select>
           </div>
           
           <div className="form-group">
@@ -386,10 +442,12 @@ const UpcomingLectureBatchCreation = () => {
                 <div className="batch-details">
                   <h4>{batch.courseName}</h4>
                   <p><strong>ID:</strong> {batch.courseId}</p>
-                  <p><strong>Instructor:</strong> {batch.courseInstructor}</p>
+                  <p><strong>Instructor:</strong> {batch.courseIntructor}</p>
                   <p><strong>Starts:</strong> {new Date(batch.startTime).toLocaleString()}</p>
                   <p><strong>Platform:</strong> {batch.platform}</p>
+                  <p><strong>Linked Lecture:</strong> {batch.linkedLecture}</p>
                   <p className="batch-description">{batch.courseDescription}</p>
+                  {console.log(batch)}
                   <div className="batch-actions">
                     <button 
                       onClick={() => handleEdit(batch)}

@@ -49,6 +49,8 @@ const Apply = () => {
     setSelectedCourse({
       id: lecture.courseId,
       name: lecture.courseName,
+      linkedLecture: lecture.linkedLecture,
+      courseName: lecture.courseName
     });
     setShowApplicationForm(true);
   };
@@ -118,6 +120,7 @@ const Apply = () => {
 const UpcomingLecturesList = ({ lectures, onBuyCourse, user }) => {
   const navigate = useNavigate();
   const [hoveredButton, setHoveredButton] = useState(null);
+  const { fetchCourses } = useContext(CourseContext);
 
   const handleBookCourse = async (lectureId) => {
     if (!user) {
@@ -129,6 +132,7 @@ const UpcomingLecturesList = ({ lectures, onBuyCourse, user }) => {
       await axios.patch(`${API_BASE}/upcomingLectureBatch/${lectureId}/book`, {}, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
+      await fetchCourses(); // Refresh the courses data after booking
       toast.success('Course booked successfully!');
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to book course.');
@@ -145,6 +149,7 @@ const UpcomingLecturesList = ({ lectures, onBuyCourse, user }) => {
         return (
           <div key={lecture._id} style={{ background: '#fff', borderRadius: '12px', boxShadow: '0 2px 16px rgba(0,0,0,0.1)', padding: '20px' }}>
             <img src={lecture.courseImage} alt={lecture.courseName} style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '8px' }} />
+            {console.log(lecture)}
             <h3 style={{ marginTop: '15px' }}>{lecture.courseName}</h3>
             <p><strong>Instructor:</strong> {lecture.courseInstructor}</p>
             <p><strong>Starts:</strong> {new Date(lecture.startTime).toLocaleString()}</p>
@@ -184,13 +189,22 @@ const UpcomingLecturesList = ({ lectures, onBuyCourse, user }) => {
 
 const ApplicationForm = ({ user, course, onCancel }) => {
   const { courses, loading: coursesLoading } = useContext(CourseContext);
-  const [form, setForm] = useState({ name: user?.name || '', email: user?.email || '', courseId: course?.id || '', courseName: course?.name || '' });
+  const [form, setForm] = useState({ 
+    name: user?.name || '', 
+    email: user?.email || '', 
+    linkedLecture: course?.linkedLecture || '',
+    courseName: course?.courseName || '' 
+  });
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
-    setForm(prev => ({ ...prev, courseId: course?.id || '', courseName: course?.name || '' }));
+    setForm(prev => ({ 
+      ...prev, 
+      linkedLecture: course?.linkedLecture || '',
+      courseName: course?.courseName || '' 
+    }));
   }, [course]);
 
   const handlePaystack = async (e) => {
@@ -209,7 +223,8 @@ const ApplicationForm = ({ user, course, onCancel }) => {
         `${API_BASE}/transaction/pay/paystack`,
         {
           userId: user._id,
-          courseId: form.courseId
+          courseName: form.courseName, // Using courseName as the primary identifier
+          linkedLecture: form.linkedLecture || undefined // Only include if it exists
         },
         {
           headers: {
@@ -227,6 +242,11 @@ const ApplicationForm = ({ user, course, onCancel }) => {
     } catch (error) {
       console.error('Payment error:', error);
       setErrorMsg(error.response?.data?.message || error.message || 'Failed to initialize payment');
+      
+      // Show more detailed error if available
+      if (error.response?.data?.details) {
+        setErrorMsg(prev => `${prev}: ${error.response.data.details}`);
+      }
     } finally {
       setLoading(false);
     }
@@ -234,7 +254,7 @@ const ApplicationForm = ({ user, course, onCancel }) => {
 
   return (
     <div style={formContainerStyle}>
-      <h1 style={{ color: '#1976d2', marginBottom: 8 }}>Apply for: {course.name}</h1>
+      <h1 style={{ color: '#1976d2', marginBottom: 8 }}>Apply for: {course.courseName}</h1>
       <p style={{ color: '#444', marginBottom: 24 }}>Please confirm your details to proceed.</p>
       <form onSubmit={handlePaystack} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
         <label htmlFor='name' style={labelStyle}>Name:</label>
@@ -245,7 +265,7 @@ const ApplicationForm = ({ user, course, onCancel }) => {
 
         <label htmlFor='courseName' style={labelStyle}>Course:</label>
         <input type='text' id='courseName' value={form.courseName} required disabled style={inputStyle} />
-        <input type='hidden' name='courseId' value={form.courseId} />
+        <input type='hidden' name='linkedLecture' value={form.linkedLecture} />
 
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '10px' }}>
           <button type='button' onClick={onCancel} style={{ ...buttonStyle(true), background: '#888' }}>Cancel</button>

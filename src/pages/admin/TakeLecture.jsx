@@ -82,15 +82,18 @@ const TakeLecture = () => {
       });
       const data = await res.json();
       if (res.ok) {
-        const now = new Date();
-        setLectures(
-          (data.lectures || []).filter(
-            (lecture) => !lecture.expiringDate || new Date(lecture.expiringDate) > now
-          )
-        );
+        // Add an 'isExpired' flag to each lecture based on expiringDate
+        const lecturesWithExpiry = (data.lectures || []).map(lecture => ({
+          ...lecture,
+          isExpired: lecture.expiringDate && new Date(lecture.expiringDate) <= new Date()
+        }));
+        setLectures(lecturesWithExpiry);
       }
-    } catch (error) {}
-    setLecturesLoading(false);
+    } catch (error) {
+      console.error('Error fetching lectures:', error);
+    } finally {
+      setLecturesLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -458,11 +461,12 @@ const TakeLecture = () => {
                   <th className="hide">Topics</th>
                   <th className="hide">Admins</th>
                   <th>Actions</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
                 {lectures.map(lecture => (
-                  <tr key={lecture._id}>
+                  <tr key={lecture._id} className={lecture.isExpired ? 'expired-lecture' : ''}>
                     <td>{lecture.title}</td>
                     <td className="hide">{lecture.startTime ? new Date(lecture.startTime).toLocaleString() : ""}</td>
                     <td className="hide">{lecture.platform}</td>
@@ -488,6 +492,13 @@ const TakeLecture = () => {
                       <button onClick={() => handleDelete(lecture._id)} style={{ marginLeft: 8, color: "red" }}>
                         Delete
                       </button>
+                    </td>
+                    <td>
+                      {lecture.isExpired && <span className="badge bg-danger">Expired</span>}
+                      {!lecture.isExpired && lecture.expiringDate && (
+                        <span className="badge bg-warning">Expires: {new Date(lecture.expiringDate).toLocaleDateString()}</span>
+                      )}
+                      {!lecture.expiringDate && <span className="badge bg-success">No Expiry</span>}
                     </td>
                   </tr>
                 ))}
