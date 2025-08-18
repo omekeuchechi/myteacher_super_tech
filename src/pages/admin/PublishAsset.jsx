@@ -93,9 +93,6 @@ const PublishAsset = () => {
     multiple: true
   });
 
-
-  
-
   useEffect(() => {
     setCurrentUser(getCurrentUser());
   }, []);
@@ -177,58 +174,6 @@ const PublishAsset = () => {
 
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
-    
-    // Define allowed file types
-    const allowedTypes = [
-      // Video files
-      'video/mp4',
-      'video/webm',
-      'video/quicktime',
-      'video/x-msvideo',
-      'video/x-ms-wmv',
-      'video/3gpp',
-      'video/mpeg',
-      // Audio files (for recordings)
-      'audio/mpeg',
-      'audio/wav',
-      'audio/ogg',
-      'audio/webm',
-      'audio/aac',
-      // Common document types
-      'application/pdf',
-      'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      'application/vnd.ms-powerpoint',
-      'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-      'application/vnd.ms-excel',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      'text/plain',
-      'application/zip',
-      'application/x-rar-compressed',
-      'application/x-7z-compressed',
-      // Images
-      'image/jpeg',
-      'image/png',
-      'image/gif',
-      'image/webp',
-      'image/svg+xml'
-    ];
-    
-    // 500MB max file size
-    const maxFileSize = 500 * 1024 * 1024; 
-    
-    // Check file types and sizes
-    const invalidFiles = selectedFiles.filter(file => 
-      !allowedTypes.some(type => file.type.startsWith(type.split('/')[0])) || 
-      file.size > maxFileSize
-    );
-    
-    if (invalidFiles.length > 0) {
-      const invalidFileNames = invalidFiles.map(f => f.name).join(', ');
-      setError(`The following files are not supported or exceed 500MB: ${invalidFileNames}`);
-      return;
-    }
-    
     setFiles(selectedFiles);
   };
 
@@ -549,17 +494,14 @@ const PublishAsset = () => {
                 transition: 'background-color 0.2s'
               }}
             >
-              <input 
-                {...getInputProps()} 
-                accept="video/*,audio/*,.mp4,.webm,.mov,.avi,.wmv,.3gp,.mp3,.wav,.ogg,.aac,.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.zip,.rar,.7z,.jpg,.jpeg,.png,.gif,.webp,.svg"
-              />
+              <input {...getInputProps()} />
               <div style={{ fontSize: 16, marginBottom: 8 }}>
                 {isDragActive 
                   ? 'Drop the files here...' 
                   : 'Drag & drop files here, or click to select files'}
               </div>
               <div style={{ fontSize: 12, color: '#666' }}>
-                Supports images, documents, PDFs, videos, audio files, and more. Max 20 files.
+                Supports images, documents, PDFs, and more. Max 20 files.
               </div>
             </div>
             
@@ -903,27 +845,11 @@ function getFileIcon(mimeType, fileName = '') {
     'text/': 'fa-file-alt',
     'application/zip': 'fa-file-archive',
     'application/x-rar-compressed': 'fa-file-archive',
-    'application/x-7z-compressed': 'fa-file-archive',
-    // Images
-    'image/jpeg': 'fa-file-image',
-    'image/png': 'fa-file-image',
-    'image/gif': 'fa-file-image',
-    'image/webp': 'fa-file-image',
-    'image/svg+xml': 'fa-file-image',
-    // Video files
-    'video/mp4': 'fa-file-video',
-    'video/webm': 'fa-file-video',
-    'video/quicktime': 'fa-file-video',
-    'video/x-msvideo': 'fa-file-video',
-    'video/x-ms-wmv': 'fa-file-video',
-    'video/3gpp': 'fa-file-video',
-    'video/mpeg': 'fa-file-video',
-    // Audio files
-    'audio/mpeg': 'fa-file-audio',
-    'audio/wav': 'fa-file-audio',
-    'audio/ogg': 'fa-file-audio',
-    'audio/webm': 'fa-file-audio',
-    'audio/aac': 'fa-file-audio',
+    'text/x-c': 'fa-file-code',
+    'text/x-csrc': 'fa-file-code',
+    'text/x-c++src': 'fa-file-code',
+    'application/x-executable': 'fa-file-code',
+    'application/octet-stream': 'fa-file-code',
     'default': 'fa-file'
   };
   
