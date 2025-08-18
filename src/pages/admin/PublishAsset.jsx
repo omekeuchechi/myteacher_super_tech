@@ -93,6 +93,9 @@ const PublishAsset = () => {
     multiple: true
   });
 
+
+  
+
   useEffect(() => {
     setCurrentUser(getCurrentUser());
   }, []);
