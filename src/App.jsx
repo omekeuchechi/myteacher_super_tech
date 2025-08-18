@@ -66,6 +66,7 @@ import VideoPage from './pages/videoPage';
 import UpcomingLectureBatchCreation from './pages/admin/upcomingLectureBatchCreation';
 import OnSite from './pages/onSite';
 import AssignCourse from './pages/admin/AssignCourse';
+import OnsiteAsset from './pages/admin/onsiteAsset';
 
 
 
@@ -337,6 +338,11 @@ function AppRoutes() {
       <Route path="/admin/assign-course" element={
         <ProtectedRoute adminOnly>
           <AssignCourse />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin/onsite-asset" element={
+        <ProtectedRoute adminOnly>
+          <OnsiteAsset />
         </ProtectedRoute>
       } />
     </Routes>

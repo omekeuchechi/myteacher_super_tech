@@ -2,12 +2,12 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
+    padding: 30px;
 }
 .onsite-container > .welcome-container{
     display: flex;
     flex-direction: row;
     gap: 30px;
-    margin-top: 10px;
     width: 100%;
     background-color: var(--secondary-color);
     padding: 20px;

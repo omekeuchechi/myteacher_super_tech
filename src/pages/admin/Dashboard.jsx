@@ -296,6 +296,10 @@ const Dashboard = () => {
                 <i className="fas fa-calendar-plus"></i>
                 <span>Assign Course</span>
               </Link>
+              <Link to="/admin/onsite-asset" className="quick-link">
+                <i className="fas fa-calendar-plus"></i>
+                <span>Onsite Asset</span>
+              </Link>
             </div>
           </div>
         </div>
