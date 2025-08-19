@@ -109,18 +109,18 @@ const Login = () => {
           <div className="form-links">
             <div className="reb">
               <input type="checkbox" />
-              <p style={{ color: 'black' }}>Remember me</p>
+              <p style={{ color: 'black', fontSize: '1.4rem', fontFamily: 'monospace' }}>Remember me</p>
             </div>
-            <Link to="/forgot-password" className="forgot-password-link">Forgot Password?</Link>
+            <Link to="/forgot-password" className="forgot-password-link" style={{ fontSize: '1.4rem', fontFamily: 'monospace' }}>Forgot Password?</Link>
           </div>
 
-          <button type="submit" disabled={loading}>
+          <button type="submit" disabled={loading} className='auth-button'>
             {loading ? "Logging in..." : "Login"}
           </button>
 
-          {message && <div style={{ color: 'red', marginTop: 10, fontSize: '1.5rem', fontFamily: 'monospace' }}>{message}</div>}
+          {message && <div style={{ color: 'red', marginTop: 10, fontSize: '1.4rem', fontFamily: 'monospace' }}>{message}</div>}
 
-          <p className="switch-auth-link">
+          <p className="switch-auth-link" style={{ fontSize: '1.4rem', fontFamily: 'monospace' }}>
             Don't have an account? <Link to="/auth">Create one</Link>
           </p>
         </form>

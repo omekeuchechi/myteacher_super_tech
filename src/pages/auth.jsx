@@ -115,9 +115,9 @@ const Register = () => {
               ))}
             </div> */}
 
-            <Link className='aha' to="/login">Already have an account?</Link>
+            <Link className='aha' to="/login" style={{ fontSize: '1.4rem', fontFamily: 'monospace' }}>Already have an account?</Link>
 
-            <button type="submit" disabled={loading}>
+            <button type="submit" disabled={loading} className='auth-button'>
               {loading ? "Processing..." : "Get Started"}
             </button>
             {message && <div style={{ color: 'red', marginTop: 10 }}>{message}</div>}

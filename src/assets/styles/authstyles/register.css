@@ -175,21 +175,22 @@ form > .eyes > i.fa-eye{
   border: 1px solid #aaa;
 }
 
-button[type="submit"] {
+/*button[type="submit"]*/ .auth-button{
   width: 100%;
   padding: 12px 0;
-  background: #1a73e8;
+  /* background: #1a73e8; */
+  background: var(--primary-color);
   color: #fff;
   border: none;
   border-radius: 6px;
-  font-size: 1.9rem;
+  font-size: 1.4rem;
   font-weight: 600;
   cursor: pointer;
   margin-top: 10px;
   transition: background 0.2s;
 }
 
-button[type="submit"]:hover {
+.auth-button:hover {
   background: #155ab6;
 }
 
