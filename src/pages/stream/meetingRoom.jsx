@@ -106,6 +106,8 @@ const MeetingRoom = () => {
       }
     };
 
+    
+
     // Handle ICE candidates
     peerConnection.onicecandidate = (event) => {
       if (event.candidate) {
