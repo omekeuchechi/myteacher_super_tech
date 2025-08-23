@@ -67,6 +67,7 @@ import UpcomingLectureBatchCreation from './pages/admin/upcomingLectureBatchCrea
 import OnSite from './pages/onSite';
 import AssignCourse from './pages/admin/AssignCourse';
 import OnsiteAsset from './pages/admin/onsiteAsset';
+import MeetingRoom from './pages/stream/meetingRoom';
 
 
 
@@ -168,6 +169,7 @@ function AppRoutes() {
           </GuestOnlyRoute>
         } />
       <Route path="/about" element={<About />} />
+      <Route path="/meeting-room" element={<MeetingRoom />} />
       <Route path="/online-class" element={
         <ProtectedRoute userOnly>
           <OnlineClass />
