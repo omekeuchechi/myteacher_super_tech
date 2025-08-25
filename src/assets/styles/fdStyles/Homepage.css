@@ -1,4 +1,3 @@
-
 /* General Layout */
 
 
@@ -129,6 +128,8 @@ button {
 /* Features Section */
 .features-section {
   background-color: #ffffff;
+  max-width: 1800px;
+  margin: auto;
   text-align: center;
 }
 
@@ -143,8 +144,8 @@ button {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1.5rem;
-  max-width: 1100px;
+  gap: 4rem;
+  max-width: 1500px;
   margin: auto;
 }
 
@@ -179,12 +180,22 @@ button {
   height: 30px;
 }
 
-.features-grid > .feature-card > *{
-  font-size: 1.3rem;
+.features-grid > .feature-card > h3{
+  font-size: 1.4rem;
+  text-align: center;
+  font-weight: 900;
+}
+
+.features-grid > .feature-card > p{
+  font-size: 1.4rem;
+  text-align: center;
+  font-weight: 600;
 }
 
 /* Onsite Training */
 .onsite-section {
+  max-width: 1800px;
+  margin: auto;
   background-color: #f9fafb;
 }
 
@@ -192,7 +203,7 @@ button {
   display: flex;
   flex-direction: row;
   gap: 2rem;
-  max-width: 1100px;
+  max-width: 1420px;
   margin: auto;
 }
 .onsite-section > .onsite-container > .onsite-text{
@@ -208,6 +219,7 @@ button {
 
 .onsite-section > .onsite-container > .onsite-text > p{
   font-size: 1.3rem;
+  font-weight: 600;
 }
 
 .onsite-section > .onsite-container > .onsite-text > h3 > img{
@@ -225,6 +237,7 @@ button {
   align-items: center;
   gap: 1rem;
   font-size: 1.3rem;
+  font-weight: 600;
   margin-top: 1rem;
 }
 
@@ -302,6 +315,8 @@ button {
 
 /* Enroll Section */
 .enroll-section {
+  max-width: 1800px;
+  margin: auto;
   background-color: #ffffff;
 }
 
@@ -315,13 +330,14 @@ button {
   display: flex;
   /* flex-wrap: wrap; */
   gap: 2rem;
-  max-width: 1000px;
+  max-width: 1390px;
   margin: auto;
 }
 
 .enroll-grid > .online{
   background-color: #EFF6FF;
   padding: 20px;
+  width: 50%;
   border-radius: 15px;
 }
 
@@ -339,7 +355,8 @@ button {
 .enroll-grid > .online > ol > li {
   display: flex;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  font-weight: 600;
   gap: 1rem;
   margin-top: 10px;
 }
@@ -348,6 +365,7 @@ button {
 .enroll-grid > .onsite{
   background-color: #F9FAFB;
   padding: 20px;
+  width: 50%;
   border-radius: 15px;
 }
 
@@ -364,7 +382,8 @@ button {
 .enroll-grid > .onsite > ol > li {
   display: flex;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  font-weight: 600;
   gap: 1rem;
   margin-top: 10px;
 }
@@ -386,7 +405,7 @@ button {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 2rem;
-  max-width: 1000px;
+  max-width: 1420px;
   margin: auto;
 }
 
@@ -411,11 +430,17 @@ button {
 }
 
 .footer-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   gap: 2rem;
-  max-width: 1100px;
+  max-width: 1400px;
   margin: auto;
+}
+
+.footer-grid > * {
+  flex: 1 1 200px;
+  min-width: 200px;
 }
 
 .footer-grid > .footer-text-logo > .footer-link{
@@ -462,7 +487,7 @@ button {
 
 .footer-grid > .footer-follow-us > .social-icons{
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .footer-grid > .footer-follow-us > .social-icons > span{
@@ -507,6 +532,36 @@ button {
     gap: 1rem;
   }
 
+  .enroll-grid > .online{
+    padding: 10px;
+    width: 100%;
+    border-radius: 10px;
+  }
+  
+  .enroll-grid > .online > h4 {
+    font-size: 1.3rem;
+  }
+  
+  .enroll-grid > .online > ol > li {
+    font-size: 1.2rem;
+  }
+  
+  /* onsite section */
+  .enroll-grid > .onsite{
+    padding: 10px;
+    width: 100%;
+    border-radius: 10px;
+  }
+  
+  .enroll-grid > .onsite > h4 {
+    font-size: 1.3rem;
+  }
+  
+  .enroll-grid > .onsite > ol > li {
+    font-size: 1.2rem;
+  }
+  
+
   .onsite-section > .onsite-container {
     display: flex;
     flex-direction: column;
@@ -534,6 +589,8 @@ button {
   .onsite-image {
     order: -1;
     margin-bottom: 2rem;
+    padding: 2rem;
+    border-radius: 0rem;
   }
   
   .onsite-buttons {
@@ -573,8 +630,8 @@ button {
   }
   
   .footer-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem 1rem;
+    flex-direction: column;
+    gap: 2rem;
   }
 }
 
@@ -593,7 +650,7 @@ button {
   }
   
   .footer-grid {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     gap: 1.5rem;
   }
   
@@ -630,4 +687,3 @@ html, body {
   overflow-x: hidden;
   width: 100%;
 }
-
