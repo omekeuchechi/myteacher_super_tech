@@ -644,7 +644,7 @@ const Certificates = () => {
                                             </div>
                                             <div className="certificate-meta">
                                                 <span className="certificate-id">
-                                                    ID: {cert._id?.slice(-8).toUpperCase() || 'N/A'}
+                                                    ID: {cert.lecture._id}
                                                 </span>
                                                 <h3 className="certificate-title">
                                                     {cert.lecture?.name || 'Course Completion Certificate'}
@@ -669,11 +669,13 @@ const Certificates = () => {
                                             <button 
                                                 onClick={() => handleDownload(cert)}
                                                 className="download-btn"
-                                                disabled={!cert.certificateIssued}
+                                                disabled={!cert.downloadUrl}
                                             >
                                                 <i className={`fas ${cert.downloaded ? 'fa-check' : 'fa-download'}`}></i>
                                                 {cert.downloaded ? 'Downloaded' : 'Download'}
                                             </button>
+                                            {console.log(cert.downloadUrl)}
+                                            {console.log(cert)}
                                             {cert.certificateIssued && (
                                                 <a 
                                                     href={`${API_BASE}/certificates/download/${cert.scoreId || `cert-${Date.now()}-${cert._id}`}`}

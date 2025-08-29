@@ -68,6 +68,7 @@ import OnSite from './pages/onSite';
 import AssignCourse from './pages/admin/AssignCourse';
 import OnsiteAsset from './pages/admin/onsiteAsset';
 import MeetingRoom from './pages/stream/meetingRoom';
+import PerLecture from './pages/perLecture';
 
 
 
@@ -195,6 +196,11 @@ function AppRoutes() {
       <Route path="/profile-search/:userId" element={
         <ProtectedRoute userOnly>
           <GeneralProfile />
+        </ProtectedRoute>
+      } />
+      <Route path="/per-lecture/:lectureId" element={
+        <ProtectedRoute userOnly>
+          <PerLecture />  {/* Changed from <perLecture /> to <PerLecture /> */}
         </ProtectedRoute>
       } />
       <Route path="/certificates" element={

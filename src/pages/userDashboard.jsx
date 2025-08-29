@@ -11,6 +11,7 @@ import { AuthContext } from '../../context/Authcontext';
 import Header from '../components/userDashCom/header';
 import QuickLinks from '../components/userDashCom/quickLinks';
 import { Modal, Box, Typography, Button } from '@mui/material';
+import CoursesApplied from '../components/userDashCom/courses';
 
 const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
@@ -163,8 +164,6 @@ function UserDashboard() {
       <div className="main-content">
         <HeroSection />
 
-        <CourseTaken theme={theme} />
-
         <div className={`quick-links ${theme}`}>
           <QuickLinks theme={theme} />
         </div>
@@ -173,6 +172,13 @@ function UserDashboard() {
           <h2 className={`${theme}`}>Do you want an online Live class/Training. Simply Apply here to get started.</h2>
           <Link to="/apply" className='apply'><i className='fas fa-plus'></i> Apply</Link>
         </div>
+
+
+        <CoursesApplied theme={theme} />
+
+        <CourseTaken theme={theme} />
+
+        
       </div>
 
       {/* Navigation Tour Modal */}
