@@ -200,7 +200,7 @@ const UpcomingLecturesList = ({ lectures, onBuyCourse, user }) => {
               </div>
             </div>
           );
-        }) : <p style={{ color: '#444', marginBottom: 24, fontSize: 16 }}>No upcoming lectures at the moment.</p>}
+        }) : <div style={{ color: '#444', marginBottom: 24, fontSize: 20, height: '50vh' }}>No upcoming lectures at the moment.</div>}
       </div>
 
       {/* Enrollment Confirmation Modal */}

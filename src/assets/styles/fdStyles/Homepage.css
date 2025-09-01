@@ -421,7 +421,8 @@ button {
 
 /* Footer */
 .footer {
-  position: block;
+  position: relative;
+  left: 0;
   bottom: 0;
   width: 100%;
   background-color: #0f172a;

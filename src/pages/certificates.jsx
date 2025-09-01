@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useMemo } from 'react';
 import { AuthContext } from '../../context/Authcontext';
 import { toast } from 'react-toastify';
 import { useNavigate, Link } from 'react-router-dom';
@@ -27,15 +27,6 @@ const NavItem = ({ icon, label, isExpanded, move, onClick }) => (
     </Link>
 );
 
-// Helper function to calculate grade based on score
-const calculateGrade = (score) => {
-    if (score >= 90) return 'A+ (Distinction)';
-    if (score >= 80) return 'A (Excellent)';
-    if (score >= 70) return 'B+ (Very Good)';
-    if (score >= 60) return 'B (Good)';
-    if (score >= 50) return 'C (Satisfactory)';
-    return 'D (Pass)';
-};
 
 const Certificates = () => {
     const navigate = useNavigate();
@@ -77,13 +68,11 @@ const Certificates = () => {
 
     const isLightMode = theme === 'light';
 
-    // Function to download total certificate
-    const downloadTotalCertificate = async () => {
+    // Function to download a specific certificate
+    const downloadCertificate = async (lectureId) => {
         try {
             const token = localStorage.getItem('token');
-            const user = localStorage.getItem('user');
-            
-            if (!token || !user) {
+            if (!token) {
                 toast.error('Please log in to download certificate');
                 return;
             }
@@ -91,25 +80,8 @@ const Certificates = () => {
             // Show loading state
             toast.info('Preparing your certificate...', { autoClose: 2000 });
     
-            // Parse the user data to get the user ID
-            let userData;
-            try {
-                userData = JSON.parse(user);
-            } catch (e) {
-                console.error('Error parsing user data:', e);
-                toast.error('Invalid user session. Please log in again.');
-                return;
-            }
-    
-            // Get user ID from the user object
-            const userId = userData.id || userData._id;
-            if (!userId) {
-                toast.error('Invalid user session. Please log in again.');
-                return;
-            }
-    
             // Make the request to the backend endpoint
-            const response = await fetch(`${API_BASE}/certificates/download-total-certificate/${userId}`, {
+            const response = await fetch(`${API_BASE}/transaction/certificate/${lectureId}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -129,7 +101,6 @@ const Certificates = () => {
                     toast.error('Session expired. Please log in again.');
                     localStorage.removeItem('token');
                     localStorage.removeItem('user');
-                    // navigate('/login');
                     return;
                 }
                 
@@ -141,7 +112,7 @@ const Certificates = () => {
     
             // Get filename from content-disposition header or use a default name
             const contentDisposition = response.headers.get('content-disposition') || '';
-            let filename = `total-certificate-${new Date().toISOString().split('T')[0]}.pdf`;
+            let filename = `certificate-${lectureId}.pdf`;
             const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
             if (filenameMatch && filenameMatch[1]) {
                 filename = filenameMatch[1].replace(/['"]/g, '');
@@ -162,19 +133,20 @@ const Certificates = () => {
                 document.body.removeChild(a);
             }, 100);
     
+            // Update the certificate as downloaded
+            setCertificates(prevCerts => 
+                prevCerts.map(cert => 
+                    cert.lecture._id === lectureId 
+                        ? { ...cert, downloaded: true } 
+                        : cert
+                )
+            );
+    
             toast.success('Certificate downloaded successfully!');
     
         } catch (error) {
-            console.error('Error downloading total certificate:', error);
-            if (error.message === 'User not found') {
-                toast.error('Your session has expired. Please log in again.');
-                // Optionally clear local storage and redirect to login
-                // localStorage.removeItem('token');
-                // localStorage.removeItem('user');
-                // navigate('/login');
-            } else {
-                toast.error(error.message || 'Failed to download certificate. Please try again later.');
-            }
+            console.error('Error downloading certificate:', error);
+            toast.error(error.message || 'Failed to download certificate. Please try again later.');
         }
     };
 
@@ -188,36 +160,17 @@ const Certificates = () => {
         try {
             setLoading(true);
             const token = localStorage.getItem('token');
-            const user = localStorage.getItem('user');
             
-            if (!token || !user) {
+            if (!token) {
                 setError('Please log in to view certificates');
                 setLoading(false);
                 return;
             }
 
-            let userData;
-            try {
-                userData = JSON.parse(user);
-            } catch (e) {
-                console.error('Error parsing user data:', e);
-                setError('Invalid user session. Please log in again.');
-                setLoading(false);
-                return;
-            }
-
-            // Get user ID from the user object
-            const userId = userData.id || userData._id;
-            if (!userId) {
-                setError('Invalid user session. Please log in again.');
-                setLoading(false);
-                return;
-            }
-
-            console.log('Fetching certificates for user:', userId);
+            console.log('Fetching certificates...');
             
-            // Make the fetch request to the updated endpoint
-            const response = await fetch(`${API_BASE}/certificates/user/${userId}`, {
+            // Updated endpoint to match the new backend API
+            const response = await fetch(`${API_BASE}/transaction/certificates`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -225,7 +178,7 @@ const Certificates = () => {
                     'x-auth-token': token
                 },
                 credentials: 'include',
-                signal: AbortSignal.timeout(15000) // 15 second timeout
+                signal: AbortSignal.timeout(15000)
             }).catch(handleFetchError);
 
             if (!response.ok) {
@@ -236,27 +189,25 @@ const Certificates = () => {
             const responseData = await response.json();
             console.log('Certificates API Response:', responseData);
 
-            if (!responseData.success || !responseData.data) {
+            if (!responseData.success || !Array.isArray(responseData.certificates)) {
                 throw new Error('Invalid response format from server');
             }
 
             // Transform the response data to match the frontend's expected format
-            const formattedCertificates = responseData.data.map((cert, index) => ({
+            const formattedCertificates = responseData.certificates.map((cert) => ({
                 ...cert,
-                // Ensure we have all required fields with fallbacks
-                lecture: cert.lecture || { 
-                    name: 'Course Completion Certificate', 
-                    description: 'Successfully completed the course requirements',
-                    _id: `lecture-${index}`
+                lecture: {
+                    name: cert.lectureId?.title || 'Course Completion Certificate',
+                    description: cert.lectureId?.description || 'Successfully completed the course requirements',
+                    _id: cert.lectureId?._id || cert._id
                 },
-                score: typeof cert.score === 'number' ? cert.score : 0,
-                grade: cert.grade || calculateGrade(cert.score || 0),
-                issuedAt: cert.issuedAt || new Date().toISOString(),
-                certificateIssued: cert.certificateIssued !== undefined ? cert.certificateIssued : true,
-                _id: cert._id || `cert-${Date.now()}-${index}`,
-                uniqueId: cert.scoreId || `cert-${Date.now()}-${index}`,
-                downloadUrl: `${API_BASE}/certificates/download/${cert.scoreId || `cert-${Date.now()}-${index}`}`,
-                feedback: cert.feedback || ''
+                score: 100, // Assuming successful completion since certificate exists
+                grade: 'Pass',
+                issuedAt: cert.createdAt || new Date().toISOString(),
+                certificateIssued: true,
+                uniqueId: cert._id,
+                downloadUrl: `${API_BASE}/transaction/certificate/${cert.lectureId?._id || cert._id}`,
+                feedback: ''
             }));
 
             setCertificates(formattedCertificates);
@@ -284,6 +235,7 @@ const Certificates = () => {
 
     // Function to check if lecture has expired
     const checkLectureExpiry = (lectures) => {
+        console.log(lectures);
         if (!lectures || !Array.isArray(lectures)) return false;
         
         const now = new Date();
@@ -350,145 +302,8 @@ const Certificates = () => {
         };
     }, [user]);
 
-    const handleDownload = async (certificate) => {
-        // Prioritize using the pre-constructed downloadUrl if available.
-        // Fallback to constructing it with uniqueId.
-        const downloadUrl = certificate.downloadUrl || (certificate.uniqueId ? `${API_BASE}/certificates/download/${certificate.uniqueId}` : null);
-
-        if (!downloadUrl) {
-            toast.error('Certificate download link is not available.');
-            console.error('Download aborted: No valid URL or ID found.', certificate);
-            return;
-        }
-
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                throw new Error('No authentication token found');
-            }
-
-            toast.info('Preparing your download...', { autoClose: 2000 });
-            
-            // Construct the download URL with the score ID
-            console.log('Downloading certificate from:', downloadUrl);
-            
-            const response = await fetch(downloadUrl, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'x-auth-token': token,
-                    'Accept': 'application/pdf'
-                },
-                credentials: 'include',
-                signal: AbortSignal.timeout(30000)
-            });
-
-            // Handle non-OK responses
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error('Download failed with status:', response.status, errorText);
-                
-                if (response.status === 401) {
-                    localStorage.removeItem('token');
-                    throw new Error('Session expired. Please log in again.');
-                } else if (response.status === 404) {
-                    throw new Error('Certificate not found. Please complete an assignment first.');
-                } else {
-                    throw new Error(`Server error: ${response.status} - ${errorText || 'Unknown error'}`);
-                }
-            }
-
-            // Get the blob data
-            const blob = await response.blob();
-            if (!blob || blob.size === 0) {
-                throw new Error('Received empty file');
-            }
-
-            // Get the filename from content-disposition header or generate one
-            let filename = 'certificate.pdf';
-            const contentDisposition = response.headers.get('content-disposition');
-            if (contentDisposition) {
-                const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
-                if (filenameMatch && filenameMatch[1]) {
-                    filename = filenameMatch[1].replace(/['"]/g, '');
-                }
-            }
-
-            // If no filename in headers, generate one
-            if (filename === 'certificate.pdf' && certificate.lecture?.name) {
-                const courseName = certificate.lecture.name
-                    .toLowerCase()
-                    .replace(/\s+/g, '-')
-                    .replace(/[^a-z0-9-]/g, '');
-                
-                const userName = (user?.name || 'user')
-                    .toLowerCase()
-                    .replace(/\s+/g, '-')
-                    .replace(/[^a-z0-9-]/g, '');
-                    
-                const dateStr = new Date().toISOString().split('T')[0];
-                filename = `certificate-${courseName}-${userName}-${dateStr}.pdf`;
-            }
-            
-            // Create a URL for the blob
-            const url = window.URL.createObjectURL(blob);
-            
-            // Create and trigger download
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', filename);
-            document.body.appendChild(link);
-            link.click();
-            
-            // Clean up
-            setTimeout(() => {
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(link);
-            }, 100);
-            
-            // Update the certificate as downloaded
-            setCertificates(prevCerts => 
-                prevCerts.map(cert => 
-                    cert._id === certificate._id 
-                        ? { ...cert, downloaded: true } 
-                        : cert
-                )
-            );
-            
-            toast.success('Download started!', { autoClose: 3000 });
-            
-        } catch (err) {
-            console.error('Error downloading certificate:', err);
-            let errorMessage = 'Failed to download certificate';
-            
-            if (err.response) {
-                if (err.response.status === 401) {
-                    errorMessage = 'Session expired. Please log in again.';
-                    localStorage.removeItem('token');
-                    setTimeout(() => window.location.href = '/login', 2000);
-                } else if (err.response.status === 404) {
-                    errorMessage = 'Certificate not found. Please complete an assignment first.';
-                } else if (err.response.status >= 500) {
-                    errorMessage = 'Server error. Please try again later.';
-                }
-            } else if (err.name === 'AbortError' || err.code === 'ECONNABORTED') {
-                errorMessage = 'Request timed out. Please check your connection and try again.';
-            } else if (!navigator.onLine) {
-                errorMessage = 'No internet connection. Please check your network.';
-            } else if (err.message) {
-                errorMessage = err.message;
-            }
-            
-            toast.error(errorMessage, { autoClose: 5000 });
-        }
-    };
-
     // Filter certificates based on active tab
-    const filteredCertificates = certificates.filter(cert => {
-        if (activeTab === 'all') return true;
-        if (activeTab === 'downloaded') return cert.downloaded;
-        return true;
-    });
+    const filteredCertificates = certificates;
 
     if (loading) {
         return (
@@ -643,55 +458,85 @@ const Certificates = () => {
                                                 )}
                                             </div>
                                             <div className="certificate-meta">
-                                                <span className="certificate-id">
-                                                    ID: {cert.lecture._id}
-                                                </span>
                                                 <h3 className="certificate-title">
-                                                    {cert.lecture?.name || 'Course Completion Certificate'}
+                                                    {cert.lecture.name || 'Course Completion Certificate'}
                                                 </h3>
-                                                <div className="certificate-grade">
-                                                    <i className="fas fa-star star-icon"></i>
-                                                    <span>Grade: {cert.grade || calculateGrade(cert.score || 0)}</span>
-                                                    <span className="score">{cert.score || 0}%</span>
+                                                <div className="certificate-details">
+                                                    {cert.lecture?.courseId?.name && (
+                                                        <p className="course-name">
+                                                            <i className="fas fa-book"></i>
+                                                            {cert.lecture.courseId.name}
+                                                        </p>
+                                                    )}
+                                                    {cert.lecture?.startTime && (
+                                                        <p className="lecture-date">
+                                                            <i className="far fa-calendar-alt"></i>
+                                                            {new Date(cert.lecture.startTime).toLocaleDateString('en-US', {
+                                                                year: 'numeric',
+                                                                month: 'long',
+                                                                day: 'numeric'
+                                                            })}
+                                                        </p>
+                                                    )}
+                                                    {cert.lecture?.platform && (
+                                                        <p className="lecture-platform">
+                                                            <i className="fas fa-laptop"></i>
+                                                            {cert.lecture.platform}
+                                                        </p>
+                                                    )}
                                                 </div>
                                                 <div className="certificate-description">
-                                                    {cert.lecture?.description || 'Successfully completed the course requirements.'}
-                                                    {cert.feedback && (
-                                                        <div className="feedback-section">
-                                                            <h4>Feedback:</h4>
-                                                            <p>{cert.feedback}</p>
-                                                        </div>
-                                                    )}
+                                                    <p>Successfully completed the course requirements.</p>
+                                                    <p>You can View the Certificate by clicking View</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="certificate-actions">
-                                            <button 
-                                                onClick={() => handleDownload(cert)}
+                                            <a 
+                                                href={cert.downloadurl}
+                                                download
+                                                target="_blank"
+                                                rel="noopener noreferrer"
                                                 className="download-btn"
-                                                disabled={!cert.downloadUrl}
+                                                onClick={() => {
+                                                    if (!cert.downloaded) {
+                                                        setCertificates(prevCerts => 
+                                                            prevCerts.map(c => 
+                                                                c.uniqueId === cert.uniqueId 
+                                                                    ? { ...c, downloaded: true } 
+                                                                    : c
+                                                            )
+                                                        );
+                                                    }
+                                                }}
                                             >
                                                 <i className={`fas ${cert.downloaded ? 'fa-check' : 'fa-download'}`}></i>
                                                 {cert.downloaded ? 'Downloaded' : 'Download'}
+                                            </a>
+                                            <button 
+                                                onClick={() => {
+                                                    if (cert.downloadurl && cert.downloadurl.startsWith('data:application/pdf;base64,')) {
+                                                        const win = window.open('', '_blank');
+                                                        win.document.write(`
+                                                            <html>
+                                                                <head><title>Certificate</title></head>
+                                                                <body style="margin: 0; height: 100vh;">
+                                                                    <embed 
+                                                                        src="${cert.downloadurl}" 
+                                                                        type="application/pdf" 
+                                                                        style="width: 100%; height: 100%;"
+                                                                    />
+                                                                </body>
+                                                            </html>
+                                                        `);
+                                                    } else {
+                                                        window.open(cert.downloadurl, '_blank');
+                                                    }
+                                                }}
+                                                className="view-btn"
+                                            >
+                                                <i className="fas fa-eye"></i> View
                                             </button>
-                                            {console.log(cert.downloadUrl)}
-                                            {console.log(cert)}
-                                            {cert.certificateIssued && (
-                                                <a 
-                                                    href={`${API_BASE}/certificates/download/${cert.scoreId || `cert-${Date.now()}-${cert._id}`}`}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="view-btn"
-                                                    onClick={(e) => {
-                                                        if (!cert.downloaded) {
-                                                            e.preventDefault();
-                                                            handleDownload(cert);
-                                                        }
-                                                    }}
-                                                >
-                                                    <i className="fas fa-eye"></i> View
-                                                </a>
-                                            )}
                                         </div>
                                     </div>
                                 ))}
