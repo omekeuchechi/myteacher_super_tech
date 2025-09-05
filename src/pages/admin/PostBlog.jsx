@@ -21,7 +21,10 @@ const PostBlog = () => {
     featuredImage: null,
     images: []
   });
-  const [previewImages, setPreviewImages] = useState([]);
+  const [previewImages, setPreviewImages] = useState({
+    featured: null,
+    additional: []
+  });
 
   useEffect(() => {
     if (user && !user.isAdmin) {
@@ -39,47 +42,86 @@ const PostBlog = () => {
     setFormData(prev => ({ ...prev, content }));
   };
 
-  const handleImageUpload = (e) => {
+  const fileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  };
+
+  const handleImageUpload = async (e) => {
     const files = Array.from(e.target.files);
     const imageFiles = files.filter(file => 
       file.type.match('image/.*') && 
-      file.size <= 100 * 1024 * 1024 // 100MB limit
+      file.size <= 5 * 1024 * 1024 // 5MB limit for base64
     );
 
     if (imageFiles.length !== files.length) {
-      toast.warning('Some files were not images or exceeded size limit');
+      toast.warning('Some files were not images or exceeded size limit (5MB)');
+      return;
     }
 
-    if (imageFiles.length > 0) {
-      setFormData(prev => ({ 
-        ...prev, 
-        images: [...prev.images, ...imageFiles] 
+    try {
+      const base64Images = await Promise.all(
+        imageFiles.map(file => fileToBase64(file))
+      );
+
+      setFormData(prev => ({
+        ...prev,
+        images: [...prev.images, ...base64Images]
       }));
 
       // Create preview URLs
       const newPreviews = imageFiles.map(file => URL.createObjectURL(file));
-      setPreviewImages(prev => [...prev, ...newPreviews]);
+      setPreviewImages(prev => ({
+        ...prev,
+        additional: [...prev.additional, ...newPreviews]
+      }));
+    } catch (error) {
+      console.error('Error processing images:', error);
+      toast.error('Error processing images');
     }
   };
 
   const handleRemoveImage = (index) => {
     const newImages = [...formData.images];
-    const newPreviews = [...previewImages];
+    const newPreviews = [...previewImages.additional];
     
     URL.revokeObjectURL(newPreviews[index]); // Clean up memory
     newImages.splice(index, 1);
     newPreviews.splice(index, 1);
     
     setFormData(prev => ({ ...prev, images: newImages }));
-    setPreviewImages(newPreviews);
+    setPreviewImages(prev => ({ ...prev, additional: newPreviews }));
   };
 
-  const handleFeaturedImageChange = (e) => {
+  const handleFeaturedImageChange = async (e) => {
     const file = e.target.files[0];
     if (file && file.type.match('image.*')) {
-      setFormData(prev => ({ ...prev, featuredImage: file }));
+      try {
+        const base64 = await fileToBase64(file);
+        setFormData(prev => ({ ...prev, featuredImage: base64 }));
+        // Create preview URL
+        const previewUrl = URL.createObjectURL(file);
+        setPreviewImages(prev => ({ ...prev, featured: previewUrl }));
+      } catch (error) {
+        console.error('Error processing featured image:', error);
+        toast.error('Error processing featured image');
+      }
     }
   };
+  
+  // Clean up object URLs on unmount
+  useEffect(() => {
+    return () => {
+      if (previewImages.featured) {
+        URL.revokeObjectURL(previewImages.featured);
+      }
+      previewImages.additional.forEach(preview => URL.revokeObjectURL(preview));
+    };
+  }, [previewImages]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -91,37 +133,24 @@ const PostBlog = () => {
 
     try {
       setLoading(true);
-      const formDataToSend = new FormData();
       
-      // Add basic fields
-      formDataToSend.append('title', formData.title);
-      formDataToSend.append('category', formData.category);
-      formDataToSend.append('content', formData.content);
-      
-      // Add tags as comma-separated string
-      if (formData.tags) {
-        formDataToSend.append('tags', formData.tags);
-      }
-
-      // Add featured image if exists
-      if (formData.featuredImage) {
-        formDataToSend.append('featuredImage', formData.featuredImage);
-      }
-
-      // Add additional images
-      if (formData.images && formData.images.length > 0) {
-        formData.images.forEach((image, index) => {
-          formDataToSend.append('images', image);
-        });
-      }
+      // Prepare the request body
+      const requestBody = {
+        title: formData.title,
+        category: formData.category,
+        content: formData.content,
+        tags: formData.tags,
+        featuredImage: formData.featuredImage,
+        images: formData.images
+      };
 
       const response = await fetch(`${API_BASE}/posts/create`, {
         method: 'POST',
         headers: {
+          'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
-          // Let the browser set the Content-Type with boundary
         },
-        body: formDataToSend
+        body: JSON.stringify(requestBody)
       });
 
       const data = await response.json();
@@ -131,7 +160,7 @@ const PostBlog = () => {
       }
 
       toast.success('Post created successfully!');
-      navigate('/tech-blog');
+      navigate('/techblog');
     } catch (error) {
       console.error('Error creating post:', error);
       toast.error(error.message || 'Error creating post');
@@ -184,18 +213,19 @@ const PostBlog = () => {
             onChange={handleFeaturedImageChange}
             className="file-input"
           />
-          {formData.featuredImage && (
+          {previewImages.featured && (
             <div className="image-preview">
               <img 
-                src={URL.createObjectURL(formData.featuredImage)} 
+                src={previewImages.featured} 
                 alt="Featured preview" 
                 className="preview-image"
               />
               <button 
                 type="button" 
                 onClick={() => {
+                  URL.revokeObjectURL(previewImages.featured);
                   setFormData(prev => ({ ...prev, featuredImage: null }));
-                  URL.revokeObjectURL(formData.featuredImage);
+                  setPreviewImages(prev => ({ ...prev, featured: null }));
                 }}
                 className="remove-image-btn"
               >
@@ -215,7 +245,7 @@ const PostBlog = () => {
             className="file-input"
           />
           <div className="image-previews">
-            {previewImages.map((preview, index) => (
+            {previewImages.additional.map((preview, index) => (
               <div key={index} className="preview-item">
                 <img 
                   src={preview} 

@@ -15,6 +15,7 @@ const initialForm = {
     description: "",
 };
 
+
 const navLinks = [
     { to: "/", label: "Home" },
     { to: "/admin/ui-settings", label: "UI Settings" },
@@ -200,7 +201,7 @@ function MediaVideo() {
             setLecturesLoading(true);
             setLecturesError("");
             try {
-                const res = await fetch(`${API_BASE}/lecture/lectures`, {
+                const res = await fetch(`${API_BASE}/lectures/lectures`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
@@ -342,15 +343,15 @@ function MediaVideo() {
                 />
                 <div style={{ marginBottom: '16px' }}>
                     <Editor
-                        apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
+                        apiKey={import.meta.env.VITE_TINYMCE_API_KEY || 'no-api-key'}
                         value={form.description}
                         init={{
                             height: 400,
                             menubar: true,
                             plugins: [
-                                'advlist autolink lists link image charmap print preview anchor',
-                                'searchreplace visualblocks code fullscreen',
-                                'insertdatetime media table paste code help wordcount'
+                                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor',
+                                'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                                'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
                             ],
                             toolbar: 'undo redo | formatselect | ' +
                                 'bold italic backcolor | alignleft aligncenter ' +
@@ -358,13 +359,13 @@ function MediaVideo() {
                                 'removeformat | help',
                             content_style: 'body { font-family: Arial, sans-serif; font-size: 14px; }',
                             branding: false,
-                            // Enable TinyMCE cloud channel (optional, but recommended)
-                            // This ensures you get the latest stable version
-                            // Remove or modify this if you want a specific version
-                            // cloud_channel: '6',
-                            // Optional: Configure image upload
-                            // images_upload_url: 'your_image_upload_endpoint',
-                            // images_upload_credentials: true
+                            // Prevent TinyMCE from auto-loading plugins
+                            external_plugins: {},
+                            // Use specific version of TinyMCE
+                            tinymceScriptSrc: 'https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js',
+                            // Disable automatic plugin loading
+                            forced_root_block: 'p',
+                            convert_urls: false
                         }}
                         onEditorChange={(content) => {
                             setForm(prev => ({
@@ -397,9 +398,11 @@ function MediaVideo() {
                         <div key={video._id} className="media-video-item">
                             <div className="media-video-details">
                                 <div className="media-video-title">
-                                    {typeof video.lecture === "object"
+                                    {video.lecture 
+                                    ? (typeof video.lecture === "object"
                                         ? video.lecture.title || video.lecture.name || video.lecture._id || "Untitled Lecture"
-                                        : video.lecture || "Untitled Lecture"}
+                                        : video.lecture)
+                                    : "No Lecture Assigned"}
                                 </div>
                                 <div 
                                     className="media-video-desc" 

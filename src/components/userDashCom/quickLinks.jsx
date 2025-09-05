@@ -13,7 +13,7 @@ const QuickLinks = ({theme}) => {
                     </Link>
                     <Link to="/video" className={`link ${theme === "dark" ? "dark" : "light"}`}>
                         <i className="fa-solid fa-video"></i>
-                        <p>Video</p>
+                        <p>Videos</p>
                     </Link>
                     <Link to="/assignment" className={`link ${theme === "dark" ? "dark" : "light"}`}>
                         <i className="fa-solid fa-book"></i>

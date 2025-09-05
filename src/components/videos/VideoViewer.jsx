@@ -83,16 +83,17 @@ const VideoViewer = ({ video, onVideoUpdate }) => {
                         src={`https://www.youtube.com/embed/${isYouTube[1]}`}
                         title="Video player"
                         allowFullScreen
+                        loading="lazy"
                     />
                 </div>
             ) : (
-                <video controls className="video-player">
+                <video controls className="video-player" loading="lazy">
                     <source src={video.videoLink} type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
             )}
 
-            <div className="video-description">
+            {/* <div className="video-description">
                 <h3>{video.lecture?.name || 'Video'}</h3>
                 <ReactMarkdown rehypePlugins={[rehypeRaw]}>
                     {video.description || 'No description available.'}
@@ -177,7 +178,7 @@ const VideoViewer = ({ video, onVideoUpdate }) => {
                 ) : (
                     <p>No comments yet. Be the first to comment!</p>
                 )}
-            </div>
+            </div> */}
         </div>
     );
 };
