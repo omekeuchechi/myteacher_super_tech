@@ -69,6 +69,8 @@ import AssignCourse from './pages/admin/AssignCourse';
 import OnsiteAsset from './pages/admin/onsiteAsset';
 import MeetingRoom from './pages/stream/meetingRoom';
 import PerLecture from './pages/perLecture';
+import Onboarding from './pages/onboarding/onboarding';
+import OnboardingUsers from './pages/admin/onboardingUsers';
 
 
 
@@ -171,6 +173,7 @@ function AppRoutes() {
         } />
       <Route path="/about" element={<About />} />
       <Route path="/meeting-room" element={<MeetingRoom />} />
+      <Route path="/onboarding" element={<Onboarding />} />
       <Route path="/online-class" element={
         <ProtectedRoute userOnly>
           <OnlineClass />
@@ -351,6 +354,11 @@ function AppRoutes() {
       <Route path="/admin/onsite-asset" element={
         <ProtectedRoute adminOnly>
           <OnsiteAsset />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin/onboarding-users" element={
+        <ProtectedRoute adminOnly>
+          <OnboardingUsers />
         </ProtectedRoute>
       } />
     </Routes>

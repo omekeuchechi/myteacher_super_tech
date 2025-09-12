@@ -35,7 +35,7 @@ const FooterFd = () => {
             <h4>Contact</h4>
             <p><i className='fa-solid fa-location-dot'></i> Myteacher Institute Tessy School junction Rumuagholu off Rumuokoro flyover Port Harcourt</p>
             <p><i className='fa-solid fa-phone'></i> +234 903 005 7489</p>
-            <p><i className='fa-solid fa-envelope'></i> info@myteacher.com</p>
+            <p><i className='fa-solid fa-envelope'></i> myteacheronlineclass1@gmail.com</p>
           </div>
           <div className='footer-follow-us'>
             <h4>Follow Us</h4>

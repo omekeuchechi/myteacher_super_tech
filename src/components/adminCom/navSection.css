@@ -4,7 +4,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #0d67c0;
+  /* background-color: #0d67c0; */
+  background-color: #1e3a8a;
   color: white;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: fixed;
@@ -46,16 +47,38 @@
 }
 
 /* Navigation Links */
-.admin-nav-links {
+.admin-Task-toggle {
   display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #fff;
+  transition: color 0.3s ease;
+}
+.admin-Task-toggle:hover {
+  color: #3498db;
+  background-color: #fff !important;
+}
+
+.admin-nav-links {
+  position: absolute;
+  top: 100%;
+  left: 40%;
+  right: 0;
+  background: black;
+  display: flex;
+  flex-direction: column;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 10px;
   align-items: center;
 }
 
 .admin-nav-links li {
-  margin-left: 2rem;
+  margin-left: 2.5rem;
 }
 
 .admin-nav-links a {
@@ -69,20 +92,23 @@
 }
 
 .admin-nav-links a:hover {
-  color: #3498db;
+  color: #000;
   background-color: #fff !important;
 }
 
 .admin-nav-logout {
   cursor: pointer;
   display: flex;
+  width: 200px;
   align-items: center;
+  justify-content: center;
+  margin: 10px auto;
   gap: 0.5rem;
   transition: color 0.3s ease;
 }
 
 .admin-nav-logout:hover {
-  color: #e74c3c;
+  color: #f2f2f2;
 }
 
 /* Mobile Styles */

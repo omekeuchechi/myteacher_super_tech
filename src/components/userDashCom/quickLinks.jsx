@@ -9,11 +9,11 @@ const QuickLinks = ({theme}) => {
                 <div className={`links-gr ${theme === "dark" ? "dark" : "light"}`}>
                     <Link to="/online-class" className={`link ${theme === "dark" ? "dark" : "light"}`}>
                         <i className="fa-solid fa-chalkboard-user"></i>
-                        <p>Online Class</p>
+                        <p>Join Live Class</p>
                     </Link>
                     <Link to="/video" className={`link ${theme === "dark" ? "dark" : "light"}`}>
                         <i className="fa-solid fa-video"></i>
-                        <p>Videos</p>
+                        <p>Class Videos</p>
                     </Link>
                     <Link to="/assignment" className={`link ${theme === "dark" ? "dark" : "light"}`}>
                         <i className="fa-solid fa-book"></i>

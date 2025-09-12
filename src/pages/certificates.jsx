@@ -3,6 +3,7 @@ import { AuthContext } from '../../context/Authcontext';
 import { toast } from 'react-toastify';
 import { useNavigate, Link } from 'react-router-dom';
 import '../assets/styles/dashboard/certificates.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Import layout components
 import Header from '../components/userDashCom/header';
@@ -340,6 +341,52 @@ const Certificates = () => {
         );
     }
 
+    const handlePurchaseCertificate = async (lectureId) => {
+        try {
+            setLoading(true);
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user'));
+            
+            if (!user || !user._id || !user.email) {
+                throw new Error('User information is incomplete. Please log in again.');
+            }
+
+            const response = await fetch(`${API_BASE}/transaction/purchase/certificate`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    userId: user._id,
+                    lectureId: lectureId,
+                    email: user.email,
+                    amount: 2000,
+                    username: user.name || user.username || 'User'
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || 'Failed to initialize payment');
+            }
+
+            const data = await response.json();
+            
+            if (data.data?.authorizationUrl) {
+                // Redirect to payment page
+                window.location.href = data.data.authorizationUrl;
+            } else {
+                throw new Error('No authorization URL received from server');
+            }
+        } catch (error) {
+            console.error('Payment error:', error);
+            toast.error(error.message || 'Payment initialization failed');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="certificates-page">
             <div className={`dashboard-container ${isLightMode ? 'light-theme' : 'dark-theme'}`} style={{ backgroundColor: theme === 'dark' ? '#000' : '#fff' }}>
@@ -492,51 +539,63 @@ const Certificates = () => {
                                             </div>
                                         </div>
                                         <div className="certificate-actions">
-                                            <a 
-                                                href={cert.downloadurl}
-                                                download
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="download-btn"
-                                                onClick={() => {
-                                                    if (!cert.downloaded) {
-                                                        setCertificates(prevCerts => 
-                                                            prevCerts.map(c => 
-                                                                c.uniqueId === cert.uniqueId 
-                                                                    ? { ...c, downloaded: true } 
-                                                                    : c
-                                                            )
-                                                        );
-                                                    }
-                                                }}
-                                            >
-                                                <i className={`fas ${cert.downloaded ? 'fa-check' : 'fa-download'}`}></i>
-                                                {cert.downloaded ? 'Downloaded' : 'Download'}
-                                            </a>
-                                            <button 
-                                                onClick={() => {
-                                                    if (cert.downloadurl && cert.downloadurl.startsWith('data:application/pdf;base64,')) {
-                                                        const win = window.open('', '_blank');
-                                                        win.document.write(`
-                                                            <html>
-                                                                <head><title>Certificate</title></head>
-                                                                <body style="margin: 0; height: 100vh;">
-                                                                    <embed 
-                                                                        src="${cert.downloadurl}" 
-                                                                        type="application/pdf" 
-                                                                        style="width: 100%; height: 100%;"
-                                                                    />
-                                                                </body>
-                                                            </html>
-                                                        `);
-                                                    } else {
-                                                        window.open(cert.downloadurl, '_blank');
-                                                    }
-                                                }}
-                                                className="view-btn"
-                                            >
-                                                <i className="fas fa-eye"></i> View
-                                            </button>
+                                            {cert.paymentVerified ? (
+                                                <>
+                                                    <a 
+                                                        href={cert.downloadurl}
+                                                        download
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="download-btn"
+                                                        onClick={() => {
+                                                            if (!cert.downloaded) {
+                                                                setCertificates(prevCerts => 
+                                                                    prevCerts.map(c => 
+                                                                        c.uniqueId === cert.uniqueId 
+                                                                            ? { ...c, downloaded: true } 
+                                                                            : c
+                                                                    )
+                                                                );
+                                                            }
+                                                        }}
+                                                    >
+                                                        <i className={`fas ${cert.downloaded ? 'fa-check' : 'fa-download'}`}></i>
+                                                        {cert.downloaded ? 'Downloaded' : 'Download'}
+                                                    </a>
+                                                    <button 
+                                                        onClick={() => {
+                                                            if (cert.downloadurl && cert.downloadurl.startsWith('data:application/pdf;base64,')) {
+                                                                const win = window.open('', '_blank');
+                                                                win.document.write(`
+                                                                    <html>
+                                                                        <head><title>Certificate</title></head>
+                                                                        <body style="margin: 0; height: 100vh;">
+                                                                            <embed 
+                                                                                src="${cert.downloadurl}" 
+                                                                                type="application/pdf" 
+                                                                                style="width: 100%; height: 100%;"
+                                                                            />
+                                                                        </body>
+                                                                    </html>
+                                                                `);
+                                                            } else {
+                                                                window.open(cert.downloadurl, '_blank');
+                                                            }
+                                                        }}
+                                                        className="view-btn"
+                                                    >
+                                                        <i className="fas fa-eye"></i> View
+                                                    </button>
+                                                </>
+                                            ) : (
+                                                <button
+                                                    onClick={() => handlePurchaseCertificate(cert._id)}
+                                                    disabled={loading}
+                                                    className="purchase-btn bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors"
+                                                >
+                                                    {loading ? 'Processing...' : 'Purchase (₦2000.00)'}
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
                                 ))}

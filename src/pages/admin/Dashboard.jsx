@@ -300,6 +300,10 @@ const Dashboard = () => {
                 <i className="fas fa-calendar-plus"></i>
                 <span>Onsite Asset</span>
               </Link>
+              <Link to="/admin/onboarding-users" className="quick-link">
+                <i className="fas fa-user-gear"></i>
+                <span>Onboarding Users</span>
+              </Link>
             </div>
           </div>
         </div>

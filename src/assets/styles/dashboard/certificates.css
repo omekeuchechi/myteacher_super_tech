@@ -414,13 +414,58 @@
 /* Certificate Actions */
 .certificates-page .certificate-actions {
     display: flex;
-    gap: 0.75rem;
-    padding: 1rem 1.5rem;
-    border-top: 1px solid var(--border-color);
-    background: var(--gray-100);
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
 }
 
+/* Buy Certificate Button */
+.buy-btn {
+    background-color: #4CAF50; /* Green color for the buy button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.buy-btn:hover {
+    background-color: #3e8e41; /* Darker green on hover */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.buy-btn i {
+    font-size: 14px;
+}
+
+/* Adjust the download and view buttons to be side by side */
+.certificate-actions > div {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Make sure the download and view buttons take equal space */
+.download-btn,
+.view-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+/* Download and View Buttons */
 .certificates-page .download-btn,
 .certificates-page .view-btn {
     flex: 1;
