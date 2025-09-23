@@ -22,7 +22,7 @@
 }
 
 .onboarding-header img {
-  max-width: 150px;
+  max-width: 100px;
   margin-bottom: 1rem;
 }
 
@@ -62,12 +62,15 @@
 
 .onboarding-form > form > .form-group > .form-input, .onboarding-form > form > .form-group > div .form-input {
   width: 100%;
-  padding: 0.75rem;
+  caret-color: #1e3a8a;
+  padding: 1.5rem 0.6rem;
   border: 1px solid #333;
   border-radius: 4px;
   font-size: 1rem;
   transition: border-color 0.3s ease;
   background-color: #fff !important;
+  color: #1e3a8a;
+  height: 20px;
 }
 
 .form-input:focus {
@@ -79,7 +82,8 @@
 .submit-btn {
   width: 100%;
   padding: 0.75rem;
-  background-color: #3498db;
+  /* background-color: #3498db; */
+  background-color: #1e3a8a;
   color: white;
   border: none;
   border-radius: 4px;

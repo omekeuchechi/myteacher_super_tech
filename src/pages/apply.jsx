@@ -6,7 +6,7 @@ import { CourseContext } from '../../context/CourseContext';
 import { useNavigate } from 'react-router-dom';
 import Nav from '../components/nav';
 import FooterFd from '../components/fd/Footer';
-import '../assets/styles/styles.css';
+import '../assets/styles/dashboard/apply.css';
 import welcomeImage from '../img/Untitled-1.png';
 import { Modal, Box, Typography, Button, CircularProgress } from '@mui/material';
 
@@ -15,12 +15,28 @@ const modalStyle = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: {
+    xs: '90%',    // On extra small screens
+    sm: '80%',     // On small screens
+    md: '60%',     // On medium screens
+    lg: '50%',     // On large screens
+    xl: '400px'    // On extra large screens
+  },
+  maxWidth: '500px', // Maximum width
   bgcolor: 'background.paper',
   boxShadow: 24,
-  p: 4,
+  p: {
+    xs: 2,  // Smaller padding on small screens
+    sm: 3,  // Medium padding on larger screens
+    md: 4   // Larger padding on desktop
+  },
   borderRadius: 2,
   textAlign: 'center',
+  maxHeight: '90vh',
+  overflowY: 'auto',
+  '&:focus': {
+    outline: 'none'
+  }
 };
 
 const API_BASE = import.meta.env.VITE_BASEURL;
@@ -73,31 +89,31 @@ const Apply = () => {
           <img 
             src={welcomeImage} 
             alt="Welcome to our courses" 
-            style={{ width: '100%', borderRadius: '8px', marginBottom: '16px' }}
+            className="welcome-modal-image"
           />
-          <Typography id="welcome-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
+          <Typography id="welcome-modal-title" variant="h6" component="h2" className="mb-2">
             Welcome to Our Courses!
           </Typography>
-          <Typography id="welcome-modal-description" sx={{ mb: 3 }}>
+          <Typography id="welcome-modal-description" className="mb-3">
             Join one of the upcoming online Live courses or enroll for an upcoming course.
           </Typography>
           <Button 
             variant="contained" 
             onClick={() => setOpenWelcomeModal(false)}
-            sx={{ backgroundColor: '#1976d2', '&:hover': { backgroundColor: '#1565c0' } }}
+            className="btn btn-primary"
           >
             Explore Courses
           </Button>
         </Box>
       </Modal>
       
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px', padding: '40px', maxWidth: '1400px', margin: '0 auto' }}>
+      <div className="apply-container">
         <UpcomingLecturesList 
           lectures={upcomingLectures} 
           onBuyCourse={handleBuyCourseClick} 
           user={user} 
         />
-        <div style={{ flex: 1, width: '100%' }}>
+        <div className="apply-form-section">
           {showApplicationForm ? (
             <ApplicationForm 
               user={user} 
@@ -105,9 +121,9 @@ const Apply = () => {
               onCancel={handleCancel} 
             />
           ) : (
-            <div style={{ textAlign: 'center', padding: '50px', background: '#f4f6fa', borderRadius: '12px' }}>
+            <div className="select-course-prompt">
               <h2>Select a Course</h2>
-              <p style={{ color: '#444', marginBottom: 24, fontSize: 16 }}>Please select a course from the upcoming lectures list to proceed with your application.</p>
+              <p>Please select a course from the upcoming lectures list to proceed with your application.</p>
             </div>
           )}
         </div>
@@ -122,6 +138,7 @@ const UpcomingLecturesList = ({ lectures, onBuyCourse, user }) => {
   const [hoveredButton, setHoveredButton] = useState(null);
   const [enrollmentDetails, setEnrollmentDetails] = useState(null);
   const [openEnrollmentModal, setOpenEnrollmentModal] = useState(false);
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const { fetchCourses } = useContext(CourseContext);
@@ -133,7 +150,6 @@ const UpcomingLecturesList = ({ lectures, onBuyCourse, user }) => {
       return;
     }
     
-    // Set enrollment details and open modal
     setEnrollmentDetails({
       userId: user._id,
       lectureId: lecture._id,
@@ -150,7 +166,6 @@ const UpcomingLecturesList = ({ lectures, onBuyCourse, user }) => {
     setIsLoading(true);
     setError('');
     try {
-      // Call the free-lecture API
       await axios.post(
         `${API_BASE}/transaction/free-lecture`,
         enrollmentDetails,
@@ -162,176 +177,124 @@ const UpcomingLecturesList = ({ lectures, onBuyCourse, user }) => {
         }
       );
       
-      // Close the modal and show success message
       setOpenEnrollmentModal(false);
       toast.success('Successfully enrolled in the lecture!');
     } catch (error) {
-      console.error('Error enrolling in lecture:', error);
-      setError(error.response?.data?.message || 'Failed to enroll in the lecture. Please try again.');
+      console.error('Enrollment error:', error);
+      setError(error.response?.data?.message || 'Failed to enroll in the lecture');
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handlePaidEnrollment = (lecture) => {
+    setEnrollmentDetails({
+      userId: user._id,
+      lectureId: lecture._id,
+      linkedLecture: lecture.linkedLecture,
+      courseImage: lecture.courseImage,
+      courseName: lecture.courseName,
+      instructor: lecture.courseInstructor,
+      startTime: lecture.startTime
+    });
+    setShowPaymentForm(true);
+  };
+
   return (
     <>
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '30px' }}>
-        <h2 style={{ margin: '20px auto', display: 'flex', alignItems: 'center', gap: '10px' }}><i className='fa-solid fa-book'></i> Upcoming Lectures</h2>
+      <div className="lectures-list">
+        <h2 className="lectures-header-title">
+          <i className='fa-solid fa-book'></i> Upcoming Lectures
+        </h2>
         {lectures.length > 0 ? lectures.map(lecture => {
           const isLectureActive = new Date(lecture.startTime) > new Date();
 
           return (
-            <div key={lecture._id} style={{ background: '#fff', borderRadius: '12px', border: '1px solid #ddd', padding: '20px' }}>
-              <img src={lecture.courseImage} alt={lecture.courseName} style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '8px' }} />
-              {console.log(lecture)}
-              <h3 style={{ marginTop: '15px' }}>{lecture.courseName}</h3>
-              <p><strong>Instructor:</strong> {lecture.courseIntructor}</p>
-              <p><strong>Starts:</strong> {new Date(lecture.startTime).toLocaleString()}</p>
-              <p><strong>Platform:</strong> {lecture.platform}</p>
-              <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
+            <div key={lecture._id} className="lecture-card">
+              <img 
+                src={lecture.courseImage} 
+                alt={lecture.courseName} 
+                className="lecture-image" 
+              />
+              <h3 className="lecture-title">{lecture.courseName}</h3>
+              <p className="lecture-detail"><strong>Instructor:</strong> {lecture.courseIntructor}</p>
+              <p className="lecture-detail"><strong>Starts:</strong> {new Date(lecture.startTime).toLocaleString()}</p>
+              <p className="lecture-detail"><strong>Platform:</strong> {lecture.platform}</p>
+              <div className="lecture-actions">
                 <button 
-                  onClick={() => handleBookCourse(lecture)} 
-                  style={buttonStyle(true, hoveredButton === lecture._id)} 
+                  onClick={() => handlePaidEnrollment(lecture)}
+                  className={`btn btn-primary ${hoveredButton === lecture._id ? 'hover' : ''}`}
                   onMouseEnter={() => setHoveredButton(lecture._id)}
                   onMouseLeave={() => setHoveredButton(null)}
                 >
-                  Enroll
+                  Enroll Now
                 </button>
               </div>
             </div>
           );
-        }) : <div style={{ color: '#444', marginBottom: 24, fontSize: 20, height: '50vh' }}>No upcoming lectures at the moment.</div>}
+        }) : <div className="no-lectures">No upcoming lectures at the moment.</div>}
       </div>
 
       {/* Enrollment Confirmation Modal */}
-      <Modal
-        open={openEnrollmentModal}
-        onClose={() => setOpenEnrollmentModal(false)}
-        aria-labelledby="enrollment-modal-title"
-        aria-describedby="enrollment-modal-description"
-      >
-        <Box sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 400,
-          bgcolor: 'background.paper',
-          boxShadow: 24,
-          p: 4,
-          borderRadius: 2
-        }}>
-          <Typography id="enrollment-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
-            Confirm Enrollment
-          </Typography>
-          
-          {enrollmentDetails && (
-            <Box sx={{ mt: 2, mb: 3 }}>
-              {/* Course Details */}
-              <Box sx={{ mb: 3, p: 2, bgcolor: '#f8f9fa', borderRadius: 1, border: '1px solid #e0e0e0' }}>
-                <Typography variant="subtitle1" sx={{ mb: 1.5, fontWeight: 600, color: '#1976d2' }}>COURSE INFORMATION</Typography>
-                <div>
-                  <Typography variant="body2" sx={{ mb: 1 }}>
-                    <span style={{ color: '#666', minWidth: '100px', display: 'inline-block' }}>Course:</span>
-                    <span style={{ fontWeight: 500 }}>{enrollmentDetails.courseName}</span>
-                  </Typography>
-                  <Typography variant="body2" sx={{ mb: 1 }}>
-                    <span style={{ color: '#666', minWidth: '100px', display: 'inline-block' }}>Instructor:</span>
-                    <span style={{ fontWeight: 500, color: '#1976d2' }}>{enrollmentDetails.courseIntructor}</span>
-                  </Typography>
-                  <Typography variant="body2">
-                    <span style={{ color: '#666', minWidth: '100px', display: 'inline-block' }}>Start Time:</span>
-                    <span>{new Date(enrollmentDetails.startTime).toLocaleString()}</span>
-                  </Typography>
-                </div>
-              </Box>
-
-              {/* Enrollment Details */}
-              <Box>
-                <Typography variant="subtitle2" sx={{ mb: 1.5, fontWeight: 500, color: '#555', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Enrollment Details</Typography>
-                <Box sx={{ 
-                  p: 2, 
-                  bgcolor: '#f8f9fa', 
-                  borderRadius: 1, 
-                  border: '1px solid #e0e0e0',
-                  '& > div': { 
-                    display: 'flex', 
-                    py: 1.5,
-                    borderBottom: '1px solid #eee',
-                    '&:last-child': { 
-                      borderBottom: 'none',
-                      pb: 0 
-                    }
-                  }
-                }}>
-                  <div>
-                    <Typography variant="body2" component="span" sx={{ color: '#666', minWidth: '120px', display: 'inline-block' }}>Student Name:</Typography>
-                    <Typography variant="body2" component="span" sx={{ fontWeight: 500 }}>{user?.name || 'N/A'}</Typography>
-                  </div>
-                  <div>
-                    <Typography variant="body2" component="span" sx={{ color: '#666', minWidth: '120px', display: 'inline-block' }}>Lecture ID:</Typography>
-                    <Typography variant="body2" component="span" sx={{ fontFamily: 'monospace', fontSize: '0.85em' }}>
-                      {enrollmentDetails.lectureId}
-                    </Typography>
-                  </div>
-                  {enrollmentDetails.linkedLecture && (
-                    <div>
-                      <Typography variant="body2" component="span" sx={{ color: '#666', minWidth: '120px', display: 'inline-block' }}>Linked Lecture:</Typography>
-                      <Typography variant="body2" component="span" sx={{ fontFamily: 'monospace', fontSize: '0.85em' }}>
-                        {enrollmentDetails.linkedLecture}
-                      </Typography>
-                    </div>
-                  )}
-                </Box>
-              </Box>
-            </Box>
-          )}
-          
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 3, flexDirection: 'column' }}>
-            {error && (
-              <Typography color="error" variant="body2" sx={{ mb: 2, textAlign: 'center' }}>
-                {error}
-              </Typography>
-            )}
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+      {openEnrollmentModal && (
+        <Modal
+          open={openEnrollmentModal}
+          onClose={() => setOpenEnrollmentModal(false)}
+          aria-labelledby="enrollment-modal-title"
+          aria-describedby="enrollment-modal-description"
+        >
+          <Box sx={modalStyle}>
+            <Typography id="enrollment-modal-title" variant="h6" component="h2">
+              Confirm Enrollment
+            </Typography>
+            <Typography id="enrollment-modal-description" className="mt-3">
+              Are you sure you want to enroll in this free lecture?
+            </Typography>
+            <Box className="form-actions">
               <Button 
-                variant="outlined" 
-                onClick={() => {
-                  setOpenEnrollmentModal(false);
-                  setError('');
-                }}
+                onClick={() => setOpenEnrollmentModal(false)}
+                variant="outlined"
                 disabled={isLoading}
+                className="btn btn-secondary"
               >
                 Cancel
               </Button>
               <Button 
-                variant="contained" 
                 onClick={handleConfirmEnrollment}
+                variant="contained"
                 disabled={isLoading}
-                sx={{ 
-                  bgcolor: '#1976d2', 
-                  '&:hover': { 
-                    bgcolor: '#1565c0',
-                    '&.Mui-disabled': {
-                      bgcolor: '#1976d2'
-                    }
-                  },
-                  '&.Mui-disabled': {
-                    bgcolor: '#1976d2',
-                    opacity: 0.7
-                  }
-                }}
+                className="btn btn-primary"
+                startIcon={isLoading ? <CircularProgress size={20} /> : null}
               >
-                {isLoading ? (
-                  <CircularProgress size={24} color="inherit" />
-                ) : (
-                  'Confirm Enrollment'
-                )}
+                {isLoading ? 'Enrolling...' : 'Confirm'}
               </Button>
             </Box>
+            {error && (
+              <Typography color="error" className="mt-3">
+                {error}
+              </Typography>
+            )}
           </Box>
-        </Box>
-      </Modal>
+        </Modal>
+      )}
+
+      {/* Payment Form Modal */}
+      {showPaymentForm && (
+        <Modal
+          open={showPaymentForm}
+          onClose={() => setShowPaymentForm(false)}
+          aria-labelledby="payment-modal-title"
+          aria-describedby="payment-modal-description"
+        >
+          <Box sx={modalStyle}>
+            <ApplicationForm 
+              user={user} 
+              course={enrollmentDetails} 
+              onCancel={() => setShowPaymentForm(false)} 
+            />
+          </Box>
+        </Modal>
+      )}
     </>
   );
 };
@@ -341,9 +304,12 @@ const ApplicationForm = ({ user, course, onCancel }) => {
   const [form, setForm] = useState({ 
     name: user?.name || '', 
     email: user?.email || '', 
+    phone: user?.phone || '',
     linkedLecture: course?.linkedLecture || '',
-    courseName: course?.courseName || '' 
+    courseName: course?.courseName || '',
+    courseId: course?.lectureId || ''
   });
+  
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -352,9 +318,13 @@ const ApplicationForm = ({ user, course, onCancel }) => {
     setForm(prev => ({ 
       ...prev, 
       linkedLecture: course?.linkedLecture || '',
-      courseName: course?.courseName || '' 
+      courseName: course?.courseName || '',
+      courseId: course?.lectureId || '',
+      name: user?.name || prev.name,
+      email: user?.email || prev.email,
+      phone: user?.phone || prev.phone
     }));
-  }, [course]);
+  }, [course, user]);
 
   const handlePaystack = async (e) => {
     e.preventDefault();
@@ -368,12 +338,60 @@ const ApplicationForm = ({ user, course, onCancel }) => {
         throw new Error('Please log in to continue');
       }
 
+      let courseToEnroll = null;
+      if (form.courseId) {
+        try {
+          const response = await axios.get(
+            `${API_BASE}/courses/${form.courseId}`,
+            { 
+              headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+              } 
+            }
+          );
+          
+          if (response.data.success && response.data.data) {
+            courseToEnroll = response.data.data;
+          } else {
+            console.log('Course not found by ID, trying by name...');
+          }
+        } catch (error) {
+          console.log('Error fetching course by ID:', error);
+        }
+      }
+
+      if (!courseToEnroll && form.courseName) {
+        try {
+          const response = await axios.get(
+            `${API_BASE}/courses?name=${encodeURIComponent(form.courseName)}`,
+            { 
+              headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+              } 
+            }
+          );
+          
+          if (response.data.success && response.data.data && response.data.data.length > 0) {
+            courseToEnroll = response.data.data[0];
+          }
+        } catch (error) {
+          console.error('Error fetching courses by name:', error);
+        }
+      }
+
+      if (!courseToEnroll) {
+        throw new Error('Course not found. Please contact support for assistance.');
+      }
+
       const response = await axios.post(
         `${API_BASE}/transaction/pay/paystack`,
         {
           userId: user._id,
-          courseName: form.courseName, // Using courseName as the primary identifier
-          linkedLecture: form.linkedLecture || undefined // Only include if it exists
+          courseId: courseToEnroll._id,
+          courseName: courseToEnroll.course || form.courseName,
+          linkedLecture: form.linkedLecture || undefined
         },
         {
           headers: {
@@ -392,9 +410,8 @@ const ApplicationForm = ({ user, course, onCancel }) => {
       console.error('Payment error:', error);
       setErrorMsg(error.response?.data?.message || error.message || 'Failed to initialize payment');
       
-      // Show more detailed error if available
-      if (error.response?.data?.details) {
-        setErrorMsg(prev => `${prev}: ${error.response.data.details}`);
+      if (error.response) {
+        console.error('Error response:', error.response.data);
       }
     } finally {
       setLoading(false);
@@ -402,66 +419,38 @@ const ApplicationForm = ({ user, course, onCancel }) => {
   };
 
   return (
-    <div style={formContainerStyle}>
-      <h1 style={{ color: '#1976d2', marginBottom: 8 }}>Apply for: {course.courseName}</h1>
-      <p style={{ color: '#444', marginBottom: 24 }}>Please confirm your details to proceed.</p>
-      <form onSubmit={handlePaystack} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-        <label htmlFor='name' style={labelStyle}>Name:</label>
-        <input type='text' id='name' value={form.name} required disabled style={inputStyle} />
+    <div className="apply-form-container">
+      <h1 className="apply-form-title">Apply for: {form.courseName}</h1>
+      <p className="apply-form-description">Please confirm your details to proceed.</p>
 
-        <label htmlFor='email' style={labelStyle}>Email:</label>
-        <input type='email' id='email' value={form.email} required disabled style={inputStyle} />
+      <div className="form-group">
+        <p className="form-detail">Name: <span>{form.name}</span></p>
+        <p className="form-detail">Course Name: <span>{form.courseName}</span></p>
+        <p className="form-detail">Email: <span>{form.email}</span></p>
+        <p className="form-detail">Linked Lecture: <span>{form.linkedLecture}</span></p>
+      </div>
+      
+      <form onSubmit={handlePaystack} className="apply-form">
+        <input type="hidden" id="name" value={form.name} required disabled />
+        <input type="hidden" id="email" value={form.email} required disabled />
+        <input type="hidden" id="courseName" value={form.courseName} required disabled />
+        <input type="hidden" name="linkedLecture" value={form.linkedLecture} />
+        <input type="hidden" name="courseId" value={form.courseId} />
 
-        <label htmlFor='courseName' style={labelStyle}>Course:</label>
-        <input type='text' id='courseName' value={form.courseName} required disabled style={inputStyle} />
-        <input type='hidden' name='linkedLecture' value={form.linkedLecture} />
-
-        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '10px' }}>
-          <button type='button' onClick={onCancel} style={{ ...buttonStyle(true), background: '#888' }}>Cancel</button>
-          <button type='submit' disabled={loading} style={buttonStyle(!loading)}>
-            {loading ? 'Redirecting...' : 'Proceed to Paystack'}
+        <div className="form-actions">
+          <button type="submit" disabled={loading} className="btn btn-primary">
+            {loading ? 'Processing...' : 'Proceed to Paystack'}
+          </button>
+          <button type="button" onClick={onCancel} className="btn btn-secondary">
+            Cancel
           </button>
         </div>
-        {successMsg && <div style={{ color: 'green', marginTop: 10 }}>{successMsg}</div>}
-        {errorMsg && <div style={{ color: 'red', marginTop: 10 }}>{errorMsg}</div>}
+        
+        {successMsg && <div className="success-message">{successMsg}</div>}
+        {errorMsg && <div className="error-message">{errorMsg}</div>}
       </form>
     </div>
   );
 };
-
-const formContainerStyle = {
-  maxWidth: 500,
-  margin: '0 auto',
-  background: '#fff',
-  borderRadius: 12,
-  boxShadow: '0 2px 16px rgba(25,118,210,0.10)',
-  padding: 32,
-  textAlign: 'center',
-  marginTop: '30px',
-};
-
-const labelStyle = { textAlign: 'left', fontWeight: 500 };
-
-const inputStyle = {
-  padding: '10px 12px',
-  borderRadius: 6,
-  border: '1px solid #bbb',
-  fontSize: 16,
-  background: '#f4f6fa',
-  cursor: 'not-allowed'
-};
-
-const buttonStyle = (active, isHovered) => ({
-  background: active ? (isHovered ? '#1565c0' : '#1e3a8a') : '#ccc',
-  color: '#fff',
-  border: 'none',
-  borderRadius: 6,
-  padding: '10px 20px',
-  fontWeight: 600,
-  fontSize: 16,
-  cursor: active ? 'pointer' : 'not-allowed',
-  transition: 'background 0.2s',
-  flex: 1
-});
 
 export default Apply;

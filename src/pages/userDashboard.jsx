@@ -176,7 +176,7 @@ function UserDashboard() {
 
         <CoursesApplied theme={theme} />
 
-        <CourseTaken theme={theme} />
+        {/* <CourseTaken theme={theme} /> */}
 
         
       </div>

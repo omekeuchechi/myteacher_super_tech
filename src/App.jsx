@@ -5,6 +5,8 @@ import { CourseProvider } from "../context/CourseContext";
 import { UserInfoProvider } from "../context/UserInfoContext";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import useDocumentTitle from './hooks/useDocumentTitle';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // first pages
 import Home from './pages/home';
@@ -67,12 +69,11 @@ import UpcomingLectureBatchCreation from './pages/admin/upcomingLectureBatchCrea
 import OnSite from './pages/onSite';
 import AssignCourse from './pages/admin/AssignCourse';
 import OnsiteAsset from './pages/admin/onsiteAsset';
-import MeetingRoom from './pages/stream/meetingRoom';
 import PerLecture from './pages/perLecture';
 import Onboarding from './pages/onboarding/onboarding';
 import OnboardingUsers from './pages/admin/onboardingUsers';
-
-
+import MeetingRoom from './pages/stream/meetingRoom';
+import RoomLobby from './pages/stream/room';
 
 // Helper component for protected routes
 function ProtectedRoute({ children, adminOnly, userOnly, verificationOnly, requireOnSite }) {
@@ -172,7 +173,21 @@ function AppRoutes() {
           </GuestOnlyRoute>
         } />
       <Route path="/about" element={<About />} />
-      <Route path="/meeting-room" element={<MeetingRoom />} />
+      <Route path="/meeting" element={
+        <ProtectedRoute userOnly>
+          <RoomLobby />
+        </ProtectedRoute>
+      } />
+      <Route path="/meeting-room/:roomId" element={
+        <ProtectedRoute userOnly>
+          <MeetingRoom />
+        </ProtectedRoute>
+      } />
+      {/* <Route path="/meeting-room" element={
+        <ProtectedRoute userOnly>
+          <MeetingRoom />
+        </ProtectedRoute>
+      } /> */}
       <Route path="/onboarding" element={<Onboarding />} />
       <Route path="/online-class" element={
         <ProtectedRoute userOnly>

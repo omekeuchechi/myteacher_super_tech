@@ -70,84 +70,39 @@ const Certificates = () => {
     const isLightMode = theme === 'light';
 
     // Function to download a specific certificate
-    const downloadCertificate = async (lectureId) => {
+    const downloadCertificate = async (cert) => {
         try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                toast.error('Please log in to download certificate');
+            if (!cert.downloadurl) {
+                toast.error('Download URL not available');
                 return;
             }
-    
-            // Show loading state
-            toast.info('Preparing your certificate...', { autoClose: 2000 });
-    
-            // Make the request to the backend endpoint
-            const response = await fetch(`${API_BASE}/transaction/certificate/${lectureId}`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'x-auth-token': token,
-                    'Accept': 'application/pdf'
-                },
-                credentials: 'include'
-            });
-    
-            // Handle non-PDF responses (like JSON error messages)
-            const contentType = response.headers.get('content-type');
-            if (!contentType || !contentType.includes('application/pdf')) {
-                const errorData = await response.json().catch(() => ({}));
-                console.error('Error response from server:', errorData);
-                
-                if (response.status === 401) {
-                    toast.error('Session expired. Please log in again.');
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('user');
-                    return;
-                }
-                
-                throw new Error(
-                    errorData.message || 
-                    `Failed to download certificate (${response.status} ${response.statusText})`
-                );
+
+            // If it's a base64 data URL, handle it directly
+            if (cert.downloadurl.startsWith('data:application/pdf;base64,')) {
+                const link = document.createElement('a');
+                link.href = cert.downloadurl;
+                link.download = `certificate-${cert.lecture._id || 'cert'}.pdf`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                toast.success('Certificate downloaded successfully!');
+            } else {
+                // Fallback for regular URLs
+                window.open(cert.downloadurl, '_blank');
             }
-    
-            // Get filename from content-disposition header or use a default name
-            const contentDisposition = response.headers.get('content-disposition') || '';
-            let filename = `certificate-${lectureId}.pdf`;
-            const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
-            if (filenameMatch && filenameMatch[1]) {
-                filename = filenameMatch[1].replace(/['"]/g, '');
-            }
-    
-            // Create and trigger download
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            
-            // Clean up
-            setTimeout(() => {
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
-            }, 100);
-    
+
             // Update the certificate as downloaded
             setCertificates(prevCerts => 
-                prevCerts.map(cert => 
-                    cert.lecture._id === lectureId 
-                        ? { ...cert, downloaded: true } 
-                        : cert
+                prevCerts.map(c => 
+                    c.uniqueId === cert.uniqueId 
+                        ? { ...c, downloaded: true } 
+                        : c
                 )
             );
-    
-            toast.success('Certificate downloaded successfully!');
-    
+
         } catch (error) {
             console.error('Error downloading certificate:', error);
-            toast.error(error.message || 'Failed to download certificate. Please try again later.');
+            toast.error('Failed to download certificate. Please try again.');
         }
     };
 
@@ -404,10 +359,10 @@ const Certificates = () => {
                         <NavItem icon="home" label="Home" move="/" isExpanded={isExpanded} />
                         <NavItem icon="chart-bar" label="Dashboard" move="/dashboard" isExpanded={isExpanded} />
                         <NavItem icon="user" label="Profile" move="/profile" isExpanded={isExpanded} />
-                        <NavItem icon="chalkboard-teacher" move="/online-class" label="Online Class" isExpanded={isExpanded} />
-                        <NavItem icon="briefcase" label="Assets" move="/assets" isExpanded={isExpanded} />
-                        <NavItem icon="book" label="Assignment" move="/assignment" isExpanded={isExpanded} />
-                        <NavItem icon="certificate" label="Certificates" move="/certificates" isExpanded={isExpanded} />
+                        <NavItem icon="chalkboard-teacher" move="/online-class" label="Class" isExpanded={isExpanded} />
+                        {/* <NavItem icon="briefcase" label="Assets" move="/assets" isExpanded={isExpanded} /> */}
+                        {/* <NavItem icon="book" label="Assignment" move="/assignment" isExpanded={isExpanded} /> */}
+                        {/* <NavItem icon="certificate" label="Certificates" move="/certificates" isExpanded={isExpanded} /> */}
                         <NavItem icon="cog" label="Settings" move="/settings" isExpanded={isExpanded} />
                         <NavItem icon="question-circle" label="Help" isExpanded={isExpanded} />
                         <NavItem icon="right-from-bracket" label="Log Out" isExpanded={isExpanded} onClick={logout} />
@@ -539,63 +494,38 @@ const Certificates = () => {
                                             </div>
                                         </div>
                                         <div className="certificate-actions">
-                                            {cert.paymentVerified ? (
-                                                <>
-                                                    <a 
-                                                        href={cert.downloadurl}
-                                                        download
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="download-btn"
-                                                        onClick={() => {
-                                                            if (!cert.downloaded) {
-                                                                setCertificates(prevCerts => 
-                                                                    prevCerts.map(c => 
-                                                                        c.uniqueId === cert.uniqueId 
-                                                                            ? { ...c, downloaded: true } 
-                                                                            : c
-                                                                    )
-                                                                );
-                                                            }
-                                                        }}
-                                                    >
-                                                        <i className={`fas ${cert.downloaded ? 'fa-check' : 'fa-download'}`}></i>
-                                                        {cert.downloaded ? 'Downloaded' : 'Download'}
-                                                    </a>
-                                                    <button 
-                                                        onClick={() => {
-                                                            if (cert.downloadurl && cert.downloadurl.startsWith('data:application/pdf;base64,')) {
-                                                                const win = window.open('', '_blank');
-                                                                win.document.write(`
-                                                                    <html>
-                                                                        <head><title>Certificate</title></head>
-                                                                        <body style="margin: 0; height: 100vh;">
-                                                                            <embed 
-                                                                                src="${cert.downloadurl}" 
-                                                                                type="application/pdf" 
-                                                                                style="width: 100%; height: 100%;"
-                                                                            />
-                                                                        </body>
-                                                                    </html>
-                                                                `);
-                                                            } else {
-                                                                window.open(cert.downloadurl, '_blank');
-                                                            }
-                                                        }}
-                                                        className="view-btn"
-                                                    >
-                                                        <i className="fas fa-eye"></i> View
-                                                    </button>
-                                                </>
-                                            ) : (
-                                                <button
-                                                    onClick={() => handlePurchaseCertificate(cert._id)}
-                                                    disabled={loading}
-                                                    className="purchase-btn bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors"
-                                                >
-                                                    {loading ? 'Processing...' : 'Purchase (₦2000.00)'}
-                                                </button>
-                                            )}
+                                            <button 
+                                                onClick={() => downloadCertificate(cert)}
+                                                className="download-btn"
+                                            >
+                                                <i className="fas fa-download"></i> Download
+                                            </button>
+                                            
+                                            {/* Keep the view button as is */}
+                                            <button 
+                                                onClick={() => {
+                                                    if (cert.downloadurl && cert.downloadurl.startsWith('data:application/pdf;base64,')) {
+                                                        const win = window.open('', '_blank');
+                                                        win.document.write(`
+                                                            <html>
+                                                                <head><title>Certificate</title></head>
+                                                                <body style="margin: 0; height: 100vh;">
+                                                                    <embed 
+                                                                        src="${cert.downloadurl}" 
+                                                                        type="application/pdf" 
+                                                                        style="width: 100%; height: 100%;"
+                                                                    />
+                                                                </body>
+                                                            </html>
+                                                        `);
+                                                    } else {
+                                                        window.open(cert.downloadurl, '_blank');
+                                                    }
+                                                }}
+                                                className="view-btn"
+                                            >
+                                                <i className="fas fa-eye"></i> View
+                                            </button>
                                         </div>
                                     </div>
                                 ))}
