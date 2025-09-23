@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../../context/Authcontext';
-import './roomLobby.css';
+import './room.css';
 
 const RoomLobby = () => {
   const navigate = useNavigate();

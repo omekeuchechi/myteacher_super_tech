@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../../context/Authcontext';
 import socketService from '../../services/socketService';
 import Peer from 'simple-peer';
-import './meetingRoom.css';
+import './meeting.css';
 
 const MeetingRoom = () => {
   const { roomId } = useParams();
