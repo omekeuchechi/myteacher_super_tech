@@ -1,0 +1,133 @@
+/* applyAsinstructor.css */
+.applyAsinstructor-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2d3748;
+  }
+  
+  .applyAsinstructor-container h1 {
+    font-size: 2rem;
+    color: #2d3748;
+    margin-bottom: 2rem;
+    line-height: 1.4;
+    text-align: center;
+  }
+  
+  .apply-info {
+    background-color: #f7fafc;
+    border-left: 4px solid #4299e1;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 0 8px 8px 0;
+  }
+  
+  .apply-info p {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    color: #4a5568;
+  }
+  
+  .apply-info span {
+    color: #4a5568;
+    line-height: 1.6;
+  }
+  
+  .apply-info a {
+    color: #3182ce;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+  
+  .apply-info a:hover {
+    color: #2c5282;
+    text-decoration: underline;
+  }
+  
+  .apply-as-instructor-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+                0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #4a5568;
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="tel"],
+  .form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .form-group textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+  }
+  
+  button[type="submit"] {
+    background-color: #4299e1;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 100%;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #3182ce;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .applyAsinstructor-container {
+      padding: 1rem;
+    }
+  
+    .applyAsinstructor-container h1 {
+      font-size: 1.5rem;
+    }
+  
+    .apply-as-instructor-form {
+      padding: 1rem;
+    }
+  }
+  
+  /* Form validation styles */
+  .form-group input:invalid:not(:placeholder-shown),
+  .form-group textarea:invalid:not(:placeholder-shown) {
+    border-color: #e53e3e;
+  }
+  
+  .form-group input:valid:not(:placeholder-shown),
+  .form-group textarea:valid:not(:placeholder-shown) {
+    border-color: #48bb78;
+  }

@@ -330,50 +330,155 @@
   margin: 36px auto 0 auto;
   max-width: 100%;
 }
-.course-list-table-wrapper {
+.course-list-wrapper {
   overflow-x: auto;
 }
-.course-list-table {
+.course-list-container {
   width: 100%;
-  border-collapse: collapse;
   margin-top: 10px;
   background: #f8fafc;
-  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: scroll;
+  gap: 10px;
   box-shadow: 0 2px 8px rgba(25,118,210,0.06);
 }
-.course-list-table th, .course-list-table td {
+.course-list-container > .course-list-data-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-around;
+}
+.course-list-container > .course-list-data-container > .c-header {
   border: 1px solid #e0e7ef;
   padding: 8px 6px;
   text-align: left;
   font-size: 1rem;
 }
-.course-list-table th {
+.course-list-container > .course-list-data-container > .c-header:first-child {
   background: #1976d2;
   color: #fff;
   font-weight: 600;
 }
-.edit-btn, .delete-btn {
+.course-list-container > .course-list-data-container > .c-header:not(:first-child) {
+  background: #d1d5da;
+}
+.course-list-container > div > .c-header:not(:first-child):hover {
+  background: #1976d2;
+  color: #fff;
+}
+.course-list-data-container {
+  display: flex;
+  gap: 10px;
+}
+.course-list-data-container > span {
+  padding: 8px 6px;
+}
+.course-list-data-container > span.course-name-data {
+  text-align: left;
+  max-width: 50px;
+  font-size: 1rem;
+  color: #1976d2;
+}
+.course-list-data-container > span.course-description-data {
+  max-width: 200px;
+  text-align: left;
+  height: 200px;
+  overflow-y: auto;
+  white-space: pre-line;
+}
+
+.course-list-data-container > span:hover {
+  background: #1976d2;
+  color: #fff;
+}
+
+.course-list-data-container > span.course-actions{
+  display: flex;
+  flex-direction: row;
+  align-items:baseline;
+}
+
+.course-list-data-container > span.course-actions > .edit-btn {
   margin: 0 2px;
-  padding: 4px 10px;
+  padding: 10px 20px;
   border: none;
+  background-color: #1976d2;
+  color: #fff;
   border-radius: 4px;
   font-size: 0.95rem;
   cursor: pointer;
 }
-.edit-btn {
-  background: #1976d2;
-  color: #fff;
+
+.course-list-edit-data-container > span {
+  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
 }
-.delete-btn {
-  background: #d32f2f;
+.course-list-edit-data-container > span > input {
+  padding: 8px 6px;
+}
+.course-list-edit-data-container > span > textarea {
+  padding: 8px 6px;
+  height: 150px;
+  font-size: 1.1rem;
+  word-spacing: 5px;
+}
+.course-list-edit-data-container > .edit-action {
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+}
+
+.course-list-edit-data-container > .edit-action > button{
+  transition: all 0.3s ease-in-out;
+}
+
+.course-list-edit-data-container > .edit-action > .edit-btn{
+  padding: 8px 6px;
+  border: none;
+  background-color: #1976d2;
   color: #fff;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.course-list-edit-data-container > .edit-action > .edit-btn:hover {
+  background-color: #1565c0;
+}
+.course-list-edit-data-container > .edit-action > .delete-btn {
+  padding: 8px 6px;
+  border: none;
+  background-color: #dc2626;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+.course-list-edit-data-container > .edit-action > .delete-btn:hover {
+  background-color: #b91c1c;
 }
 @media (max-width: 700px) {
-  .course-list-table th, .course-list-table td {
+  .course-list-container > div > .c-header {
     font-size: 0.95rem;
     padding: 6px 2px;
   }
 }
+
+@media (max-width: 1000px) {
+  .course-list-container {
+    width: 500px;
+    margin-top: 0;
+    background: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    overflow-x: scroll;
+    gap: 10px;
+    box-shadow: 0 2px 8px rgba(25,118,210,0.06);
+  }
+}
+
 
 @media (max-width: 700px) {
   .stats-grid {

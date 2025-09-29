@@ -509,101 +509,97 @@ function CourseList({ courses, onUpdate, onDelete }) {
   };
 
   return (
-    <div className="course-list-table-wrapper">
-      <table className="course-list-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>₦ Price</th>
-            <th>Weeks</th>
-            <th>Instructor</th>
-            <th>Image</th>
-            <th style={{ minWidth: 110 }}>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
+    <div className="course-list-wrapper">
+      <div className="course-list-container">
+          <div className="course-list-data-container">
+            <span className="c-header">Name</span>
+            <span className="c-header">Description</span>
+            <span className="c-header">₦ Price</span>
+            <span className="c-header">Weeks</span>
+            <span className="c-header">Instructor</span>
+            <span className="c-header">Image</span>
+            <span className="c-header">Actions</span>
+          </div>
           {courses.map((c) =>
             editId === c._id ? (
-              <tr key={c._id}>
-                <td>
+              <div key={c._id} className="course-list-edit-data-container">
+                <span>
                   <input
                     type="text"
                     name="course"
                     value={editForm.course}
                     onChange={handleEditChange}
                   />
-                </td>
-                <td>
+                </span>
+                <span>
                   <textarea
                     name="courseDescription"
                     value={editForm.courseDescription}
                     onChange={handleEditChange}
                     rows={1}
                   />
-                </td>
-                <td>
+                </span>
+                <span>
                   <input
                     type="number"
                     name="price"
                     value={editForm.price}
                     onChange={handleEditChange}
                   />
-                </td>
-                <td>
+                </span>
+                <span>
                   <input
                     type="number"
                     name="durationWeeks"
                     value={editForm.durationWeeks}
                     onChange={handleEditChange}
                   />
-                </td>
-                <td>
+                </span>
+                <span>
                   <input
                     type="text"
                     name="courseIntructor"
                     value={editForm.courseIntructor}
                     onChange={handleEditChange}
                   />
-                </td>
-                <td>
+                </span>
+                <span>
                   <input
                     type="text"
                     name="courseImage"
                     value={editForm.courseImage}
                     onChange={handleEditChange}
                   />
-                </td>
-                <td>
+                </span>
+                <span className="edit-action">
                   <button className="edit-btn" onClick={handleEditSubmit}>Save</button>
                   <button className="delete-btn" onClick={cancelEdit}>Cancel</button>
                   {editMsg && <div className="form-success">{editMsg}</div>}
                   {editErr && <div className="form-error">{editErr}</div>}
-                </td>
-              </tr>
+                </span>
+              </div>
             ) : (
-              <tr key={c._id}>
-                <td>{c.course}</td>
-                <td style={{ maxWidth: 120, whiteSpace: "pre-line" }}>{c.courseDescription}</td>
-                <td>{c.price}</td>
-                <td>{c.durationWeeks}</td>
-                <td>{c.courseIntructor}</td>
-                <td>
+              <div key={c._id} className="course-list-data-container">
+                <span className="course-name-data">{c.course}</span>
+                <span className="course-description-data">{c.courseDescription}</span>
+                <span>{c.price}</span>
+                <span>{c.durationWeeks}</span>
+                <span>{c.courseIntructor}</span>
+                <span>
                   {c.courseImage ? (
                     <img src={c.courseImage} alt="" style={{ width: 38, height: 38, objectFit: "cover", borderRadius: 4 }} />
                   ) : (
                     "-"
                   )}
-                </td>
-                <td>
+                </span>
+                <span className="course-actions">
                   <button className="edit-btn" onClick={() => startEdit(c)}>Edit</button>
                   <button className="delete-btn" onClick={() => onDelete(c._id)}>Delete</button>
-                </td>
-              </tr>
+                </span>
+              </div>
             )
           )}
-        </tbody>
-      </table>
+      </div>
     </div>
   );
 }

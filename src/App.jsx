@@ -74,6 +74,7 @@ import Onboarding from './pages/onboarding/onboarding';
 import OnboardingUsers from './pages/admin/onboardingUsers';
 import MeetingRoom from './pages/stream/meetingRoom';
 import RoomLobby from './pages/stream/room';
+import ApplyAsinstructor from './pages/job/applyAsinstructor';
 
 // Helper component for protected routes
 function ProtectedRoute({ children, adminOnly, userOnly, verificationOnly, requireOnSite }) {
@@ -262,6 +263,8 @@ function AppRoutes() {
       <Route path='/power-bi' element={<PowerBi />} />
       <Route path='/backend-programming' element={<Backend />} />
 
+      {/* Job application route */}
+      <Route path='/instructor-form' element={<ApplyAsinstructor />} />
 
       <Route
         path="/google-success"
