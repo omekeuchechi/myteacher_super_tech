@@ -75,6 +75,9 @@ import OnboardingUsers from './pages/admin/onboardingUsers';
 import MeetingRoom from './pages/stream/meetingRoom';
 import RoomLobby from './pages/stream/room';
 import ApplyAsinstructor from './pages/job/applyAsinstructor';
+import JobRoom from './pages/admin/job';
+import ErrorBoundary from './services/errorBoundary';
+import JobList from './pages/jobList';
 
 // Helper component for protected routes
 function ProtectedRoute({ children, adminOnly, userOnly, verificationOnly, requireOnSite }) {
@@ -253,6 +256,11 @@ function AppRoutes() {
 
       <Route path="/courses" element={<Courses />} />
       <Route path="/techblog" element={<TechBlog />} />
+      <Route path="/job-list" element={
+        <ErrorBoundary>
+          <JobList />
+        </ErrorBoundary>
+      } />
 
       {/* Course description pages */}
       <Route path="/copy-right" element={<CopyRight />} />
@@ -377,6 +385,13 @@ function AppRoutes() {
       <Route path="/admin/onboarding-users" element={
         <ProtectedRoute adminOnly>
           <OnboardingUsers />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin/job-room" element={
+        <ProtectedRoute adminOnly>
+          <ErrorBoundary>
+            <JobRoom />
+          </ErrorBoundary>
         </ProtectedRoute>
       } />
     </Routes>

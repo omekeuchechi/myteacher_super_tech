@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Pusher from "pusher-js";
 import "../../assets/styles/admin/dashboard.css";
 import AdminNav from "../../components/adminCom/navSection";
+import { Table, Tag, Space, Button, message, Modal, Input, Image } from 'antd';
+import { EditOutlined, DeleteOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
 
 const API_BASE = import.meta.env.VITE_BASEURL;
 
@@ -303,6 +305,10 @@ const Dashboard = () => {
               <Link to="/admin/onboarding-users" className="quick-link">
                 <i className="fas fa-user-gear"></i>
                 <span>Onboarding Users</span>
+              </Link>
+              <Link to="/admin/job-room" className="quick-link">
+                <i className="fas fa-user-gear"></i>
+                <span>Job Room</span>
               </Link>
             </div>
           </div>
