@@ -182,12 +182,13 @@ const Nav = () => {
                     color: "#1976d2",
                     fontWeight: "bold"
                   }}
+                  className="nav-dropdown-profile"
                 >
                   <i className="fas fa-tachometer-alt" style={{ marginRight: 8 }}></i>
                   Dashboard
                 </button>
                 {/* Meeting link */}
-                <button
+                {/* <button
                   onClick={() => {
                     setDropdownOpen(false);
                     navigate("/meeting");
@@ -205,7 +206,7 @@ const Nav = () => {
                 >
                   <i className="fas fa-video" style={{ marginRight: 8 }}></i>
                   Video Meeting
-                </button>
+                </button> */}
                 {/* Logout button */}
                 <button
                   onClick={() => {
@@ -223,6 +224,7 @@ const Nav = () => {
                     color: "#d32f2f",
                     fontWeight: "bold"
                   }}
+                  className="nav-dropdown-profile"
                 >
                   <i className="fas fa-sign-out-alt" style={{ marginRight: 8 }}></i>
                   Logout

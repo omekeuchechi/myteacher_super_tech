@@ -524,6 +524,14 @@ button {
   transition: all 0.3s ease-in-out;
 }
 
+.nav-dropdown-profile:hover{
+  background-color: #1e3a8a !important;
+}
+
+.nav-dropdown-profile:hover > i{
+  color: #fff !important;
+}
+
 /* Responsive Breakpoints */
 @media (max-width: 1024px) {
 

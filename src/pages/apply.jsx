@@ -215,6 +215,7 @@ const UpcomingLecturesList = ({ lectures, onBuyCourse, user }) => {
                 src={lecture.courseImage} 
                 alt={lecture.courseName} 
                 className="lecture-image" 
+                loading='lazy'
               />
               <h3 className="lecture-title">{lecture.courseName}</h3>
               <p className="lecture-detail"><strong>Instructor:</strong> {lecture.courseIntructor}</p>

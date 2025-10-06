@@ -204,26 +204,62 @@ function VideoPage() {
             setLoading(true);
             setError("");
             try {
-                const res = await fetch(`${API_BASE}/video`, {
+                // First, get the user's specific lectures
+                const lecturesRes = await fetch(`${API_BASE}/lectures/userSpecificLecture`, {
                     headers: { Authorization: `Bearer ${getToken()}` },
                 });
-                const data = await res.json();
-                if (data.success) {
-                    // Sort comments in descending order by createdAt date (newest first)
-                    const sortedVideos = (data.videos || []).map(video => ({
-                        ...video,
-                        comment: Array.isArray(video.comment) 
-                            ? [...video.comment].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                            : []
-                    })).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // Sort videos by date (newest first)
-                    setVideos(sortedVideos);
+                const lecturesData = await lecturesRes.json();
+                
+                if (!lecturesData.lectures || lecturesData.lectures.length === 0) {
+                    setVideos([]);
+                    setLoading(false);
+                    return;
+                }
+        
+                // Get all videos
+                const videosRes = await fetch(`${API_BASE}/video`, {
+                    headers: { Authorization: `Bearer ${getToken()}` },
+                });
+                const videosData = await videosRes.json();
+        
+                if (videosData.success) {
+                    // Extract lecture IDs from user's lectures
+                    const userLectureIds = new Set(lecturesData.lectures.map(lecture => lecture._id.toString()));
+        
+                    const processedVideos = (videosData.videos || [])
+                        // Filter videos to only include those with a lecture that matches user's lectures
+                        .filter(video => {
+                            const videoLectureId = video.lecture?._id?.toString();
+                            return videoLectureId && userLectureIds.has(videoLectureId);
+                        })
+                        .map(video => {
+                            // Sort comments by creation date (newest first)
+                            const sortedComments = Array.isArray(video.comment) 
+                                ? [...video.comment].sort((a, b) => 
+                                    new Date(b.createdAt) - new Date(a.createdAt)
+                                  )
+                                : [];
+                            
+                            return {
+                                ...video,
+                                comment: sortedComments
+                            };
+                        })
+                        .sort((a, b) => 
+                            // Sort videos by creation date (newest first)
+                            new Date(b.createdAt) - new Date(a.createdAt)
+                        );
+                    
+                    setVideos(processedVideos);
                 } else {
-                    setError(data.message || "Failed to fetch videos");
+                    setError(videosData.message || "Failed to fetch videos");
                 }
             } catch (err) {
-                setError("Network error fetching videos");
+                console.error("Error fetching data:", err);
+                setError("Network error fetching data");
+            } finally {
+                setLoading(false);
             }
-            setLoading(false);
         }
         fetchVideos();
 
@@ -674,7 +710,7 @@ function VideoPage() {
                                 />
                             </div>
                         </div>
-                        <div className="comments-section">
+                        {/* <div className="comments-section">
                             <div className="comments-title">Comments</div>
                                 {Array.isArray(video.comment) && video.comment.length > 0 ? (
                                 [...video.comment]
@@ -811,7 +847,7 @@ function VideoPage() {
                                                     </div>
                                                 )}
                                             </div>
-                                            {/* Pending replies UI */}
+                                            
                                             <div className="pending-replies">
                                                 {offlineReplies[comment._id]?.map(reply => (
                                                     <div key={reply.id} className={`pending-reply ${reply.status}`}>
@@ -949,13 +985,13 @@ function VideoPage() {
                                     <i className="fa-sharp fa-solid fa-paper-plane"></i>
                                 </button>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 ))
             )}
             
             {/* Edit Confirmation Popup */}
-            {showEditPopup && (
+            {/* {showEditPopup && (
                 <div className="edit-popup-overlay" onClick={() => setShowEditPopup(null)}>
                     <div className="edit-popup" onClick={e => e.stopPropagation()}>
                         <h3>Edit Comment</h3>
@@ -982,7 +1018,7 @@ function VideoPage() {
                         </div>
                     </div>
                 </div>
-            )}
+            )} */}
         </div>
         </div>
     );
