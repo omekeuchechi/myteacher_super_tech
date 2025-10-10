@@ -78,6 +78,7 @@ import ApplyAsinstructor from './pages/job/applyAsinstructor';
 import JobRoom from './pages/admin/job';
 import ErrorBoundary from './services/errorBoundary';
 import JobList from './pages/jobList';
+import OnboardingHome from './pages/onboarding/onboardingHome';
 
 // Helper component for protected routes
 function ProtectedRoute({ children, adminOnly, userOnly, verificationOnly, requireOnSite }) {
@@ -193,6 +194,7 @@ function AppRoutes() {
         </ProtectedRoute>
       } /> */}
       <Route path="/onboarding" element={<Onboarding />} />
+      <Route path="/onboarding-home" element={<OnboardingHome />} />
       <Route path="/online-class" element={
         <ProtectedRoute userOnly>
           <OnlineClass />

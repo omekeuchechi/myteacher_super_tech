@@ -31,9 +31,13 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
-    localStorage.removeItem("user_expiry");
+    const confirmLogout = window.confirm('Are you sure you want to log out?');
+
+    if (confirmLogout) {
+      setUser(null);
+      localStorage.removeItem("user");
+      localStorage.removeItem("user_expiry");
+    }
   };
 
   // Update user in state and localStorage

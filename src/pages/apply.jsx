@@ -233,7 +233,10 @@ const UpcomingLecturesList = ({ lectures, onBuyCourse, user }) => {
               </div>
             </div>
           );
-        }) : <div className="no-lectures">No upcoming lectures at the moment.</div>}
+        }) : <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '50vh', width: '100%' }}>
+          <div style={{ width: '3rem', height: '3rem', color: '#007bff', animation: 'spin 1s linear infinite', borderRadius: '50%', display: 'inline-block', border: '3px solid transparent', borderTopColor: '#007bff', marginBottom: '1rem' }} role="status">
+          </div>
+      </div>}
       </div>
 
       {/* Enrollment Confirmation Modal */}

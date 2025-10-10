@@ -103,7 +103,7 @@
     }
 }
 
-@media (max-width: 1160px) {
+@media (max-width: 1290px) {
     .navbar {
         display: inline-flex;
         /* gap: 7rem; */
