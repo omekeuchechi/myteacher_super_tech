@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { Table, Button, Modal, Tag, Space, message, Select, Input, DatePicker } from 'antd';
-import { DownloadOutlined, EyeOutlined, CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { DownloadOutlined, EyeOutlined, CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import '../../assets/styles/admin/jobRoom.css';
@@ -101,6 +101,19 @@ const JobRoom = () => {
     }
   };
 
+  const deleteApplication = async (id) => {
+    try {
+      await axios.delete(`${API_BASE}/instructor-applications/deleteApplication/${id}`, { 
+        headers: { Authorization: `Bearer ${token}` } 
+      });
+      message.success('Application deleted');
+      fetchApplications();
+    } catch (error) {
+      message.error('Failed to delete application');
+      console.error('Error:', error);
+    }
+  };
+
   const getStatusTag = (status) => {
     const statusMap = {
       pending: { color: 'orange', text: 'Pending' },
@@ -173,6 +186,12 @@ const JobRoom = () => {
             onClick={() => downloadResume(record._id)}
           >
             Resume
+          </Button>
+          <Button
+            icon={<DeleteOutlined />}
+            onClick={() => deleteApplication(record._id)}
+          >
+            Delete
           </Button>
         </Space>
       ),

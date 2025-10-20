@@ -1,0 +1,205 @@
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    transform: translateZ(0); /* Hardware acceleration */
+    will-change: transform, box-shadow; /* Optimize animations */
+}
+
+.card-content {
+    padding: 1.5rem;
+    height: 100%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 2;
+    background: inherit;
+    border-radius: inherit;
+}
+
+/* Enhanced Hover Effects */
+.card.elevate {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card.elevate:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+}
+
+.card.scale {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card.scale:hover {
+    transform: scale(1.05);
+}
+
+.card.glow {
+    transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card.glow:hover {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+}
+
+.card.border {
+    border: 1px solid transparent;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.card.border:hover {
+    border-color: #3b82f6;
+    transform: translateY(-2px);
+}
+
+/* Hover overlay for all cards */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: rgba(255, 255, 255, 0.15);
+    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.card:hover::before {
+    height: 100%;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+@keyframes slideIn {
+    from { 
+        opacity: 0; 
+        transform: translateX(-20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateX(0); 
+    }
+}
+
+@keyframes zoomIn {
+    from { 
+        opacity: 0; 
+        transform: scale(0.95); 
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1); 
+    }
+}
+
+@keyframes rotateIn {
+    from { 
+        opacity: 0;
+        transform: rotate(-5deg) scale(0.95);
+    }
+    to { 
+        opacity: 1;
+        transform: rotate(0) scale(1);
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slideIn {
+    animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-zoomIn {
+    animation: zoomIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-rotateIn {
+    animation: rotateIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card {
+        margin: 0.5rem;
+        border-radius: 10px;
+    }
+    
+    .card-content {
+        padding: 1.2rem;
+    }
+}
+
+/* Custom Card Types */
+.card.primary {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+}
+
+.card.secondary {
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+    color: white;
+}
+
+.card.success {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+}
+
+.card.warning {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+}
+
+.card.danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+}
+
+.card.dark {
+    background: linear-gradient(135deg, #1e293b, #111827);
+    color: white;
+}
+
+.card.info {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+}
+
+/* Shadow Hover Effect */
+.card.shadow-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card.shadow-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0,0.1), 
+                0 10px 15px -5px rgba(0, 0, 0, 0.05);
+}
+
+/* Disabled State */
+.card.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+    filter: grayscale(0.5);
+}
+
+/* Card with Image */
+.card.with-image .card-content {
+    padding-top: 0;
+}

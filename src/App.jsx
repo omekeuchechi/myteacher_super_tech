@@ -66,6 +66,8 @@ import AssignmentCorrections from './pages/admin/assignmentCorrections';
 import MediaVideo from './pages/admin/mediaVideo';
 import VideoPage from './pages/videoPage';
 import UpcomingLectureBatchCreation from './pages/admin/upcomingLectureBatchCreation';
+
+// other imports
 import OnSite from './pages/onSite';
 import AssignCourse from './pages/admin/AssignCourse';
 import OnsiteAsset from './pages/admin/onsiteAsset';
@@ -80,8 +82,23 @@ import ErrorBoundary from './services/errorBoundary';
 import JobList from './pages/jobList';
 import OnboardingHome from './pages/onboarding/onboardingHome';
 
+
+// instructor imports
+import InstructorAuth from './pages/instructor/auth';
+import InstructorLogin from './pages/instructor/login';
+import Help from './pages/help';
+import Privacy from './pages/agreementPage/privacy';
+import Terms from './pages/agreementPage/terms';
+import InstructorDashboard from './pages/instructor/dashboard';
+import MyCourses from './pages/instructor/mycourses';
+import InstructorCourses from './pages/instructor/courses';
+import InstructorCreateCourse from './pages/instructor/createCourse';
+import AttendLecture from './pages/instructor/attendLecture';
+
+
+
 // Helper component for protected routes
-function ProtectedRoute({ children, adminOnly, userOnly, verificationOnly, requireOnSite }) {
+function ProtectedRoute({ children, adminOnly, userOnly, verificationOnly, requireOnSite, instructorOnly }) {
   const { user, authLoading } = useContext(AuthContext);
 
   // Wait for auth to load before making a decision
@@ -122,6 +139,16 @@ function ProtectedRoute({ children, adminOnly, userOnly, verificationOnly, requi
     return children;
   }
 
+  // Only show instructor pages if not admin and isVerified
+  if (instructorOnly) {
+    if (!user.isInstructor || !user.isVerified) {
+      return <Navigate to="/" replace />;
+    }
+
+    // Allow access to any instructorOnly page, do not force redirect to dashboard
+    return children;
+  }
+
   // Default: allow
   return children;
 }
@@ -136,7 +163,11 @@ function GuestOnlyRoute({ children }) {
 
   if (user) {
     // Redirect authenticated users to dashboard or admin dashboard ONLY when accessing login/register
-    if (user.isAdmin) return <Navigate to="/admin/dashboard" replace />;
+    if (user.isInstructor) {
+      return <Navigate to="/instructor/dashboard" replace />;
+    } else if (user.isAdmin) {
+      return <Navigate to="/admin/dashboard" replace />;
+    }
     return <Navigate to="/dashboard" replace />;
   }
   return children;
@@ -195,6 +226,11 @@ function AppRoutes() {
       } /> */}
       <Route path="/onboarding" element={<Onboarding />} />
       <Route path="/onboarding-home" element={<OnboardingHome />} />
+
+      <Route path='/help' element={<Help />} />
+      <Route path='/terms' element={<Terms />} />
+      <Route path='/privacy' element={<Privacy />} />
+
       <Route path="/online-class" element={
         <ProtectedRoute userOnly>
           <OnlineClass />
@@ -393,6 +429,59 @@ function AppRoutes() {
         <ProtectedRoute adminOnly>
           <ErrorBoundary>
             <JobRoom />
+          </ErrorBoundary>
+        </ProtectedRoute>
+      } />
+
+
+
+      <Route path='/instructorAuth' element={
+          <ErrorBoundary>
+            <InstructorAuth />
+          </ErrorBoundary>
+      } />
+
+      {/* <Route path='/instructor/login' element={
+          <ErrorBoundary>
+            <InstructorLogin />
+          </ErrorBoundary>
+      } /> */}
+      <Route path='/instructor/dashboard' element={
+        <ProtectedRoute instructorOnly>
+          <ErrorBoundary>
+            <InstructorDashboard />
+          </ErrorBoundary>
+        </ProtectedRoute>
+      } />
+
+      <Route path='/instructor/mycourses' element={
+        <ProtectedRoute instructorOnly>
+          <ErrorBoundary>
+            <MyCourses />
+          </ErrorBoundary>
+        </ProtectedRoute>
+      } />
+
+      <Route path='/instructor/courses' element={
+        <ProtectedRoute instructorOnly>
+          <ErrorBoundary>
+            <InstructorCourses />
+          </ErrorBoundary>
+        </ProtectedRoute>
+      } />
+
+      <Route path='/instructor/createcourse' element={
+        <ProtectedRoute instructorOnly>
+          <ErrorBoundary>
+            <InstructorCreateCourse />
+          </ErrorBoundary>
+        </ProtectedRoute>
+      } />
+
+      <Route path='/instructor/lecture-room' element={
+        <ProtectedRoute instructorOnly>
+          <ErrorBoundary>
+            <AttendLecture />
           </ErrorBoundary>
         </ProtectedRoute>
       } />

@@ -1,0 +1,287 @@
+/* Base styles */
+.instructor-side-nav {
+    width: 250px;
+    height: 100vh;
+    background-color: #000;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    overflow-y: auto;
+}
+
+/* Logo section */
+.instructor-side-nav > .logo {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    border-bottom: 1px solid #444;
+    position: relative;
+}
+
+.instructor-side-nav > .logo > img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.instructor-side-nav > .logo > h1 {
+    margin-left: 0.75rem;
+    font-size: 1.25rem;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+/* Navigation links */
+.instructor-side-nav > .nav-ul {
+    list-style: none;
+    padding: 1rem 0;
+    margin: 0;
+}
+
+.instructor-side-nav > .nav-ul > .nav-link {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #222;
+    transition: all 0.2s ease;
+}
+
+.instructor-side-nav > .nav-ul > .nav-link > a {
+    display: flex;
+    align-items: center;
+    color: #e0e0e0;
+    text-decoration: none;
+    padding: 0.75rem 0.5rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.instructor-side-nav > .nav-ul > .nav-link > a > i {
+    width: 24px;
+    text-align: center;
+    margin-right: 0.75rem;
+    font-size: 1.1rem;
+    color: #9ca3af;
+    transition: all 0.2s ease;
+}
+
+.instructor-side-nav > .nav-ul > .nav-link > a > span {
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+/* Hover and active states */
+.instructor-side-nav > .nav-ul > .nav-link > a:hover,
+.instructor-side-nav > .nav-ul > .nav-link > a.active {
+    background-color: #1f2937;
+    color: #fff;
+}
+
+.instructor-side-nav > .nav-ul > .nav-link > a:hover > i,
+.instructor-side-nav > .nav-ul > .nav-link > a.active > i {
+    color: #3b82f6;
+}
+
+/* Logout button */
+.instructor-side-nav > button {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    background-color: #1f2937;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.instructor-side-nav > button:hover {
+    background-color: #374151;
+}
+
+.instructor-side-nav > button > i {
+    margin-right: 0.5rem;
+}
+
+/* Mobile menu toggle button */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1100;
+    background: #000;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+/* Sub-navigation styles */
+.instructor-side-nav .sub-nav {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+    background-color: #111;
+    border-radius: 0 0 6px 6px;
+    margin: 0 0.5rem 0.5rem;
+}
+
+.instructor-side-nav .nav-link:hover .sub-nav,
+.instructor-side-nav .nav-link.active .sub-nav {
+    max-height: 500px; /* Adjust based on your content */
+}
+
+.instructor-side-nav .sub-nav ul {
+    list-style: none;
+    padding: 0.5rem 0;
+    margin: 0;
+}
+
+.instructor-side-nav .sub-nav li {
+    padding: 0.25rem 0;
+}
+
+.instructor-side-nav .sub-nav a {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1.5rem 0.5rem 3.5rem; /* Indent sub-items */
+    color: #9ca3af;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.instructor-side-nav .sub-nav a::before {
+    content: '';
+    position: absolute;
+    left: 1.5rem;
+    width: 4px;
+    height: 4px;
+    background-color: #4b5563;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.instructor-side-nav .sub-nav a:hover,
+.instructor-side-nav .sub-nav a.active {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.instructor-side-nav .sub-nav a:hover::before,
+.instructor-side-nav .sub-nav a.active::before {
+    background-color: #3b82f6;
+}
+
+.instructor-side-nav .sub-nav i {
+    font-size: 0.9rem;
+    width: 20px;
+    margin-right: 0.75rem;
+    color: #4b5563;
+    transition: color 0.2s ease;
+}
+
+.instructor-side-nav .sub-nav a:hover i,
+.instructor-side-nav .sub-nav a.active i {
+    color: #3b82f6;
+}
+
+/* Parent link indicator */
+.instructor-side-nav .nav-link > a.has-subnav::after {
+    content: '›';
+    margin-left: auto;
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+}
+
+.instructor-side-nav .nav-link:hover > a.has-subnav::after {
+    transform: rotate(90deg);
+}
+
+/* Active state for parent link when subnav is active */
+.instructor-side-nav .nav-link.active > a {
+    background-color: #1f2937;
+    color: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .instructor-side-nav .sub-nav a {
+        padding-left: 4rem;
+    }
+    
+    .instructor-side-nav .sub-nav a::before {
+        left: 2rem;
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+    .instructor-side-nav {
+        transform: translateX(-100%);
+    }
+
+    .instructor-side-nav.mobile-open {
+        transform: translateX(0);
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+    .instructor-side-nav {
+        width: 220px;
+    }
+
+    .instructor-side-nav > .logo > h1 {
+        font-size: 1.1rem;
+    }
+
+    .instructor-side-nav > .nav-ul > .nav-link > a {
+        padding: 0.6rem 0.5rem;
+    }
+
+    .instructor-side-nav > .nav-ul > .nav-link > a > i {
+        font-size: 1rem;
+        margin-right: 0.6rem;
+    }
+
+    .instructor-side-nav > .nav-ul > .nav-link > a > span {
+        font-size: 0.9rem;
+    }
+}
+
+/* Animation for menu items */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.instructor-side-nav > .nav-ul > .nav-link {
+    animation: slideIn 0.3s ease forwards;
+    animation-delay: calc(var(--i) * 0.1s);
+    opacity: 0;
+}

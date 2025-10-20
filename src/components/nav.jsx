@@ -168,6 +168,8 @@ const Nav = () => {
                     setDropdownOpen(false);
                     if (user.isAdmin) {
                       navigate("/admin/dashboard");
+                    } else if (user.isInstructor) {
+                      navigate("/instructor/dashboard");
                     } else {
                       navigate("/dashboard");
                     }

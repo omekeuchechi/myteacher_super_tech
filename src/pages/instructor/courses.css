@@ -1,0 +1,73 @@
+.courses-quick-action{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.courses-quick-action > a{
+    width: 300px;
+    border: 1px solid #ccc;
+}
+
+.courses-quick-action > a:hover{
+    border: 0;
+}
+
+.courses-quick-action > a > .v-course{
+    background-color: #ececec;
+    text-align: start;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-weight: 900;
+    font-size: 1.5rem;
+    line-height: 0.9;
+    color: #000;
+}
+
+.courses-quick-action > a > .v-course:hover{
+    background-color: blue;
+    color: #fff;
+}
+
+.courses-quick-action > a > .c-course{
+    background-color: #ececec;
+    text-align: start;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-weight: 900;
+    font-size: 1.5rem;
+    line-height: 0.9;
+    color: #000;
+}
+
+.courses-quick-action > a > .c-course:hover{
+    background-color: green;
+    color: #fff;
+}
+
+.courses-quick-action > a > .a-Lecture{
+    background-color: #ececec;
+    text-align: start;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-weight: 900;
+    font-size: 1.5rem;
+    line-height: 0.9;
+    color: #000;
+}
+
+.courses-quick-action > a > .a-Lecture:hover{
+    background-color: #000;
+    color: #fff;
+}

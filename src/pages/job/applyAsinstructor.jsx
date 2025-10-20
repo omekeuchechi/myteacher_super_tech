@@ -1,5 +1,6 @@
-    import { Link } from "react-router-dom";
-    import { useState } from "react";
+    import { Link, Navigate, useNavigate } from "react-router-dom";
+    import { useState, useContext } from "react";
+    import { CourseContext } from "../../../context/CourseContext";
     import "./applyAsinstructor.css";
     import PhoneInput from 'react-phone-number-input';
     import 'react-phone-number-input/style.css';
@@ -111,6 +112,9 @@
         location: {}
       });
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [explanetion, setExplanetion] = useState(false);
+    const navigate = useNavigate();
+    const { courses } = useContext(CourseContext);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -195,95 +199,100 @@
       };
 
       const handleSubmit = async (e) => {
-        e.preventDefault();
+        const confirmSubmit = window.confirm('Are you sure you want to submit this form?');
         
-        // First validate the form
-        const newErrors = {};
-        if (!formData.name) newErrors.name = 'Name is required';
-        if (!formData.email) newErrors.email = 'Email is required';
-        if (!formData.phone) newErrors.phone = 'Phone is required';
-        if (!formData.jobPosition) newErrors.jobPosition = 'Please select a job position';
-        if (!formData.resume) newErrors.resume = 'Resume is required';
-        if (!formData.location.country || !formData.location.state || !formData.location.city) {
-          newErrors.location = newErrors.location || {};
-          if (!formData.location.country) newErrors.location.country = 'Please select a country';
-          if (!formData.location.state) newErrors.location.state = 'Please select a state';
-          if (!formData.location.city) newErrors.location.city = 'Please select a city';
-        }
-        if (!formData.preferredStartDate) newErrors.preferredStartDate = 'Please select a preferred start date';
-        if (!formData.linkedin) newErrors.linkedin = 'Please provide a LinkedIn URL or portfolio URL';
-        if (!formData.message) newErrors.message = 'Please provide a message';
-      
-        // If there are errors, don't proceed with submission
-        if (Object.keys(newErrors).length > 0) {
-          setErrors(newErrors);
-          const firstError = Object.keys(newErrors)[0];
-          document.getElementById(firstError)?.scrollIntoView({ behavior: 'smooth' });
-          return;
-        }
-      
-        // Only set isSubmitting to true if form is valid
-        setIsSubmitting(true);
-      
-        try {
-          const formDataToSend = new FormData();
+        if (confirmSubmit) {
+          e.preventDefault();
           
-          // Append all form fields
-          formDataToSend.append('name', formData.name);
-          formDataToSend.append('email', formData.email);
-          formDataToSend.append('phone', formData.phone);
-          formDataToSend.append('message', formData.message);
-          formDataToSend.append('linkedin', formData.linkedin);
-          formDataToSend.append('jobPosition', formData.jobPosition);
-          formDataToSend.append('preferredStartDate', formData.preferredStartDate);
-          formDataToSend.append('location', JSON.stringify(formData.location));
-          
-          if (formData.resume) {
-            formDataToSend.append('resume', formData.resume);
+          // First validate the form
+          const newErrors = {};
+          if (!formData.name) newErrors.name = 'Name is required';
+          if (!formData.email) newErrors.email = 'Email is required';
+          if (!formData.phone) newErrors.phone = 'Phone is required';
+          if (!formData.jobPosition) newErrors.jobPosition = 'Please select a job position';
+          if (!formData.resume) newErrors.resume = 'Resume is required';
+          if (!formData.location.country || !formData.location.state || !formData.location.city) {
+            newErrors.location = newErrors.location || {};
+            if (!formData.location.country) newErrors.location.country = 'Please select a country';
+            if (!formData.location.state) newErrors.location.state = 'Please select a state';
+            if (!formData.location.city) newErrors.location.city = 'Please select a city';
           }
-      
-          const response = await fetch(`${API_BASE}/instructor-applications/create`, {
-            method: 'POST',
-            body: formDataToSend,
-            headers: {
-              'Accept': 'application/json',
-            },
-          });
-      
-          const data = await response.json();
-      
-          if (!response.ok) {
-            throw new Error(data.message || 'Failed to submit application');
+          if (!formData.preferredStartDate) newErrors.preferredStartDate = 'Please select a preferred start date';
+          if (!formData.linkedin) newErrors.linkedin = 'Please provide a LinkedIn URL or portfolio URL';
+          if (!formData.message) newErrors.message = 'Please provide a message';
+        
+          // If there are errors, don't proceed with submission
+          if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            const firstError = Object.keys(newErrors)[0];
+            document.getElementById(firstError)?.scrollIntoView({ behavior: 'smooth' });
+            return;
           }
-      
-          // Handle success
-          alert('Application submitted successfully!');
-          
-          // Reset form
-          const fileInput = document.getElementById('resume');
-          if (fileInput) {
-            fileInput.value = '';  
+        
+          // Only set isSubmitting to true if form is valid
+          setIsSubmitting(true);
+        
+          try {
+            const formDataToSend = new FormData();
+            
+            // Append all form fields
+            formDataToSend.append('name', formData.name);
+            formDataToSend.append('email', formData.email);
+            formDataToSend.append('phone', formData.phone);
+            formDataToSend.append('message', formData.message);
+            formDataToSend.append('linkedin', formData.linkedin);
+            formDataToSend.append('jobPosition', formData.jobPosition);
+            formDataToSend.append('preferredStartDate', formData.preferredStartDate);
+            formDataToSend.append('location', JSON.stringify(formData.location));
+            
+            if (formData.resume) {
+              formDataToSend.append('resume', formData.resume);
+            }
+        
+            const response = await fetch(`${API_BASE}/instructor-applications/create`, {
+              method: 'POST',
+              body: formDataToSend,
+              headers: {
+                'Accept': 'application/json',
+              },
+            });
+        
+            const data = await response.json();
+        
+            if (!response.ok) {
+              throw new Error(data.message || 'Failed to submit application');
+            }
+        
+            // Handle success
+            alert('Application submitted successfully!\nPlease check The apply as Instructor page');
+            
+            // Reset form
+            const fileInput = document.getElementById('resume');
+            if (fileInput) {
+              fileInput.value = '';  
+            }
+            
+            setFormData({
+              name: "",
+              email: "",
+              phone: "",
+              message: "",
+              location: { country: "", state: "", city: "" },
+              linkedin: "",
+              jobPosition: "",
+              preferredStartDate: "",
+              resume: null,
+            });
+            setFileName('');
+            setExplanetion(true);
+        
+          } catch (error) {
+            console.error('Error submitting application:', error);
+            alert(error.message || 'Failed to submit application. Please try again.');
+          } finally {
+            // Always set isSubmitting to false when done
+            setIsSubmitting(false);
           }
-          
-          setFormData({
-            name: "",
-            email: "",
-            phone: "",
-            message: "",
-            location: { country: "", state: "", city: "" },
-            linkedin: "",
-            jobPosition: "",
-            preferredStartDate: "",
-            resume: null,
-          });
-          setFileName('');
-      
-        } catch (error) {
-          console.error('Error submitting application:', error);
-          alert(error.message || 'Failed to submit application. Please try again.');
-        } finally {
-          // Always set isSubmitting to false when done
-          setIsSubmitting(false);
         }
       };
 
@@ -305,6 +314,12 @@
         </div>
 
         <div className="apply-as-instructor-form">
+          {explanetion ? <><div className="explanation">
+            <h2>Application Submitted Successfully!</h2>
+            <p>Please check The apply as Instructor page</p>
+            <p>And also check your Mail for confirmation to see detailed information of What Next</p>
+            <Link to="/job-list">Check Apply as Instructor page</Link>
+            </div></> : <><div></div></>}
             <form onSubmit={handleSubmit}>
             <div className="form-group">
                 <label htmlFor="name">Full Name</label>
@@ -399,6 +414,9 @@
                 type="date"
                 name="preferredStartDate"
                 id="preferredStartDate"
+                style={{
+                  color: "#000"
+                }}
                 value={formData.preferredStartDate}
                 onChange={handleChange}
                 min={new Date().toISOString().split('T')[0]}  // Prevent selecting past dates
@@ -431,8 +449,8 @@
                 className={errors.jobPosition ? 'error' : ''}
             >
                 <option value="">Select a position</option>
-                {jobPositions.map(position => (
-                <option key={position} value={position}>{position}</option>
+                {courses.map(position => (
+                <option key={position} value={position.course}>{position.course}</option>
                 ))}
             </select>
             {errors.jobPosition && <p className="error-message">{errors.jobPosition}</p>}
@@ -473,7 +491,6 @@
   {isSubmitting ? (
     <>
       <span className="spinner"></span>
-      Submitting...
     </>
   ) : (
     'Submit Application'

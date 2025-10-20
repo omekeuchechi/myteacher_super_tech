@@ -45,11 +45,13 @@ const Login = () => {
         // Redirect to the originally intended page, or dashboard/admin dashboard
         const redirectTo =
           location.state?.from?.pathname ||
-          (data.user.isVerified && data.user.isAdmin
-            ? '/admin/dashboard'
-            : data.user.isVerified && !data.user.isAdmin
-            ? '/dashboard'
-            : '/login');
+          (data.user.isInstructor && data.user.isVerified
+            ? '/instructor/dashboard'
+            : data.user.isAdmin && data.user.isVerified
+              ? '/admin/dashboard'
+              : data.user.isVerified
+                ? '/dashboard'
+                : '/login');
         navigate(redirectTo, { replace: true });
       } else {
         setMessage(data.message || 'Login failed');

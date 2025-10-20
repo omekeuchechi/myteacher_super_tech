@@ -1,0 +1,74 @@
+/* mainFrame.css */
+.instructor-main-frame {
+    padding: 2rem;
+    margin-left: 250px; /* Match sidebar width */
+    min-height: 100vh;
+    transition: all 0.3s ease;
+    width: calc(100% - 250px); /* Account for sidebar width */
+    position: relative;
+    background-color: #f8f9fa; /* Match your background */
+}
+
+/* Mobile view */
+.instructor-main-frame.mobile-view {
+    width: 100%;
+    margin-left: 0;
+    padding: 1rem;
+    padding-top: 5rem; /* Space for mobile header */
+    position: relative;
+    left: 0;
+    right: 0;
+}
+
+/* When mobile menu is open */
+.instructor-main-frame.menu-open.mobile-view {
+    position: fixed;
+    left: 250px; /* Match sidebar width */
+    right: -250px;
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Overlay when menu is open */
+.instructor-main-frame.mobile-view::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.instructor-main-frame.menu-open.mobile-view::before {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .instructor-main-frame:not(.mobile-view) {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+/* Prevent scrolling when menu is open */
+body.mobile-menu-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+/* Adjust for smaller screens */
+@media (max-width: 768px) {
+    .instructor-main-frame.mobile-view {
+        padding: 0.75rem;
+        padding-top: 4.5rem;
+    }
+}
