@@ -27,6 +27,7 @@ const TakeLecture = () => {
     jitsiPassword: "",
     isVerified: false,
     verificationToken: "",
+    days: [],
     adminIds: user?._id ? [user._id] : [],
   });
   const [loading, setLoading] = useState(false);
@@ -43,6 +44,7 @@ const TakeLecture = () => {
     jitsiPassword: "",
     isVerified: false,
     verificationToken: "",
+    days: [],
     lecturesListed: [],
   });
   const [updateLoading, setUpdateLoading] = useState(false);
@@ -103,6 +105,7 @@ const TakeLecture = () => {
   // Handle create form change
   const handleChange = (e) => {
     const { name, value, type, checked, options } = e.target;
+    
     if (name === "adminIds") {
       const selected = Array.from(options)
         .filter((o) => o.selected)
@@ -111,6 +114,13 @@ const TakeLecture = () => {
         ...prev,
         adminIds: selected,
       }));
+    } else if (name === "days") {
+      setForm(prev => {
+        const newDays = checked
+          ? [...prev.days, value]
+          : prev.days.filter(day => day !== value);
+        return { ...prev, days: newDays };
+      });
     } else {
       setForm((prev) => ({
         ...prev,
@@ -132,6 +142,13 @@ const TakeLecture = () => {
         ...prev,
         lecturesListed: selected,
       }));
+    } else if (name === "days") {
+      setUpdateForm(prev => {
+        const newDays = checked
+          ? [...prev.days, value]
+          : prev.days.filter(day => day !== value);
+        return { ...prev, days: newDays };
+      });
     } else {
       setUpdateForm((prev) => ({
         ...prev,
@@ -163,6 +180,7 @@ const TakeLecture = () => {
           jitsiPassword: data.lecture.jitsiPassword || "",
           isVerified: data.lecture.isVerified || false,
           verificationToken: data.lecture.verificationToken || "",
+          days: Array.isArray(data.lecture.days) ? data.lecture.days : [],
           lecturesListed: Array.isArray(data.lecture.lecturesListed)
             ? data.lecture.lecturesListed.map(a => (typeof a === "object" ? a._id : a))
             : [],
@@ -182,8 +200,8 @@ const TakeLecture = () => {
     setLoading(true);
     setMsg("");
     setErr("");
-    if (!form.courseId || !form.startTime || !form.platform || !form.adminIds.length) {
-      setErr("All fields are required.");
+    if (!form.courseId || !form.startTime || !form.platform || !form.adminIds.length || form.days.length === 0 || !form.days.length === 0) {
+      setErr("All fields are required, including at least one day of the week.");
       setLoading(false);
       return;
     }
@@ -211,6 +229,7 @@ const TakeLecture = () => {
           jitsiPassword: "",
           isVerified: false,
           verificationToken: "",
+          days: [],
           adminIds: user?._id ? [user._id] : [],
         });
         fetchLectures();
@@ -259,6 +278,7 @@ const TakeLecture = () => {
           jitsiPassword: "",
           isVerified: false,
           verificationToken: "",
+          days: [],
           lecturesListed: [],
         });
       } else {
@@ -371,19 +391,40 @@ const TakeLecture = () => {
                 required
               />
             </label>
-            <label>
-              Platform:
+            <div className="form-group">
+              <label>Platform</label>
               <select
                 name="platform"
                 value={form.platform}
                 onChange={handleChange}
+                className="form-control"
                 required
               >
                 <option value="Zoom">Zoom</option>
-                <option value="Google Meet">Google Meet</option>
                 <option value="Jitsi">Jitsi</option>
               </select>
-            </label>
+            </div>
+            <div className="form-group">
+              <label>Days of the Week (Select all that apply) *</label>
+              <div className="days-checkbox-container">
+                {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
+                  <div key={day} className="day-checkbox">
+                    <input
+                      type="checkbox"
+                      id={`day-${day}`}
+                      name="days"
+                      value={day}
+                      checked={form.days.includes(day)}
+                      onChange={handleChange}
+                      className="form-check-input"
+                    />
+                    <label htmlFor={`day-${day}`} className="form-check-label">
+                      {day}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
             <label>
               Meeting Link:
               <input
@@ -543,6 +584,27 @@ const TakeLecture = () => {
                   placeholder="Paste Zoom/Meet/Jitsi link"
                 />
               </label>
+              <label>
+                <p>Days of the Week (Select all that apply) *</p>
+                <div className="days-checkbox-container">
+                  {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
+                    <div key={day} className="day-checkbox">
+                      <input
+                        type="checkbox"
+                        id={`day-${day}`}
+                        name="days"
+                        value={day}
+                        checked={updateForm.days.includes(day)}
+                        onChange={handleUpdateChange}
+                        className="form-check-input"
+                      />
+                      <label htmlFor={`day-${day}`} className="form-check-label">
+                        {day}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+            </label>
               <label>
                 Topics (comma separated):
                 <input

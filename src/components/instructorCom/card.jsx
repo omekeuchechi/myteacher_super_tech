@@ -8,7 +8,9 @@ const Card = ({
     animationType = 'fadeIn',
     delay = 0,
     hoverBgColor = 'rgba(255, 255, 255, 0.1)',
-    style = {}
+    style = {},
+    width = '100%',
+    height = '100%',
 }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
@@ -52,7 +54,9 @@ const Card = ({
             style={{ 
                 animationDelay: `${delay}ms`,
                 opacity: isVisible ? 1 : 0,
-                ...style 
+                ...style,
+                width,
+                height
             }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -64,7 +68,7 @@ const Card = ({
                     position: 'absolute',
                     top: 0,
                     left: 0,
-                    width: '100%',
+                    width: width,
                     height: isHovered ? '100%' : '0%',
                     background: hoverBgColor,
                     transition: 'height 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -79,7 +83,7 @@ const Card = ({
                 style={{ 
                     position: 'relative', 
                     zIndex: 2,
-                    height: '100%'
+                    height: height
                 }}
             >
                 {children}

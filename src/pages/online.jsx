@@ -33,7 +33,7 @@ const OnlineClass = () => {
     const seconds = Math.floor(ms / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
-    
+
     if (hours > 0) {
       return `${hours}h ${minutes % 60}m`;
     } else if (minutes > 0) {
@@ -234,7 +234,7 @@ const OnlineClass = () => {
           onClick={handleCurrectTime}
           style={{
             position: 'fixed',
-            bottom: '80px', 
+            bottom: '80px',
             right: '20px',
             zIndex: 1000,
             padding: '10px 15px',
@@ -305,7 +305,16 @@ const OnlineClass = () => {
               const oneHourInMs = 60 * 60 * 1000;
               const isTimeReached = timeDifference <= oneHourInMs; // 1 hour before
               const buttonText = 'Join Class';
-              const isButtonDisabled = (timeDifference > oneHourInMs) || (loading && selectedClass?.id === cls.id);
+
+              const getCurrentDayName = () => {
+                const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                return days[new Date().getDay()];
+              };
+
+
+              const isButtonDisabled = (timeDifference > oneHourInMs) ||
+                (loading && selectedClass?.id === cls.id) ||
+                !cls.days?.includes(getCurrentDayName());
 
               return (
                 <div
@@ -326,7 +335,7 @@ const OnlineClass = () => {
                     className={`join-class-btn ${isButtonDisabled ? 'disabled' : ''}`}
                     onClick={() => !isButtonDisabled && handleJoinClick(cls)}
                     disabled={isButtonDisabled}
-                    style={{ 
+                    style={{
                       position: 'relative',
                       opacity: isButtonDisabled ? 0.7 : 1,
                       cursor: isButtonDisabled ? 'not-allowed' : 'pointer',

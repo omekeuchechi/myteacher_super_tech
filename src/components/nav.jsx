@@ -166,10 +166,10 @@ const Nav = () => {
                 <button
                   onClick={() => {
                     setDropdownOpen(false);
-                    if (user.isAdmin) {
-                      navigate("/admin/dashboard");
-                    } else if (user.isInstructor) {
+                    if (user.isAdmin && user.isInstructor) {
                       navigate("/instructor/dashboard");
+                    } else if (user.isAdmin) {
+                      navigate("/admin/dashboard");
                     } else {
                       navigate("/dashboard");
                     }

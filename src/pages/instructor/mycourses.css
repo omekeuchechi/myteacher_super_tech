@@ -1,0 +1,89 @@
+.mycourses-container > .lectures-container > .lectures-wrapper{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+.mycourses-container > .lectures-container > .lectures-wrapper > .lecture-card{
+    width: 85%;
+    max-height: 250px;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow-x: hidden;
+    cursor: pointer;
+    background-color: #ececec;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mycourses-container > .lectures-container > .lectures-wrapper > .lecture-card:hover{
+    transform: translateY(-10px);
+    border: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mycourses-container > .lectures-container > .lectures-wrapper > .lecture-card > h3{
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 0.9;
+    border-bottom: 1.5px solid #000;
+    padding-bottom: 20px;
+    color: #000;
+}
+
+.mycourses-container > .lectures-container > .lectures-wrapper > .lecture-card > .midle-section{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    background-color: #0000009c;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.mycourses-container > .lectures-container > .lectures-wrapper > .lecture-card > .down-section{
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.mycourses-container > .lectures-container > .lectures-wrapper > .lecture-card > .down-section > .d-btn-section{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+#student-show-btn{
+    padding: 15px;
+    border-radius: 50px;
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+}
+
+#students-in-lectures{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    width: 100%;
+    min-height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#students-in-lectures > p{
+    background-color: #fff;
+    color: #000;
+    padding: 10px;
+    border-radius: 10px;
+}
