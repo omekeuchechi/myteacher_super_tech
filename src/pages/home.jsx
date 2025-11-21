@@ -30,6 +30,7 @@ import WhyChoose from "../components/fd/WhyChoose";
 import FooterFd from "../components/fd/Footer";
 import HeroFd from "../components/fd/hero";
 import AiChat from "../components/aiChat";
+import Programs from "../components/fd/programs";
 function Home() {
     const { user, logout } = useContext(AuthContext);
 
@@ -63,7 +64,8 @@ useEffect(() => {
             {/* <HeroSection /> */}
             {/* <HeroBox /> */}
             <HeroFd />
-            <Features />
+            {/* <Features /> */}
+            <Programs />
             <OnsiteTraining />
             <Enroll />
             <WhyChoose />

@@ -206,37 +206,59 @@ const UpcomingLecturesList = ({ lectures, onBuyCourse, user }) => {
         <h2 className="lectures-header-title">
           <i className='fa-solid fa-book'></i> Upcoming Lectures
         </h2>
-        {lectures.length > 0 ? lectures.map(lecture => {
-          const isLectureActive = new Date(lecture.startTime) > new Date();
-
-          return (
-            <div key={lecture._id} className="lecture-card">
-              <img 
-                src={lecture.courseImage} 
-                alt={lecture.courseName} 
-                className="lecture-image" 
-                loading='lazy'
-              />
-              <h3 className="lecture-title">{lecture.courseName}</h3>
-              <p className="lecture-detail"><strong>Instructor:</strong> {lecture.courseIntructor}</p>
-              <p className="lecture-detail"><strong>Starts:</strong> {new Date(lecture.startTime).toLocaleString()}</p>
-              <p className="lecture-detail"><strong>Platform:</strong> {lecture.platform}</p>
-              <div className="lecture-actions">
-                <button 
-                  onClick={() => handlePaidEnrollment(lecture)}
-                  className={`btn btn-primary ${hoveredButton === lecture._id ? 'hover' : ''}`}
-                  onMouseEnter={() => setHoveredButton(lecture._id)}
-                  onMouseLeave={() => setHoveredButton(null)}
-                >
-                  Enroll Now
-                </button>
-              </div>
-            </div>
-          );
-        }) : <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '50vh', width: '100%' }}>
-          <div style={{ width: '3rem', height: '3rem', color: '#007bff', animation: 'spin 1s linear infinite', borderRadius: '50%', display: 'inline-block', border: '3px solid transparent', borderTopColor: '#007bff', marginBottom: '1rem' }} role="status">
+        {isLoading ? (
+          <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '50vh', width: '100%' }}>
+            <div 
+              style={{ 
+                width: '3rem', 
+                height: '3rem', 
+                color: '#007bff', 
+                animation: 'spin 1s linear infinite', 
+                borderRadius: '50%', 
+                display: 'inline-block', 
+                border: '3px solid transparent', 
+                borderTopColor: '#007bff', 
+                marginBottom: '1rem' 
+              }} 
+              role="status"
+            ></div>
           </div>
-      </div>}
+        ) : lectures.length > 0 ? (
+          lectures.map(lecture => {
+            const isLectureActive = new Date(lecture.startTime) > new Date();
+
+            return (
+              <div key={lecture._id} className="lecture-card">
+                <img 
+                  src={lecture.courseImage} 
+                  alt={lecture.courseName} 
+                  className="lecture-image" 
+                  loading='lazy'
+                />
+                <h3 className="lecture-title">{lecture.courseName}</h3>
+                <p className="lecture-detail"><strong>Instructor:</strong> {lecture.courseIntructor}</p>
+                <p className="lecture-detail"><strong>Starts:</strong> {new Date(lecture.startTime).toLocaleString()}</p>
+                <p className="lecture-detail"><strong>Platform:</strong> {lecture.platform}</p>
+                <div className="lecture-actions">
+                  <button 
+                    onClick={() => handlePaidEnrollment(lecture)}
+                    className={`btn btn-primary ${hoveredButton === lecture._id ? 'hover' : ''}`}
+                    onMouseEnter={() => setHoveredButton(lecture._id)}
+                    onMouseLeave={() => setHoveredButton(null)}
+                  >
+                    Enroll Now
+                  </button>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <div className="d-flex flex-column align-items-center justify-content-center" style={{ minHeight: '50vh', width: '100%' }}>
+            <i className="fas fa-exclamation-circle" style={{ fontSize: '3rem', color: '#6c757d', marginBottom: '1rem' }}></i>
+            <h3 style={{ color: '#6c757d' }}>No Course found</h3>
+            <p>Please try again later</p>
+          </div>
+        )}
       </div>
 
       {/* Enrollment Confirmation Modal */}

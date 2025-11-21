@@ -209,6 +209,7 @@
           if (!formData.name) newErrors.name = 'Name is required';
           if (!formData.email) newErrors.email = 'Email is required';
           if (!formData.phone) newErrors.phone = 'Phone is required';
+          if (!formData.nin) newErrors.nin = 'NIN is required';
           if (!formData.jobPosition) newErrors.jobPosition = 'Please select a job position';
           if (!formData.resume) newErrors.resume = 'Resume is required';
           if (!formData.location.country || !formData.location.state || !formData.location.city) {
@@ -239,6 +240,7 @@
             formDataToSend.append('name', formData.name);
             formDataToSend.append('email', formData.email);
             formDataToSend.append('phone', formData.phone);
+            formDataToSend.append('nin', formData.nin);
             formDataToSend.append('message', formData.message);
             formDataToSend.append('linkedin', formData.linkedin);
             formDataToSend.append('jobPosition', formData.jobPosition);
@@ -276,6 +278,7 @@
               name: "",
               email: "",
               phone: "",
+              nin: "",
               message: "",
               location: { country: "", state: "", city: "" },
               linkedin: "",
@@ -406,6 +409,20 @@
                 className={`${errors.phone ? 'error' : ''} phone-input`}
             />
             {errors.phone && <p className="error-message">{errors.phone}</p>}
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="nin">NIN</label>
+                <input
+                type="text"
+                name="nin"
+                id="nin"
+                value={formData.nin}
+                onChange={handleChange}
+                placeholder="Enter your NIN"
+                className={errors.nin ? 'error' : ''}
+                />
+                {errors.nin && <p className="error-message">{errors.nin}</p>}
             </div>
 
             <div className="form-group">
