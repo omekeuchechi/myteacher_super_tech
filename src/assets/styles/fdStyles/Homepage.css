@@ -353,6 +353,170 @@ button {
     color: #fff;
   }
 
+
+  /* private online tutor */
+  .privateOnlineTutor-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #F9FAFB;
+    box-shadow: 0px 4px 6px 0px #0000001A;
+    opacity: 1;
+    border-radius: 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .privateOnlineTutor-container > .private-online-tutor-datails{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    width: 800px;
+  }
+
+  .privateOnlineTutor-container > .private-online-tutor-datails > h2{
+    font-size: 2.2rem;
+    font-weight: 600;
+    font-style: Semi Bold;
+    line-height: 100%;
+    text-align: center;
+    border-bottom: 0;
+    color: #111827;
+  }
+
+  .privateOnlineTutor-container > .private-online-tutor-datails > p{
+    font-size: 1.4rem;
+    font-weight: 400;
+    font-style: Bold;
+    line-height: 100%;
+    color: #111827d8;
+  }
+
+  .privateOnlineTutor-container > .private-online-tutor-datails > .features{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .privateOnlineTutor-container > .private-online-tutor-datails > .features > div{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+    margin-left: -20px;
+  }
+
+  .privateOnlineTutor-container > .private-online-tutor-datails > .features > div > img{
+    width: 20px;
+    height: 20px;
+  }
+
+  .privateOnlineTutor-container > .private-online-tutor-datails > a{
+    background-color: #1E40AF;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-style: Semi Bold;
+    line-height: 100%;
+    text-align: center;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 17px 35px;
+    transition: all ease-in-out 0.6s;
+  }
+
+  .privateOnlineTutor-container > .private-online-tutor-datails > a:hover{
+    background-color: #3960e0;
+    color: #fff;
+  }
+
+  #private-online-tutor-form-section{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+    width: 600px;
+    background: #fff;
+    overflow-x: hidden;
+  }
+
+  #private-online-tutor-form-section > form > input{
+    padding: 15px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    border: 1px solid #D1D5DB;
+    width: 100%;
+  }
+
+  #private-online-tutor-form-section > form > input:focus{
+    border: 1px solid #1E40AF;
+  }
+
+  #private-online-tutor-form-section > form > select{
+    padding: 15px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    border: 1px solid #D1D5DB;
+    width: 100%;
+  }
+
+  #private-online-tutor-form-section > form > select:focus{
+    border: 1px solid #1E40AF;
+    outline: none;
+  }
+
+  #private-online-tutor-form-section > form > input:focus::placeholder{
+    color: #D1D5DB;
+    font-size: 1.2rem;
+  }
+
+  #private-online-tutor-form-section > form > textarea{
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #D1D5DB;
+    resize: none;
+    font-size: 1.2rem;
+    height: 130px;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  #private-online-tutor-form-section > form > textarea:focus{
+    border: 1px solid #1E40AF;
+    outline: none;
+  }
+
+  #private-online-tutor-form-section > form > button{
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #1E40AF;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-style: Semi Bold;
+    line-height: 100%;
+    text-align: center;
+    transition: all ease-in-out 0.6s;
+    border: 0;
+    width: 100%;
+  }
+
+  #private-online-tutor-form-section > form > button:hover{
+    background-color: #3960e0;
+    color: #fff;
+  }
+
   /* Responsive Styles */
   @media (max-width: 1600px) {
     .programs-section > .program-wraper {
@@ -366,6 +530,16 @@ button {
     .programs-section > .program-wraper > .program-card {
       max-width: calc(50% - 20px);
       flex: 0 0 calc(50% - 20px);
+    }
+    .privateOnlineTutor-container{
+      display: flex;
+      align-items: start;
+      flex-direction: column;
+      gap: 15px;
+      padding: 5px;
+      box-shadow: 0;
+      opacity: 1;
+      border-radius: 0;
     }
   }
 
@@ -391,6 +565,63 @@ button {
       gap: 20px;
       flex-wrap: wrap;
     }
+
+      /* private online tutor */
+    .privateOnlineTutor-container{
+      display: flex;
+      align-items: start;
+      flex-direction: column;
+      gap: 15px;
+      padding: 5px;
+      box-shadow: 0;
+      opacity: 1;
+      border-radius: 0;
+    }
+
+    .privateOnlineTutor-container > .private-online-tutor-datails{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0;
+      padding: 10px;
+      width: 100%;
+    }
+
+    .privateOnlineTutor-container > .private-online-tutor-datails > h2{
+      font-size: 2rem;
+    }
+    .privateOnlineTutor-container > .private-online-tutor-datails > .features{
+      gap: 10px;
+      width: 100%;
+      padding: 10px;
+    }
+
+    .privateOnlineTutor-container > .private-online-tutor-datails > .features > div{
+      gap: 10px;
+      margin-left: 0;
+    }
+
+    .privateOnlineTutor-container > .private-online-tutor-datails > a{
+      padding: 10px;
+      text-align: start;
+      display: flex;
+      align-items: start;
+      justify-content: start;
+      text-decoration: none;
+    }
+
+      
+    #private-online-tutor-form-section{
+      display: flex;
+      flex-direction: column;
+      padding: 8px;
+      gap: 15px;
+      width: 100%;
+      background: #fff;
+      overflow-x: hidden;
+    }
+    
   }
 
   @media (max-width: 768px) {
