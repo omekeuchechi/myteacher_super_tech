@@ -118,7 +118,7 @@ const Programs = () => {
 
                         <div className="program-actions">
                             <Link to="/apply" className="take-online-coursees"><p>Take Online Course</p> <span>{program.price}</span></Link>
-                            <Link to="/auth" className="book-online-course">Book Live Online Classes</Link>
+                            <Link to="/private-tutor" className="book-online-course">Request for Tutor</Link>
                             <a href="https://myteacher.ng/training-registration-form/" className="onsite-training">Register Onsite</a>
                         </div>
                     </div>

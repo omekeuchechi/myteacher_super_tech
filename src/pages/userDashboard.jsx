@@ -13,6 +13,13 @@ import QuickLinks from '../components/userDashCom/quickLinks';
 import { Modal, Box, Typography, Button } from '@mui/material';
 import CoursesApplied from '../components/userDashCom/courses';
 
+
+// images for course section
+import onlineImage from "../assets/illustrations/dashboard/online_class.png";
+import oneOnOneImage from "../assets/illustrations/dashboard/one_on_one.png";
+import buy_courseImage from "../assets/illustrations/dashboard/buy_course.png";
+
+
 const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
 
 // Modal style
@@ -167,10 +174,35 @@ function UserDashboard() {
         <div className={`quick-links ${theme}`}>
           <QuickLinks theme={theme} />
         </div>
-
+        
         <div className={`apply-for-course-section ${theme}`}>
-          <h2 className={`${theme}`}>Do you want an online Live class/Training. Simply Apply here to get started.</h2>
-          <Link to="/apply" className='apply'><i className='fas fa-plus'></i> Apply</Link>
+          <Link to='/apply-for-online-class' className={`apply-for-course-cards ${theme}`}>
+            <div className={`apply-for-course-image-wrapper`}>
+              <img src={onlineImage} alt="" />
+            </div>
+            <h2>Online Class</h2>
+            <p className="descriptions">
+              An online class is a course conducted on an online platform (such as Zoom). It is a public class where other users or students who apply can join, learn, and share materials and ideas.
+            </p>
+          </Link>
+          <Link className={`apply-for-course-cards ${theme}`}>
+            <div className="apply-for-course-image-wrapper">
+              <img src={buy_courseImage} alt="" />
+            </div>
+            <h2>Buy Course</h2>
+            <p className="descriptions">
+              Real-world case studies and step-by-step demonstrations show how to apply your learning in actual scenarios, bridging theory and practice and highlighting pitfalls with actionable takeaways.    
+            </p>
+          </Link>
+          <Link to='/private-tutor' className={`apply-for-course-cards ${theme}`}>
+            <div className="apply-for-course-image-wrapper">
+              <img src={oneOnOneImage} alt="" />
+            </div>
+            <h2>Private Tutor</h2>
+            <p className="descriptions">
+              One-on-one teaching pairs a tutor with a single student via Zoom or other online platforms, offering direct interaction, real-time feedback, and tailored pacing. 
+            </p>
+          </Link>
         </div>
 
 

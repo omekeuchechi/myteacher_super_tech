@@ -77,7 +77,7 @@ const PrivateOnlineTutor = () => {
                     </div>
                 </div>
 
-                <a href="#private-online-tutor-form-section">Request a Tutor</a>
+                <Link to="/private-tutor">Request a Tutor</Link>
             </div>
             <div id="private-online-tutor-form-section">
                 <form onSubmit={handleSubmit}>

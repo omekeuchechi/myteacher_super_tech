@@ -530,7 +530,13 @@ button {
     .programs-section > .program-wraper > .program-card {
       max-width: calc(50% - 20px);
       flex: 0 0 calc(50% - 20px);
+      gap: 20px;
+      border: 0;
+      box-shadow: none;
+      opacity: 1;
+      border-radius: 0;
     }
+
     .privateOnlineTutor-container{
       display: flex;
       align-items: start;

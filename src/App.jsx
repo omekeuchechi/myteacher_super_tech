@@ -15,6 +15,8 @@ import Register from './pages/auth';
 import Login from './pages/login';
 import Courses from './pages/courses';
 import TechBlog from './pages/Techblog';
+import PrivateTutorFormPage from './pages/privateTutorPageForm';
+
 
 // user dashboard pages
 import UserDashboard from './pages/userDashboard';
@@ -94,6 +96,7 @@ import MyCourses from './pages/instructor/mycourses';
 import InstructorCourses from './pages/instructor/courses';
 import InstructorCreateCourse from './pages/instructor/createCourse';
 import AttendLecture from './pages/instructor/attendLecture';
+
 
 
 
@@ -294,6 +297,7 @@ function AppRoutes() {
 
       <Route path="/courses" element={<Courses />} />
       <Route path="/techblog" element={<TechBlog />} />
+      <Route path="/private-tutor" element={<PrivateTutorFormPage />} />
       <Route path="/job-list" element={
         <ErrorBoundary>
           <JobList />
