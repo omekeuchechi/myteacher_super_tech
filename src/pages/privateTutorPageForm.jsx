@@ -60,7 +60,12 @@ const PrivateTutorFormPage = () => {
                 <div className='private-tutor-container'>
                     <div className="private-tutor-details">
                         <h2>Need a Private Online Tutor?</h2>
-                        <p>Get personalized one-on-one tutoring sessions tailored to your learning needs and schedule.</p>
+                        <p>Get personalized one-on-one tutoring sessions tailored to your learning needs and schedule, We offer comprehensive digital skills training in areas such as Coding, Data Analytics, UI/UX Design, Web Development, Artificial Intelligence (AI), Digital Marketing, Social Media Management, Virtual Assistance, Cybersecurity, Basic Computing, and more.</p>
+
+                        <p>Our programmes are tailored for individuals, children, staff, and organizations.
+                        </p>
+
+                        <p>Do you have a child who needs a private coach in Science, Technology, Engineering, and Mathematics (STEM)? We provide experienced tutors dedicated to helping learners build strong foundations and excel academically.</p>
 
                         <div className="features">
                             <div>
@@ -79,66 +84,70 @@ const PrivateTutorFormPage = () => {
                                 <img src={blueMark} alt="" />
                                 <span>Progress tracking</span>
                             </div>
+                            <div>
+                                <img src={blueMark} alt="" />
+                                <span>Certification</span>
+                            </div>
                         </div>
                     </div>
 
                     <div className="private-tutor-form-section">
                         <form onSubmit={handleSubmit}>
                             {error && <div className="error-message">{error}</div>}
-                        
-                                <input 
-                                    type="text" 
-                                    name="name"
-                                    placeholder='Your Name' 
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            
-                                <input 
-                                    type="email" 
-                                    name="email"
-                                    placeholder='Your Email' 
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            
-                                <input 
-                                    type="text" 
-                                    name="phone"
-                                    placeholder='Your Phone' 
-                                    value={formData.phone}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            
-                                <select 
-                                    name="subject" 
-                                    value={formData.subject}
-                                    onChange={handleChange}
-                                    required
-                                >
-                                    <option value="">Select Subject</option>
-                                    <option value="Data Analysis with Python">Data Analysis with Python</option>
-                                    <option value="Copy Writing">Copy Writing</option>
-                                    <option value="Responsive Web Design">Responsive Web Design</option>
-                                    <option value="Digital Marketing">Digital Marketing</option>
-                                    <option value="Content Creation">Content Creation</option>
-                                    <option value="Mobile Dev with React-native">Mobile Dev with React-native</option>
-                                    <option value="Data Analysis with Excel">Data Analysis with Excel</option>
-                                </select>
-                            
-                                <textarea 
-                                    name="goals" 
-                                    cols="30" 
-                                    rows="10" 
-                                    placeholder='Tell us about your learning goals'
-                                    value={formData.goals}
-                                    onChange={handleChange}
-                                    required
-                                ></textarea>
-                            
+
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder='Your Name'
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                            />
+
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder='Your Email'
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                            />
+
+                            <input
+                                type="text"
+                                name="phone"
+                                placeholder='Your Phone'
+                                value={formData.phone}
+                                onChange={handleChange}
+                                required
+                            />
+
+                            <select
+                                name="subject"
+                                value={formData.subject}
+                                onChange={handleChange}
+                                required
+                            >
+                                <option value="">Select Subject</option>
+                                <option value="Data Analysis with Python">Data Analysis with Python</option>
+                                <option value="Copy Writing">Copy Writing</option>
+                                <option value="Responsive Web Design">Responsive Web Design</option>
+                                <option value="Digital Marketing">Digital Marketing</option>
+                                <option value="Content Creation">Content Creation</option>
+                                <option value="Mobile Dev with React-native">Mobile Dev with React-native</option>
+                                <option value="Data Analysis with Excel">Data Analysis with Excel</option>
+                            </select>
+
+                            <textarea
+                                name="goals"
+                                cols="30"
+                                rows="10"
+                                placeholder='Tell us about your learning goals'
+                                value={formData.goals}
+                                onChange={handleChange}
+                                required
+                            ></textarea>
+
                             <button type="submit" className="submit-btn" disabled={isSubmitting}>
                                 {isSubmitting ? 'Submitting...' : 'Submit'}
                             </button>

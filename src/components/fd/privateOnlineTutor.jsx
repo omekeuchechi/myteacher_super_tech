@@ -75,6 +75,10 @@ const PrivateOnlineTutor = () => {
                         <img src={blueMark} alt="" />
                         <span>Progress tracking</span>
                     </div>
+                    <div>
+                        <img src={blueMark} alt="" />
+                        <span>Certifaction</span>
+                    </div>
                 </div>
 
                 <Link to="/private-tutor">Request a Tutor</Link>

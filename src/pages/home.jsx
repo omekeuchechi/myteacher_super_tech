@@ -11,7 +11,7 @@ import PopularCourses from "../components/popularCourses";
 import Services from "../components/services";
 import TechRoadMap from "../components/techRoadMap";
 import AiSection from "../components/aiSection";
-import Gallary from "../components/gallary";
+// import Gallary from "../components/gallary";
 import Testimony from "../components/testimony";
 import Footer from "../components/footer";
 // import Faq from "../components/faq";

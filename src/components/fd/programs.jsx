@@ -51,7 +51,7 @@ const programData = [
     },
     {
         id: 4,
-        title: "UI/UX Design Fundamentals",
+        title: "UI/UX Design",
         description: "Create stunning user interfaces and experiences using Figma and Adobe XD",
         category: "Design",
         rating: 4.8,
@@ -63,7 +63,7 @@ const programData = [
     },
     {
         id: 5,
-        title: "Cybersecurity Fundamentals",
+        title: "Cybersecurity",
         description: "Protect systems and networks with ethical hacking and security protocols",
         category: "Security",
         rating: 4.8,

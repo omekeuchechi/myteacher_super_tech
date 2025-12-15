@@ -4,6 +4,8 @@
   background: #f8f9fa;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding-top: 60px;
+
+  --course-bg-color: #2563EB;
 }
 
 /* Header */
@@ -68,7 +70,8 @@
 }
 
 .crs-gride-toggle i.active {
-  color: #357ab9;
+  /* color: #357ab9; */
+  color: var(--course-bg-color);
 }
 
 /* Course Container */
@@ -144,7 +147,7 @@
 }
 
 .crs-des .h1-texte:hover{
-  text-decoration: solid underline 2px #357ab9;
+  text-decoration: solid underline 2px var(--course-bg-color);
 }
 
 .crs-des span {
@@ -169,7 +172,7 @@
 }
 
 .readmore-btn {
-  background: #357ab9;
+  background: var(--course-bg-color);
   color: #fff;
   border: none;
   padding: 0.5rem 1rem;
@@ -180,7 +183,7 @@
   transition: background 0.3s ease;
 }
 .readmore-btn:hover {
-  background: #2b5f91;
+  background: #1254e2;
 }
 
 /* Pricing Section */

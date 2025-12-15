@@ -13,6 +13,7 @@ import Header from '../components/userDashCom/header';
 
 // zoom image 
 import zoomImage from '../assets/illustrations/myteacher-intitute-zoom.jpg';
+import Sidebar from '../components/common/Sidebar';
 
 const API_BASE = import.meta.env.VITE_BASEURL;
 
@@ -271,25 +272,12 @@ const OnlineClass = () => {
         </button>
       </div>
 
-      <div className={`sidebar ${isExpanded ? 'expanded' : 'collapsed'}`}>
-        <button onClick={toggleSidebar} className="toggle-button" aria-label="Toggle sidebar">
-          <i className={`fas ${isExpanded ? 'fa-chevron-left' : 'fa-chevron-right'}`}></i>
-        </button>
-
-        <nav className="nav">
-          <FullscreenIcon />
-          <NavItem icon="home" label="Home" move="/" isExpanded={isExpanded} />
-          <NavItem icon="chart-bar" label="Dashboard" move="/dashboard" isExpanded={isExpanded} />
-          <NavItem icon="user" label="Profile" move="/profile" isExpanded={isExpanded} />
-          <NavItem icon="chalkboard-teacher" label="Classroom" isExpanded={isExpanded} />
-          <NavItem icon="briefcase" label="Assets" isExpanded={isExpanded} move="/assets" />
-          <NavItem icon="book" label="Assignment" move="/assignment" isExpanded={isExpanded} />
-          <NavItem icon="certificate" label="Certificates" move="/certificates" isExpanded={isExpanded} />
-          <NavItem icon="cog" label="Settings" move="/settings" isExpanded={isExpanded} />
-          <NavItem icon="question-circle" label="Help" isExpanded={isExpanded} />
-          <NavItem icon="right-from-bracket" label="Log Out" isExpanded={isExpanded} onClick={logout} />
-        </nav>
-      </div>
+        <Sidebar
+          isExpanded={isExpanded}
+          onToggle={toggleSidebar}
+          onLogout={logout}
+          showFullscreenIcon={true}
+        />
 
       <div className="main-content">
         <h2 style={{ fontSize: '26px', marginBottom: '20px' }}>📚 Online Classes</h2>

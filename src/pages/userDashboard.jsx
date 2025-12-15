@@ -12,12 +12,16 @@ import Header from '../components/userDashCom/header';
 import QuickLinks from '../components/userDashCom/quickLinks';
 import { Modal, Box, Typography, Button } from '@mui/material';
 import CoursesApplied from '../components/userDashCom/courses';
+import Sidebar from '../components/common/Sidebar';
 
 
 // images for course section
 import onlineImage from "../assets/illustrations/dashboard/online_class.png";
 import oneOnOneImage from "../assets/illustrations/dashboard/one_on_one.png";
 import buy_courseImage from "../assets/illustrations/dashboard/buy_course.png";
+import buy_courseImage2 from "../assets/illustrations/dashboard/myteacher_buy_course.png";
+import myteacher_private_tutor from "../assets/illustrations/dashboard/myteacher_private_tutor.png";
+import myteacher_logo from "../img/Untitled-1.png"
 
 
 const API_BASE = import.meta.env.VITE_BASEURL || "http://localhost:5000";
@@ -146,26 +150,12 @@ function UserDashboard() {
         ></i>
       </button>
 
-      {/* Sidebar */}
-      <div className={`sidebar ${isExpanded ? '' : 'collapsed'}`} ref={navRef}>
-        <button onClick={toggleSidebar} className="toggle-button">
-          <i className={`fas ${isExpanded ? 'fa-chevron-left' : 'fa-chevron-right'}`}></i>
-        </button>
-
-        {/* Navigation Items */}
-        <nav className="nav">
-          <FullscreenIcon />
-          <NavItem icon="home" label="Home" move="/" isExpanded={isExpanded} />
-          <NavItem icon="chart-bar" label="Dashboard" isExpanded={isExpanded} move="/dashboard" />
-          <NavItem icon="user" label="Profile" move="/profile" isExpanded={isExpanded} />
-          <NavItem icon="chalkboard-teacher" move="/online-class" label="Online Class" isExpanded={isExpanded} />
-          <NavItem icon="briefcase" label="Assets" move="/assets" isExpanded={isExpanded} />
-          <NavItem icon="school" move="/on-site" label="On Site" isExpanded={isExpanded} />
-          <NavItem icon="cog" label="Settings" move="/settings" isExpanded={isExpanded} target="_blank"/>
-          <NavItem icon="question-circle" label="Help" isExpanded={isExpanded} target="_blank"/>
-          <NavItem icon="right-from-bracket" label="Log Out" isExpanded={isExpanded} onClick={logout} />
-        </nav>
-      </div>
+      <Sidebar 
+        isExpanded={isExpanded}
+        onToggle={toggleSidebar}
+        onLogout={logout}
+        showFullscreenIcon={true}
+      />
 
       {/* Main Content */}
       <div className="main-content">
@@ -176,33 +166,55 @@ function UserDashboard() {
         </div>
         
         <div className={`apply-for-course-section ${theme}`}>
-          <Link to='/apply-for-online-class' className={`apply-for-course-cards ${theme}`}>
+          <div className={`apply-for-course-cards ${theme}`}>
             <div className={`apply-for-course-image-wrapper`}>
-              <img src={onlineImage} alt="" />
+              <img src={onlineImage} alt="" loading="lazy" />
             </div>
             <h2>Online Class</h2>
             <p className="descriptions">
               An online class is a course conducted on an online platform (such as Zoom). It is a public class where other users or students who apply can join, learn, and share materials and ideas.
             </p>
-          </Link>
-          <Link className={`apply-for-course-cards ${theme}`}>
+
+            <div className="btn-section">
+              <Link to="/apply-for-online-class">
+                View E-LEARNING
+              </Link>
+
+              <img src={myteacher_logo} alt="" loading="lazy" />
+            </div>
+          </div>
+          <div className={`apply-for-course-cards ${theme}`}>
             <div className="apply-for-course-image-wrapper">
-              <img src={buy_courseImage} alt="" />
+              <img src={buy_courseImage2} alt="" loading="lazy" />
             </div>
             <h2>Buy Course</h2>
             <p className="descriptions">
               Real-world case studies and step-by-step demonstrations show how to apply your learning in actual scenarios, bridging theory and practice and highlighting pitfalls with actionable takeaways.    
             </p>
-          </Link>
-          <Link to='/private-tutor' className={`apply-for-course-cards ${theme}`}>
+            <div className="btn-section">
+              <Link to="/apply-for-online-class">
+                View Courses
+              </Link>
+
+              <img src={myteacher_logo} alt="" loading="lazy" />
+            </div>
+          </div>
+          <div className={`apply-for-course-cards ${theme}`}>
             <div className="apply-for-course-image-wrapper">
-              <img src={oneOnOneImage} alt="" />
+              <img src={myteacher_private_tutor} alt="" loading="lazy" />
             </div>
             <h2>Private Tutor</h2>
             <p className="descriptions">
               One-on-one teaching pairs a tutor with a single student via Zoom or other online platforms, offering direct interaction, real-time feedback, and tailored pacing. 
             </p>
-          </Link>
+            <div className="btn-section">
+              <Link to="/apply-for-online-class">
+                Find Totur
+              </Link>
+
+              <img src={myteacher_logo} alt="" loading="lazy" />
+            </div>
+          </div>
         </div>
 
 

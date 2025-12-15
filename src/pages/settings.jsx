@@ -24,6 +24,7 @@ import myteacherUnitedKingdom from '../assets/illustrations/myteacher_united-kin
 import myteacherCanada from '../assets/illustrations/myteacher_canada.png';
 import myteacherIndia from '../assets/illustrations/myteacher_india.png';
 import Header from '../components/userDashCom/header';
+import Sidebar from '../components/common/Sidebar';
 
 const statesByCountry = {
   Nigeria: {
@@ -110,10 +111,10 @@ const SECTION_LIST = [
   { key: 'profile', label: 'Change Profile', icon: 'fa-user-edit' },
   { key: 'address', label: 'Change Address & Info', icon: 'fa-map-marker-alt' },
   { key: 'country', label: 'Set Date of Birth, State & Country', icon: 'fa-flag' },
-  { key: 'userinfo', label: 'User Info (Profile Details)', icon: 'fa-id-card' },
-  { key: 'storyImage', label: 'Story Image', icon: 'fa-image' },
-  { key: 'storyVideo', label: 'Story Video', icon: 'fa-video' },
-  { key: 'profileImage', label: 'Profile Image', icon: 'fa-user-circle' },
+  // { key: 'userinfo', label: 'User Info (Profile Details)', icon: 'fa-id-card' },
+  // { key: 'storyImage', label: 'Story Image', icon: 'fa-image' },
+  // { key: 'storyVideo', label: 'Story Video', icon: 'fa-video' },
+  // { key: 'profileImage', label: 'Profile Image', icon: 'fa-user-circle' },
 ];
 
 const Settings = () => {
@@ -133,23 +134,23 @@ const Settings = () => {
       toast.error('Only JPG, PNG, or AVIF images are allowed.');
       return;
     }
-    
+
     const file = acceptedFiles[0];
     if (!file) return;
-    
+
     // Validate file type
     const allowedTypes = ['image/jpeg', 'image/png', 'image/avif', 'image/jpg'];
     if (!allowedTypes.includes(file.type)) {
       toast.error('Only JPG, PNG, or AVIF images are allowed.');
       return;
     }
-    
+
     setProfileImage(file);
     const reader = new FileReader();
     reader.onload = () => setPreviewImage(reader.result);
     reader.readAsDataURL(file);
   }, []);
-  
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
@@ -182,18 +183,18 @@ const Settings = () => {
   const onImageDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
     if (!file) return;
-    
+
     // Validate image type
     if (!file.type.startsWith('image/')) {
       toast.error('Only image files are allowed');
       return;
     }
-    
+
     setStoryImageFile(file);
     const imageUrl = URL.createObjectURL(file);
     setStoryImage(imageUrl);
   }, []);
-  
+
   const { getRootProps: getImageRootProps, getInputProps: getImageInputProps } = useDropzone({
     onDrop: onImageDrop,
     accept: {
@@ -208,18 +209,18 @@ const Settings = () => {
   const onVideoDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
     if (!file) return;
-    
+
     // Validate video type
     if (!file.type.startsWith('video/')) {
       toast.error('Only video files are allowed');
       return;
     }
-    
+
     setStoryVideoFile(file);
     const videoUrl = URL.createObjectURL(file);
     setStoryVideo(videoUrl);
   }, []);
-  
+
   const { getRootProps: getVideoRootProps, getInputProps: getVideoInputProps } = useDropzone({
     onDrop: onVideoDrop,
     accept: {
@@ -270,7 +271,7 @@ const Settings = () => {
           setStoryImage(data.storyImage || '');
           setStoryVideo(data.storyVideo || '');
           // If address is also part of user_info, you might want to set it here too or decide which one takes precedence
-          setAddress(data.address || user.address || ''); 
+          setAddress(data.address || user.address || '');
           setUserInfoExists(true);
         } else {
           setUserInfoExists(false);
@@ -523,58 +524,58 @@ const Settings = () => {
     e.preventDefault();
     setModalLoading(true);
     try {
-        const token = localStorage.getItem('token');
-        const payload = {};
-        
-        // Only include fields that have values
-        if (aboutYourSelf !== undefined) payload.aboutYourSelf = aboutYourSelf;
-        if (hobbies !== undefined) payload.hobbies = hobbies;
-        if (marritaStatus !== undefined) payload.marritaStatus = marritaStatus;
-        if (address !== undefined) payload.address = address;
+      const token = localStorage.getItem('token');
+      const payload = {};
 
-        // If no fields to update
-        if (Object.keys(payload).length === 0) {
-            toast.error('No fields to update');
-            return;
+      // Only include fields that have values
+      if (aboutYourSelf !== undefined) payload.aboutYourSelf = aboutYourSelf;
+      if (hobbies !== undefined) payload.hobbies = hobbies;
+      if (marritaStatus !== undefined) payload.marritaStatus = marritaStatus;
+      if (address !== undefined) payload.address = address;
+
+      // If no fields to update
+      if (Object.keys(payload).length === 0) {
+        toast.error('No fields to update');
+        return;
+      }
+
+      const res = await fetch(`${API_BASE}/user_info/update`, {
+        method: 'PATCH',  // Using PATCH for partial updates
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        toast.success(data.message || 'User info updated successfully!');
+        // Update local state from response
+        if (data.userInfo) {
+          setAboutYourSelf(prev => data.userInfo.aboutYourSelf ?? prev);
+          setHobbies(prev => data.userInfo.hobbies ?? prev);
+          setMarritaStatus(prev => data.userInfo.marritaStatus ?? prev);
+          if (data.userInfo.address) setAddress(data.userInfo.address);
         }
-
-        const res = await fetch(`${API_BASE}/user_info/update`, {
-            method: 'PATCH',  // Using PATCH for partial updates
-            headers: { 
-                'Content-Type': 'application/json', 
-                'Authorization': `Bearer ${token}` 
-            },
-            body: JSON.stringify(payload),
-        });
-        
-        const data = await res.json();
-        
-        if (res.ok) {
-            toast.success(data.message || 'User info updated successfully!');
-            // Update local state from response
-            if (data.userInfo) {
-                setAboutYourSelf(prev => data.userInfo.aboutYourSelf ?? prev);
-                setHobbies(prev => data.userInfo.hobbies ?? prev);
-                setMarritaStatus(prev => data.userInfo.marritaStatus ?? prev);
-                if (data.userInfo.address) setAddress(data.userInfo.address);
-            }
-            setOpenSection(null);
+        setOpenSection(null);
+      } else {
+        if (res.status === 400) {
+          toast.error(data.message || 'Invalid update data');
+        } else if (res.status === 404) {
+          toast.error('Please create your user info first');
         } else {
-            if (res.status === 400) {
-                toast.error(data.message || 'Invalid update data');
-            } else if (res.status === 404) {
-                toast.error('Please create your user info first');
-            } else {
-                toast.error(data.message || 'Failed to update user info');
-            }
+          toast.error(data.message || 'Failed to update user info');
         }
+      }
     } catch (err) {
-        console.error('Update error:', err);
-        toast.error('Network error. Please try again.');
+      console.error('Update error:', err);
+      toast.error('Network error. Please try again.');
     } finally {
-        setModalLoading(false);
+      setModalLoading(false);
     }
-};
+  };
 
 
   // Modal rendering logic
@@ -656,98 +657,98 @@ const Settings = () => {
           </form>
         );
         break;
-      case 'userinfo':
-        content = (
-          <form className={`input-box-auth ${theme}`} onSubmit={e => {
-            e.preventDefault();
-            setModalLoading(true);
-            handleUserInfoSubmit(e);
-          }}>
-            <h2>User Info (Profile Details)</h2>
-            <textarea placeholder="About Yourself" value={aboutYourSelf} onChange={e => setAboutYourSelf(e.target.value)} style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }} />
-            <input type="text" placeholder="Hobbies (comma separated)" value={hobbies} onChange={e => setHobbies(e.target.value)} style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }} />
-            <input type="text" placeholder="Marital Status" value={marritaStatus} onChange={e => setMarritaStatus(e.target.value)} style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }} /><textarea type="text" placeholder="Change Address" value={address} onChange={e => setAddress(e.target.value)} style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }} />
-            <button type="submit">{userInfoExists ? 'Update User Info' : 'Create User Info'}</button>
-          </form>
-        );
-        break;
-      case 'storyImage':
-        content = (
-          <form className={`input-box-auth ${theme}`} onSubmit={async e => {
-            e.preventDefault();
-            if (!storyImageFile) return toast.warning('Please select an image.');
-            setModalLoading(true);
-            setStoryImageUploading(true);
-            const token = localStorage.getItem('token');
-            const formData = new FormData();
-            formData.append('storyImage', storyImageFile);
-            try {
-              // Assuming /user_info/upload/storyImage exists and handles this
-              const res = await fetch(`${API_BASE}/user_info/upload/storyImage`, {
-                method: 'POST',
-                headers: { Authorization: `Bearer ${token}` },
-                body: formData
-              });
-              const data = await res.json();
-              if (res.ok) {
-                setStoryImage(data.url); // Update local state for preview
-                toast.success('Story image uploaded!');
-                // Pusher event should update other clients if needed
-              } else {
-                toast.error(data.message || 'Story image upload failed');
-              }
-            } catch {
-              toast.error('Story image upload failed');
-            } finally {
-              setStoryImageUploading(false);
-              setModalLoading(false);
-            }
-          }}>
-            <h2>Story Image</h2>
-            <div 
-              className="fb-upload-preview" 
-              style={{ 
-                backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff',
-                minHeight: '200px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'relative',
-                borderRadius: '8px',
-                border: isImageDragActive ? '2px dashed #4CAF50' : '2px dashed #ccc',
-                transition: 'border 0.3s ease',
-                cursor: 'pointer',
-                overflow: 'hidden'
-              }}
-              {...getImageRootProps()}
-            >
-              <input {...getImageInputProps()} />
-              {storyImage ? (
-                <img 
-                  src={storyImage} 
-                  alt="Story" 
-                  style={{ 
-                    maxWidth: '100%', 
-                    maxHeight: '300px',
-                    display: 'block',
-                    objectFit: 'contain'
-                  }} 
-                />
-              ) : (
-                <div style={{ textAlign: 'center', padding: '20px' }}>
-                  <i className="fas fa-image" style={{ fontSize: '48px', marginBottom: '10px', color: '#666' }}></i>
-                  <p style={{ margin: '10px 0' }}>
-                    {isImageDragActive ? 'Drop the image here' : 'Drag & drop an image here, or click to select'}
-                  </p>
-                  <p style={{ fontSize: '0.9em', color: '#999' }}>Supports: JPG, PNG, WebP, GIF</p>
-                </div>
-              )}
-            </div>
-            <button type="submit" disabled={storyImageUploading}>{storyImageUploading ? 'Uploading...' : 'Upload Story Image'}</button>
-          </form>
-        );
-        break;
-      case 'storyVideo':
+      // case 'userinfo':
+      //   content = (
+      //     <form className={`input-box-auth ${theme}`} onSubmit={e => {
+      //       e.preventDefault();
+      //       setModalLoading(true);
+      //       handleUserInfoSubmit(e);
+      //     }}>
+      //       <h2>User Info (Profile Details)</h2>
+      //       <textarea placeholder="About Yourself" value={aboutYourSelf} onChange={e => setAboutYourSelf(e.target.value)} style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }} />
+      //       <input type="text" placeholder="Hobbies (comma separated)" value={hobbies} onChange={e => setHobbies(e.target.value)} style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }} />
+      //       <input type="text" placeholder="Marital Status" value={marritaStatus} onChange={e => setMarritaStatus(e.target.value)} style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }} /><textarea type="text" placeholder="Change Address" value={address} onChange={e => setAddress(e.target.value)} style={{ backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff' }} />
+      //       <button type="submit">{userInfoExists ? 'Update User Info' : 'Create User Info'}</button>
+      //     </form>
+      //   );
+      //   break;
+      // case 'storyImage':
+      //   content = (
+      //     <form className={`input-box-auth ${theme}`} onSubmit={async e => {
+      //       e.preventDefault();
+      //       if (!storyImageFile) return toast.warning('Please select an image.');
+      //       setModalLoading(true);
+      //       setStoryImageUploading(true);
+      //       const token = localStorage.getItem('token');
+      //       const formData = new FormData();
+      //       formData.append('storyImage', storyImageFile);
+      //       try {
+      //         // Assuming /user_info/upload/storyImage exists and handles this
+      //         const res = await fetch(`${API_BASE}/user_info/upload/storyImage`, {
+      //           method: 'POST',
+      //           headers: { Authorization: `Bearer ${token}` },
+      //           body: formData
+      //         });
+      //         const data = await res.json();
+      //         if (res.ok) {
+      //           setStoryImage(data.url); // Update local state for preview
+      //           toast.success('Story image uploaded!');
+      //           // Pusher event should update other clients if needed
+      //         } else {
+      //           toast.error(data.message || 'Story image upload failed');
+      //         }
+      //       } catch {
+      //         toast.error('Story image upload failed');
+      //       } finally {
+      //         setStoryImageUploading(false);
+      //         setModalLoading(false);
+      //       }
+      //     }}>
+      //       <h2>Story Image</h2>
+      //       <div
+      //         className="fb-upload-preview"
+      //         style={{
+      //           backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff',
+      //           minHeight: '200px',
+      //           display: 'flex',
+      //           alignItems: 'center',
+      //           justifyContent: 'center',
+      //           position: 'relative',
+      //           borderRadius: '8px',
+      //           border: isImageDragActive ? '2px dashed #4CAF50' : '2px dashed #ccc',
+      //           transition: 'border 0.3s ease',
+      //           cursor: 'pointer',
+      //           overflow: 'hidden'
+      //         }}
+      //         {...getImageRootProps()}
+      //       >
+      //         <input {...getImageInputProps()} />
+      //         {storyImage ? (
+      //           <img
+      //             src={storyImage}
+      //             alt="Story"
+      //             style={{
+      //               maxWidth: '100%',
+      //               maxHeight: '300px',
+      //               display: 'block',
+      //               objectFit: 'contain'
+      //             }}
+      //           />
+      //         ) : (
+      //           <div style={{ textAlign: 'center', padding: '20px' }}>
+      //             <i className="fas fa-image" style={{ fontSize: '48px', marginBottom: '10px', color: '#666' }}></i>
+      //             <p style={{ margin: '10px 0' }}>
+      //               {isImageDragActive ? 'Drop the image here' : 'Drag & drop an image here, or click to select'}
+      //             </p>
+      //             <p style={{ fontSize: '0.9em', color: '#999' }}>Supports: JPG, PNG, WebP, GIF</p>
+      //           </div>
+      //         )}
+      //       </div>
+      //       <button type="submit" disabled={storyImageUploading}>{storyImageUploading ? 'Uploading...' : 'Upload Story Image'}</button>
+      //     </form>
+      //   );
+      //   break;
+      // case 'storyVideo':
         content = (
           <form className={`input-box-auth ${theme}`} onSubmit={async e => {
             e.preventDefault();
@@ -779,9 +780,9 @@ const Settings = () => {
             }
           }}>
             <h2>Story Video</h2>
-            <div 
-              className="fb-upload-preview" 
-              style={{ 
+            <div
+              className="fb-upload-preview"
+              style={{
                 backgroundColor: theme === 'dark' ? '#3b3b3b' : '#fff',
                 minHeight: '200px',
                 display: 'flex',
@@ -798,14 +799,14 @@ const Settings = () => {
             >
               <input {...getVideoInputProps()} />
               {storyVideo ? (
-                <video 
-                  src={storyVideo} 
-                  controls 
-                  style={{ 
-                    maxWidth: '100%', 
+                <video
+                  src={storyVideo}
+                  controls
+                  style={{
+                    maxWidth: '100%',
                     maxHeight: '300px',
                     display: 'block'
-                  }} 
+                  }}
                 />
               ) : (
                 <div style={{ textAlign: 'center', padding: '20px' }}>
@@ -821,190 +822,190 @@ const Settings = () => {
           </form>
         );
         break;
-      case 'profileImage':
-      content = (
-      <form className={`input-box-auth ${theme}`} onSubmit={async e => {
-        e.preventDefault();
-        if (user && user.googleId) {
-          toast.error("Profile image update not allowed for Google-authenticated users.");
-          setModalLoading(false);
-          return;
-        }
-        if (!profileImage) return toast.warning('Please select an image.');
-        setModalLoading(true);
-        const token = localStorage.getItem('token');
-        const reader = new FileReader();
-        reader.onload = async () => {
-          const base64 = reader.result.split(',')[1];
-          const filename = profileImage.name;
-          const mimetype = profileImage.type;
-          try {
-            const res = await fetch(`${API_BASE}/user/profile_image`, {
-              method: 'PATCH',
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`
-              },
-              body: JSON.stringify({
-                imageBase64: base64,
-                filename,
-                mimetype
-              })
-            });
-            const data = await res.json();
-            if (res.ok) {
-              toast.success('Profile image updated!');
-              setPreviewImage(null); // Clear preview
-              if (updateUser && data.user) {
-                updateUser(data.user); // This will trigger Pusher event from backend if configured
+      // case 'profileImage':
+        content = (
+          <form className={`input-box-auth ${theme}`} onSubmit={async e => {
+            e.preventDefault();
+            if (user && user.googleId) {
+              toast.error("Profile image update not allowed for Google-authenticated users.");
+              setModalLoading(false);
+              return;
+            }
+            if (!profileImage) return toast.warning('Please select an image.');
+            setModalLoading(true);
+            const token = localStorage.getItem('token');
+            const reader = new FileReader();
+            reader.onload = async () => {
+              const base64 = reader.result.split(',')[1];
+              const filename = profileImage.name;
+              const mimetype = profileImage.type;
+              try {
+                const res = await fetch(`${API_BASE}/user/profile_image`, {
+                  method: 'PATCH',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                  },
+                  body: JSON.stringify({
+                    imageBase64: base64,
+                    filename,
+                    mimetype
+                  })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                  toast.success('Profile image updated!');
+                  setPreviewImage(null); // Clear preview
+                  if (updateUser && data.user) {
+                    updateUser(data.user); // This will trigger Pusher event from backend if configured
+                  }
+                  setOpenSection(null);
+                } else {
+                  toast.error(data.message || 'Upload failed!');
+                }
+              } catch (err) {
+                toast.error('Upload failed! ' + err.message);
+              } finally {
+                setModalLoading(false);
               }
-              setOpenSection(null);
-            } else {
-              toast.error(data.message || 'Upload failed!');
-            }
-          } catch(err) {
-            toast.error('Upload failed! ' + err.message);
-          } finally {
-            setModalLoading(false);
-          }
-        };
-        reader.readAsDataURL(profileImage);
-      }}>
-      <h2 style={{ textAlign: 'center' }}>Profile Image</h2>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-      <div className="profile-img-container" style={{ position: 'relative', width: '120px', height: '120px' }}>
-      {(() => {
-      const imgSrc = previewImage
-      ? previewImage
-      : (user && user.avatar && typeof user.avatar === 'string' && user.avatar.startsWith('http'))
-      ? user.avatar
-      : userAvatarDefault;
-      return (
-      <Img
-      src={imgSrc}
-      alt="profile"
-      className="preview-avatar"
-      style={{
-      maxWidth: 120,
-      maxHeight: 120,
-      borderRadius: '50%',
-      objectFit: 'cover',
-      border: '2px solid #ccc',
-      background: theme === 'dark' ? '#23272f' : '#fff'
-      }}
-      loader={<span>Loading...</span>}
-      unloader={<img src={userAvatarDefault} alt="profile" className="preview-avatar" style={{ maxWidth: 120, maxHeight: 120, borderRadius: '50%', objectFit: 'cover', border: '2px solid #ccc', background: theme === 'dark' ? '#23272f' : '#fff' }} />}
-      />
-      );
-      })()}
-      <div 
-        {...getRootProps()}
-        className="fb-file-upload-label" 
-        style={{
-          background: 'red',
-          cursor: 'pointer',
-          width: '40px',
-          height: '40px',
-          borderRadius: '50%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          position: 'absolute',
-          bottom: '0',
-          right: '0',
-          border: `2px solid ${theme === 'dark' ? '#23272f' : '#fff'}`,
-          zIndex: 5
-        }}
-      >
-        <input {...getInputProps()} />
-        <i className="fas fa-camera" style={{ color: 'white' }} />
-        {isDragActive && (
-          <div style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'rgba(0,0,0,0.5)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 9999,
-            color: 'white',
-            fontSize: '24px',
-            fontWeight: 'bold'
+            };
+            reader.readAsDataURL(profileImage);
           }}>
-            Drop the image here...
-          </div>
-        )}
-      </div>
-      </div>
-      <div style={{ position: 'relative', width: '100%', maxWidth: 200, alignSelf: 'center' }}>
-        <button 
-          type="submit" 
-          style={{ 
-            width: '100%',
-            position: 'relative',
-            zIndex: 1,
-            opacity: modalLoading ? 0.7 : 1,
-            pointerEvents: modalLoading ? 'none' : 'auto',
-            padding: '10px',
-            backgroundColor: '#4CAF50',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            fontSize: '16px',
-            marginTop: '10px',
-            transition: 'opacity 0.3s ease',
-            ':hover': {
-              backgroundColor: '#45a049',
-            },
-            ':disabled': {
-              backgroundColor: '#cccccc',
-              cursor: 'not-allowed'
-            }
-          }}
-          disabled={modalLoading}
-        >
-          {modalLoading ? 'Uploading...' : 'Upload Profile Image'}
-        </button>
-        {modalLoading && (
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.7)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: '4px',
-            zIndex: 2
-          }}>
-            <div className="spinner-border text-light" role="status" style={{
-              width: '1.5rem',
-              height: '1.5rem',
-              borderWidth: '0.2em'
-            }}>
-              <span className="visually-hidden">Loading...</span>
+            <h2 style={{ textAlign: 'center' }}>Profile Image</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+              <div className="profile-img-container" style={{ position: 'relative', width: '120px', height: '120px' }}>
+                {(() => {
+                  const imgSrc = previewImage
+                    ? previewImage
+                    : (user && user.avatar && typeof user.avatar === 'string' && user.avatar.startsWith('http'))
+                      ? user.avatar
+                      : userAvatarDefault;
+                  return (
+                    <Img
+                      src={imgSrc}
+                      alt="profile"
+                      className="preview-avatar"
+                      style={{
+                        maxWidth: 120,
+                        maxHeight: 120,
+                        borderRadius: '50%',
+                        objectFit: 'cover',
+                        border: '2px solid #ccc',
+                        background: theme === 'dark' ? '#23272f' : '#fff'
+                      }}
+                      loader={<span>Loading...</span>}
+                      unloader={<img src={userAvatarDefault} alt="profile" className="preview-avatar" style={{ maxWidth: 120, maxHeight: 120, borderRadius: '50%', objectFit: 'cover', border: '2px solid #ccc', background: theme === 'dark' ? '#23272f' : '#fff' }} />}
+                    />
+                  );
+                })()}
+                <div
+                  {...getRootProps()}
+                  className="fb-file-upload-label"
+                  style={{
+                    background: 'red',
+                    cursor: 'pointer',
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'absolute',
+                    bottom: '0',
+                    right: '0',
+                    border: `2px solid ${theme === 'dark' ? '#23272f' : '#fff'}`,
+                    zIndex: 5
+                  }}
+                >
+                  <input {...getInputProps()} />
+                  <i className="fas fa-camera" style={{ color: 'white' }} />
+                  {isDragActive && (
+                    <div style={{
+                      position: 'fixed',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'rgba(0,0,0,0.5)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      zIndex: 9999,
+                      color: 'white',
+                      fontSize: '24px',
+                      fontWeight: 'bold'
+                    }}>
+                      Drop the image here...
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div style={{ position: 'relative', width: '100%', maxWidth: 200, alignSelf: 'center' }}>
+                <button
+                  type="submit"
+                  style={{
+                    width: '100%',
+                    position: 'relative',
+                    zIndex: 1,
+                    opacity: modalLoading ? 0.7 : 1,
+                    pointerEvents: modalLoading ? 'none' : 'auto',
+                    padding: '10px',
+                    backgroundColor: '#4CAF50',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    fontSize: '16px',
+                    marginTop: '10px',
+                    transition: 'opacity 0.3s ease',
+                    ':hover': {
+                      backgroundColor: '#45a049',
+                    },
+                    ':disabled': {
+                      backgroundColor: '#cccccc',
+                      cursor: 'not-allowed'
+                    }
+                  }}
+                  disabled={modalLoading}
+                >
+                  {modalLoading ? 'Uploading...' : 'Upload Profile Image'}
+                </button>
+                {modalLoading && (
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(0,0,0,0.7)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: '4px',
+                    zIndex: 2
+                  }}>
+                    <div className="spinner-border text-light" role="status" style={{
+                      width: '1.5rem',
+                      height: '1.5rem',
+                      borderWidth: '0.2em'
+                    }}>
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        )}
-      </div>
-      </div>
-      </form>
-      );
-      break;
+          </form>
+        );
+        break;
       default:
         content = null;
     }
     return (
       <div className="settings-modal-overlay">
         <div className="settings-modal">
-          <button 
-            className="modal-close" 
+          <button
+            className="modal-close"
             onClick={() => setOpenSection(null)}
             aria-label="Close modal"
           >
@@ -1021,68 +1022,58 @@ const Settings = () => {
 
   return (
     <div className={`dashboard-container ${theme}`}>
-    <DashMobileNav theme={theme} />
-    <Header theme={theme} />
-    <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
-    <div className={`sidebar${isExpanded ? '' : ' collapsed'}`}>
-    <button onClick={toggleSidebar} className="toggle-button">
-    <i className={`fas ${isExpanded ? 'fa-chevron-left' : 'fa-chevron-right'}`}></i>
-    </button>
-    <nav className="nav">
-    <FullscreenIcon />
-    <NavItem icon="home" label="Home" move="/" isExpanded={isExpanded} />
-    <NavItem icon="chart-bar" label="Dashboard" move="/dashboard" isExpanded={isExpanded} />
-    <NavItem icon="user" label="Profile" move="/profile" isExpanded={isExpanded} />
-    <NavItem icon="chalkboard-teacher" label="Online Class" move="/online-class" isExpanded={isExpanded} />
-    <NavItem icon="briefcase" label="Assets" move="/assets" isExpanded={isExpanded} />
-    <NavItem icon="cog" label="Settings" move="/settings" isExpanded={isExpanded} />
-    <NavItem icon="question-circle" label="Help" move="/help" isExpanded={isExpanded} />
-    <NavItem icon="right-from-bracket" label="Log Out" move="" isExpanded={isExpanded} onClick={logout} />
-    </nav>
-    </div>
-    <div className="settings-content">
-    <h1>⚙️ Account Settings</h1>
-    <button onClick={toggleTheme} className="theme-toggle"
-    style={{ position: 'fixed', top: '10px', right: '10px', zIndex: 1000, padding: '8px 12px', border: 'none', borderRadius: '4px', cursor: 'pointer', backgroundColor: theme === 'dark' ? '#333' : '#f0f0f0', color: theme === 'dark' ? '#fff' : '#000', display: 'flex', alignItems: 'center' }}>
-    <i className={`fas fa-${theme === 'light' ? 'moon' : 'sun'}`} />
-    </button>
-    <div className="setting-input-section">
-    {SECTION_LIST.map(section => (
-    <div
-    key={section.key}
-    className={`settings-card ${theme}${openSection === section.key ? ' open' : ''}`}
-    style={{
-      backgroundColor: theme === 'dark' ? '#2c2f33' : '#fff',
-      color: theme === 'dark' ? '#fff' : '#000',
-    }}
-    onClick={() => {
-        // For profile image, if user is google authenticated, show toast and don't open modal
-        if (section.key === 'profileImage' && user && user.googleId) {
-            toast.error("Profile image update not allowed for Google-authenticated users.");
-            return;
-        }
-         if (section.key === 'password' && user && user.googleId) {
-            toast.error("Password change not allowed for Google-authenticated users.");
-            return;
-        }
-        // For other profile sections, if user is google authenticated, show toast and don't open modal
-        const googleRestrictedSections = ['profile', 'address', 'country'];
-        if (googleRestrictedSections.includes(section.key) && user && user.googleId) {
-            toast.error("Profile updates not allowed for Google-authenticated users.");
-            return;
-        }
-        setOpenSection(section.key);
-    }}
-    >
-    <span className="card-title">
-    <i className={`fas ${section.icon}`}></i> {section.label}
-    </span>
-    <i className={`fas fa-chevron-down card-chevron${openSection === section.key ? ' open' : ''}`}></i>
-    </div>
-    ))}
-    </div>
-    {renderModal()}
-    </div>
+      <DashMobileNav theme={theme} />
+      <Header theme={theme} />
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+      <Sidebar
+        isExpanded={isExpanded}
+        onToggle={toggleSidebar}
+        onLogout={logout}
+        showFullscreenIcon={true}
+      />
+      <div className="settings-content">
+        <h1>⚙️ Account Settings</h1>
+        <button onClick={toggleTheme} className="theme-toggle"
+          style={{ position: 'fixed', top: '10px', right: '10px', zIndex: 1000, padding: '8px 12px', border: 'none', borderRadius: '4px', cursor: 'pointer', backgroundColor: theme === 'dark' ? '#333' : '#f0f0f0', color: theme === 'dark' ? '#fff' : '#000', display: 'flex', alignItems: 'center' }}>
+          <i className={`fas fa-${theme === 'light' ? 'moon' : 'sun'}`} />
+        </button>
+        <div className="setting-input-section">
+          {SECTION_LIST.map(section => (
+            <div
+              key={section.key}
+              className={`settings-card ${theme}${openSection === section.key ? ' open' : ''}`}
+              style={{
+                backgroundColor: theme === 'dark' ? '#2c2f33' : '#fff',
+                color: theme === 'dark' ? '#fff' : '#000',
+              }}
+              onClick={() => {
+                // For profile image, if user is google authenticated, show toast and don't open modal
+                if (section.key === 'profileImage' && user && user.googleId) {
+                  toast.error("Profile image update not allowed for Google-authenticated users.");
+                  return;
+                }
+                if (section.key === 'password' && user && user.googleId) {
+                  toast.error("Password change not allowed for Google-authenticated users.");
+                  return;
+                }
+                // For other profile sections, if user is google authenticated, show toast and don't open modal
+                const googleRestrictedSections = ['profile', 'address', 'country'];
+                if (googleRestrictedSections.includes(section.key) && user && user.googleId) {
+                  toast.error("Profile updates not allowed for Google-authenticated users.");
+                  return;
+                }
+                setOpenSection(section.key);
+              }}
+            >
+              <span className="card-title">
+                <i className={`fas ${section.icon}`}></i> {section.label}
+              </span>
+              <i className={`fas fa-chevron-down card-chevron${openSection === section.key ? ' open' : ''}`}></i>
+            </div>
+          ))}
+        </div>
+        {renderModal()}
+      </div>
     </div>
   );
 };

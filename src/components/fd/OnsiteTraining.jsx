@@ -2,6 +2,8 @@ import myteacherOnsite from "../../assets/svg/myteacher_institute_onsite.png";
 import vector from "../../assets/svg/Vector.png";
 import vector2 from "../../assets/svg/Vector2.png";
 import vector3 from "../../assets/svg/Vector3.png";
+
+import myteacherOnsiteImage from "../../assets/images/Best_tech_intitute_image4.jpeg";
 const OnsiteTraining = () => {
     return(
         <section className="onsite-section">
@@ -20,7 +22,7 @@ const OnsiteTraining = () => {
             </div>
           </div>
           <div className="onsite-image">
-            <img src={myteacherOnsite} alt="Campus" />
+            <img src={myteacherOnsiteImage} alt="Campus" />
             <p className="caption">Visit Our Campus</p>
             <span>Experience hand-on learning in our state-of-the-art facilities</span>
           </div>
