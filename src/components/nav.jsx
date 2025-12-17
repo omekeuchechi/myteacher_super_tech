@@ -86,7 +86,8 @@ const Nav = () => {
       </div>
       <ul className="nav-ul">
         <li onClick={handleCoursesClick}><Link to="/courses" id="navLink">Courses</Link></li>
-        <li><Link to="/techblog" id="navLink">Blog</Link></li>
+        {/* <li><Link to="/techblog" id="navLink">Blog</Link></li> */}
+        <Link to="/buy-course" id="navLink">Buy Course</Link>
         <li><Link to="/apply" id="navLink">Live Online Courses</Link></li>
         <li><Link to="/instructor-form" id="navLink">Apply as Instructor</Link></li>
         <li><Link to="/job-list" id="navLink">Job List</Link></li>

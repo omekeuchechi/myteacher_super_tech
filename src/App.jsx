@@ -96,6 +96,7 @@ import MyCourses from './pages/instructor/mycourses';
 import InstructorCourses from './pages/instructor/courses';
 import InstructorCreateCourse from './pages/instructor/createCourse';
 import AttendLecture from './pages/instructor/attendLecture';
+import BuyCoursePage from './pages/buyCourse/buyCoursePage';
 
 
 
@@ -296,6 +297,8 @@ function AppRoutes() {
       />
 
       <Route path="/courses" element={<Courses />} />
+
+      <Route path="/buy-course" element={<BuyCoursePage />} />
       <Route path="/techblog" element={<TechBlog />} />
       <Route path="/private-tutor" element={<PrivateTutorFormPage />} />
       <Route path="/job-list" element={

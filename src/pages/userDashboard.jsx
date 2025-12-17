@@ -176,7 +176,7 @@ function UserDashboard() {
             </p>
 
             <div className="btn-section">
-              <Link to="/apply-for-online-class">
+              <Link to="/apply">
                 View E-LEARNING
               </Link>
 
@@ -192,7 +192,7 @@ function UserDashboard() {
               Real-world case studies and step-by-step demonstrations show how to apply your learning in actual scenarios, bridging theory and practice and highlighting pitfalls with actionable takeaways.    
             </p>
             <div className="btn-section">
-              <Link to="/apply-for-online-class">
+              <Link to="/buy-course">
                 View Courses
               </Link>
 

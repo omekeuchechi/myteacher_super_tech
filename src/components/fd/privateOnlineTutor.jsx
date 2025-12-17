@@ -77,7 +77,7 @@ const PrivateOnlineTutor = () => {
                     </div>
                     <div>
                         <img src={blueMark} alt="" />
-                        <span>Certifaction</span>
+                        <span>Certification</span>
                     </div>
                 </div>
 

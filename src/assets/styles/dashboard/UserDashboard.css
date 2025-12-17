@@ -13,9 +13,11 @@ h2.light{
 }
 
 .dashboard-container {
-  --primary-color: #086ccabb;
+  /* --primary-color: #086ccabb; */
+  --primary-color: #2148b4;
   --primary-color-2: #3498db85;
-  --secondary-color: #086cca;
+  /* --secondary-color: #086cca; */
+  --secondary-color: #1e3a8a;
   --text-color: #000;
   --text-color-gray: #4b4545;
   --text-color-light: #fff;
@@ -205,6 +207,18 @@ h2.light{
   font-weight: 900;
 }
 
+.apply-for-course-section > .apply-for-course-cards.light > .btn-section > a:hover{
+  background-color: #1e3a8a;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+.apply-for-course-section > .apply-for-course-cards.dark > .btn-section > a:hover{
+  background-color: #0d266b;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
 .apply-for-course-section > .apply-for-course-cards.light > .btn-section > a{
   background-color: #fff;
   color: var(--primary-color);
@@ -220,18 +234,22 @@ h2.light{
   height: 40px;
 }
 
-@media (max-width: 1190px) {
+@media (max-width: 1350px) {
   .apply-for-course-section {
   margin-top: 10px;
   padding: 10px 5px;
   border-radius: 0;
   box-shadow: 0;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 20px;
   overflow-x: hidden;
+}
+.apply-for-course-section > .apply-for-course-cards {
+  width: 100%;
 }
 .apply-for-course-section > .apply-for-course-cards > .apply-for-course-image-wrapper{
   width: 100%;
